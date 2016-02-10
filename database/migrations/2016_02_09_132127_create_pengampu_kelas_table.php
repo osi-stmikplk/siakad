@@ -16,7 +16,7 @@ class CreatePengampuKelasTable extends Migration
             // nilai MD5({id mata kuliah}{nomor induk dosen}{tahun ajaran}{kelas diampu})
             $table->char('id', 32)->primary();
             $table->string('tahun_ajaran', 5)->index();
-            $table->date('tgl_ditetapkan')->nullable();
+            $table->date('tgl_penetapan')->nullable();
             $table->string('kelas', 5)->index();
             $table->tinyInteger('quota', false, true)->default(20);
             $table->tinyInteger('jumlah_peminat', false,true)->default(0);

@@ -20,6 +20,7 @@ class CreateRencanaStudisTable extends Migration
             $table->string('mahasiswa_id', 12)->index();
             $table->date('tgl_pengisian')->nullable();
             $table->date('tgl_pengajuan')->nullable();
+            $table->string('status', 15)->index();
             $table->nullableTimestamps();
         });
     }
