@@ -1,0 +1,8 @@
+a { cursor: pointer; }
+table tr td.caption {font-weight: bold; width: 20%;text-align: right;}
+li#indic-loader{font-weight: bold;display: none;}
+li#indic-loader a{color: #003cb3;}
+hr.separator {margin-top: 10px; margin-bottom: 10px;padding-top: 1px;padding-bottom: 1px;}
+.timeline-comments { padding:10px;}
+.timeline-comments > .item { border-bottom: 1px dotted lightblue; margin-bottom: 5px; }
+.timeline-comment-user {font-weight: bold; }

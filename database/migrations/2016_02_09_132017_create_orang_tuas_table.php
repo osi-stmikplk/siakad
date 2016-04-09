@@ -12,7 +12,7 @@ class CreateOrangTuasTable extends Migration
      */
     public function up()
     {
-        Schema::create('orang_tuas', function (Blueprint $table) {
+        Schema::create('orang_tua', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ class CreateOrangTuasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('orang_tuas');
+        Schema::drop('orang_tua');
     }
 }
