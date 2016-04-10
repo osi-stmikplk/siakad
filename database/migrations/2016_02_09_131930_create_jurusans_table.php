@@ -13,10 +13,11 @@ class CreateJurusansTable extends Migration
     public function up()
     {
         Schema::create('jurusan', function (Blueprint $table) {
-            // Untuk id adalah {jenjang}{kode}
+            // Untuk id adalah {jenjang: C atau E}{kode}
             $table->char('id', 7)->primary();
-            $table->char('kode', 5)->unique()->index();
+            $table->char('kode', 5)->index();
             $table->string('nama', 100);
+            // yang ini adalah S1 atau D3 ...
             $table->char('jenjang', 2)->index();
 //            $table->timestamps();
         });

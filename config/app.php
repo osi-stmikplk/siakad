@@ -156,7 +156,6 @@ return [
         Stmik\Providers\EventServiceProvider::class,
         Stmik\Providers\RouteServiceProvider::class,
 
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 

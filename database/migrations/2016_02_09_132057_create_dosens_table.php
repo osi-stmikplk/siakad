@@ -15,6 +15,7 @@ class CreateDosensTable extends Migration
         Schema::create('dosen', function (Blueprint $table) {
 //            $table->string('id', 15)->primary();
             $table->string('nomor_induk', 15)->primary();
+            $table->string('nama', 100)->index();
             $table->string('tempat_lahir', 100)->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->char('jenis_kelamin', 1)->index();
@@ -25,7 +26,7 @@ class CreateDosensTable extends Migration
             $table->string('nidn', 50)->nullable()->index();
             $table->string('agama', 50)->nullable()->index();
             $table->string('status', 15)->default('LUAR BIASA')->index();
-            $table->char('status_aktif')->default('A')->index();
+            $table->char('status_aktif', 1)->default('A')->index();
             $table->char('jurusan_id', 7)->nullable()->index();
             $table->nullableTimestamps();
         });

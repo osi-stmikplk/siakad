@@ -21,7 +21,8 @@
             "database"
         ],
         "psr-4": {
-            "Stmik\\": "app/"
+            "Stmik\\": "app/",
+            "Panatau\\Tools\\": "panatau/tools/src/"
         }
     },
     "autoload-dev": {

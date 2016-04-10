@@ -16,6 +16,14 @@ class Mahasiswa extends Model
     protected $primaryKey = 'nomor_induk';
     public $incrementing = false;
 
+    const STATUS_AKTIF = 'A';
+    const STATUS_CUTI = 'C';
+    const STATUS_DROP_OUT = 'D';
+    const STATUS_KELUAR = 'K';
+    const STATUS_LULUS = 'L';
+    const STATUS_NON_AKTIF = 'N';
+    const STATUS_PINDAH = 'P';
+
     /**
      * Link ke nama jurusan dll.
      * @return BelongsTo
@@ -42,5 +50,15 @@ class Mahasiswa extends Model
     public function rencanaStudi()
     {
         return $this->hasMany(RencanaStudi::class, 'mahasiswa_id');
+    }
+
+    public function setTglLahirAttribute($value)
+    {
+        $this->attributes['tgl_lahir'] = convert_date_to('d-m-Y', $value);
+    }
+
+    public function getTglLahirAttribute($value)
+    {
+        return convert_date_to('Y-m-d', $value, 'd-m-Y');
     }
 }

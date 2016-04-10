@@ -3,6 +3,7 @@
 namespace Stmik\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Panatau\Tools\PanatauToolsServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if($this->app->environment()=='local')
+        {
+            $this->app->register('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider');
+//            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
+        $this->app->register(PanatauToolsServiceProvider::class);
     }
 }

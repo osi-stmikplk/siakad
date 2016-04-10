@@ -17,8 +17,6 @@ class CreateReferensiAkademiksTable extends Migration
             $table->string('tahun_ajaran', 5)->index();
             $table->date('tgl_mulai_isi_krs');
             $table->date('tgl_berakhir_isi_krs');
-            $table->string('nama_institusi');
-            $table->text('alamat_institusi')->nullable();
             $table->timestamps();
         });
     }
