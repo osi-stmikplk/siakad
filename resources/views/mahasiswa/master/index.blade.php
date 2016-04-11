@@ -58,8 +58,9 @@
         },
         loadAksi: function(value, row, index) {
             return [
-                '<a title="Set User Account" data-ic-get-from="/mhs/master/setUser/' + row['nomor_induk'] + '" '
-                    + ' class="btn btn-xs bg-red"><i class="fa fa-user"></a>'
+                '<a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body" ' +
+                    'title="Set User Account" data-ic-get-from="/user/setUserUntuk/' + row['nomor_induk'] + '/mahasiswa" '+
+                    ' class="btn btn-xs bg-red"><i class="fa fa-user"></a>'
             ].join('&nbsp;');
         },
         addFilter: function (p) {

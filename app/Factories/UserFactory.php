@@ -9,8 +9,61 @@
 namespace Stmik\Factories;
 
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Stmik\Dosen;
+use Stmik\Mahasiswa;
+use Stmik\Pegawai;
+use Stmik\User;
+
 class UserFactory extends AbstractFactory
 {
 
+    /**
+     * Untuk user ini ada 3 tipe: Dosen, Mahasiswa dan Pegawai
+     * @param string $type yaitu dosen|mahasiswa|pegawai
+     * @return null|Dosen|Mahasiswa|Pegawai
+     */
+    public function getModelDari($type, $id)
+    {
+        switch(strtolower($type)) {
+            case 'dosen': return Dosen::with('user')->findOrFail($id); break;
+            case 'mahasiswa': return Mahasiswa::with('user')->findOrFail($id); break;
+            case 'pegawai': return Pegawai::with('user')->findOrFail($id); break;
+        }
+        return null;
+    }
+
+    /**
+     * Lakukan penyimpanan terhadap user ini
+     * @param Model $modelEmpunyaUser
+     * @param $input
+     * @return bool
+     */
+    public function setUserIni(Model $modelEmpunyaUser, $input)
+    {
+        $user = $modelEmpunyaUser->user; // ambil user, karena ini modal yang bisa punya user
+        try {
+            \DB::transaction(function () use ($user, $modelEmpunyaUser, $input) {
+                if($user === null) {
+                    // user baru
+                    $user = new User();
+                }
+                if(isset($input['password'][0])) {
+                    // ada di set password
+                    $user->password = \Hash::make($input['password']);
+                }
+                $user->name = $input['name'];
+                $user->email = $input['email'];
+                $user->save();
+                // ingat ini polymorphic maka ... set ke dalam relasi milik modelEmpunyaUser
+                $modelEmpunyaUser->user()->save($user);
+            });
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['input'=>Arr::flatten($input)]);
+            $this->errors->add('system', $e->getMessage());
+        }
+        return $this->errors->count() <= 0;
+    }
 
 }

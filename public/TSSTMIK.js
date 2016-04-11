@@ -76,6 +76,9 @@ $(document).ready(function () {
     });
     // setiap baru saja di load, set active menu sesuai dengan URL
     TSSTMIK.setMenuActiveBasedOnURL();
+    $('.modal').on('shown.bs.modal', function () {
+        $(this).find('input[type=text],textarea,select').filter(':visible:first').focus();
+    });
 }).ajaxError(function( event, request, settings, s ) {
     if(request.status == 401) {
         alert('Unauthorized, Login Ulang Dibutuhkan!');

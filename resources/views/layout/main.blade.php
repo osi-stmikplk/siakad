@@ -54,7 +54,22 @@
     @include("layout.footer")
 </div>
 <!-- ./wrapper -->
-
+{{-- Digunakan untuk yang ingin menggunakan modal --}}
+<div class="modal fade"
+     id="modal-util"
+     {{--Bug karena field tidak dapat autofocus di dialog window bootstrap adalah tabindex="-1" di remove--}}
+     {{--tabindex="-1" --}}
+     role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 id="modal-util-title" class="modal-title">{{ config('siakad.nama') }}</h4>
+            </div>
+            <div id="modal-util-body" class="modal-body">Tunggu Sedang loading ...</div>
+        </div>
+    </div>
+</div>
 <!-- jQuery 2.2.0 -->
 <script src="{{ asset('plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
 <script src="{{ asset('plugins/intercooler/intercooler-0.9.4.min.js') }}"></script>

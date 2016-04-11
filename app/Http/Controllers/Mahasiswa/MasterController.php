@@ -8,7 +8,6 @@
 
 namespace Stmik\Http\Controllers\Mahasiswa;
 
-
 use Stmik\Factories\MasterMahasiswaFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
