@@ -35,6 +35,22 @@ class UserFactory extends AbstractFactory
     }
 
     /**
+     * Kembalikan tipe dari user
+     * @param User $user
+     * @return string
+     */
+    public function getTypeDari(User $user)
+    {
+        $type = 'pegawai';
+        if($user instanceof Mahasiswa) {
+            $type = 'mahasiswa';
+        } elseif($user instanceof Dosen) {
+            $type = 'dosen';
+        }
+        return $type;
+    }
+
+    /**
      * Lakukan penyimpanan terhadap user ini
      * @param Model $modelEmpunyaUser
      * @param $input

@@ -13,9 +13,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Stmik\Events\SomeEvent' => [
-            'Stmik\Listeners\EventListener',
+        \Illuminate\Auth\Events\Login::class => [
+            \Stmik\Listeners\InitSessionUntukUserLogin::class
         ],
+        \Illuminate\Auth\Events\Logout::class => [
+            \Stmik\Listeners\DestroySessionUntukUserLogout::class
+        ]
     ];
 
     /**

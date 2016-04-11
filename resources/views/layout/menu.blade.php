@@ -24,7 +24,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-pie-chart"></i>
+                    <i class="fa fa-star-half-full"></i>
                     <span>Master</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -38,7 +38,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-pie-chart"></i>
+                    <i class="fa fa-book"></i>
                     <span>Mahasiswa</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -50,7 +50,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-pie-chart"></i>
+                    <i class="fa fa-university"></i>
                     <span>AKMA</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
