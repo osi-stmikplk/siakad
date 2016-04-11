@@ -54,6 +54,16 @@ var TSSTMIK = {
                 callback();
             }
         }
+    },
+    setMenuActiveBasedOnURL: function() {
+        $themenu = $('ul.sidebar-menu li a[href="'+window.location.href+'"]');
+        // get parent li
+        $parent_li = $themenu.parent('li');
+        // get parent ul
+        $treview = $parent_li.closest('li.treeview');
+        // set active
+        $parent_li.addClass('active');
+        $treview.addClass('active');
     }
 };
 $(document).ready(function () {
@@ -64,6 +74,8 @@ $(document).ready(function () {
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    // setiap baru saja di load, set active menu sesuai dengan URL
+    TSSTMIK.setMenuActiveBasedOnURL();
 }).ajaxError(function( event, request, settings, s ) {
     if(request.status == 401) {
         alert('Unauthorized, Login Ulang Dibutuhkan!');

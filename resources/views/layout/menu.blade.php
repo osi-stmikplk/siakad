@@ -13,7 +13,9 @@
             {{--</div>--}}
         {{--</div>--}}
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu" data-ic-indicator="#indic-loader">
+        <ul class="sidebar-menu"
+            {{--data-ic-indicator="#indic-loader" data-ic-target="div#the-content" data-ic-push-url="true"--}}
+        >
             <li class="header">NAVIGASI UTAMA</li>
             <li class="active">
                 <a href="{{ route('home') }}">
@@ -40,9 +42,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> KRS</a></li>
+                    <li><a href="{{ route('mhs.dataDiri') }}"><i class="fa fa-circle-o"></i> Data Diri</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Isi FRS</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> KHS</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Data Induk</a></li>
                 </ul>
             </li>
             <li class="treeview">

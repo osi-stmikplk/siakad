@@ -11,6 +11,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/btable/bootstrap-table.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
@@ -37,7 +38,7 @@
     @include('layout.menu')
     <!-- =============================================== -->
     <!-- Content Wrapper. Contains page content -->
-    <div id="content-load" class="content-wrapper">
+    <div id="the-content" class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             @yield('content-header')
@@ -59,6 +60,7 @@
 <script src="{{ asset('plugins/intercooler/intercooler-0.9.4.min.js') }}"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ asset('plugins/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ asset('plugins/btable/bootstrap-table.min.js') }}"></script>
 <!-- SlimScroll -->
 <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->

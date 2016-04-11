@@ -51,18 +51,14 @@
 @endsection
 @push('late-script')
 <script type="text/javascript">
-    function LoadBT() {
-        $spp = $('#spp-data-table');
-        $spp.bootstrapTable();
-        $spp.on('load-success.bs.table', function(e,data){
-            StSPP.attachIC();
-        });
-
-    }
-    $(document).ready(function () {
-        TSSTMIK.loadBootstrapTableScript(LoadBT);
-    });
     var StSPP = {
+        init: function() {
+            $spp = $('#spp-data-table');
+            $spp.bootstrapTable();
+            $spp.on('load-success.bs.table', function(e,data){
+                StSPP.attachIC();
+            });
+        },
         loadAksi: function(value, row, index) {
             a = '';
             taval = $('#ta').val();
@@ -90,5 +86,8 @@
             Intercooler.processNodes($('table#spp-data-table tbody'));
         }
     };
+    $(document).ready(function () {
+        StSPP.init();
+    });
 </script>
 @endpush

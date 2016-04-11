@@ -424,6 +424,25 @@ function _init() {
           _this.layout.fix();
         });
       }
+      else { // in here must be item menu
+        var p_ul = $this.parents('ul').first(), // get first ul
+            p_li = $this.parent('li'); // get li
+        p_ul.find('li.active').removeClass('active'); // remove other active
+        p_li.addClass('active'); // add active to current
+      }
+      // if checkElement menu not treeview
+      //else if(this.is('.treeview-menu')) {
+      //  //Get the parent menu
+      //  var prnt = $this.parents('ul').first();
+      //  ////Close all open menus within the prnt
+      //  //var uls = prnt.find('ul:visible').slideUp(animationSpeed);
+      //  ////Remove the menu-open class from the prnt
+      //  //uls.removeClass('menu-open');
+      //  //Get the prnt li
+      //  var prnt_li = $this.parent("li");
+      //  prnt.find('li.active').removeClass('active');
+      //  prnt_li.addClass('active');
+      //}
       //if this isn't a link, prevent the page from being redirected
       if (checkElement.is('.treeview-menu')) {
         e.preventDefault();
