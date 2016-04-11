@@ -30,7 +30,8 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="#"><i class="fa fa-circle-o"></i> Dosen</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Mahasiswa</a></li>
+                    <li><a href="{{ route('mhs.master') }}"><i class="fa fa-circle-o"></i> Mahasiswa</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Pegawai</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> Mata Kuliah</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> User</a></li>
                 </ul>

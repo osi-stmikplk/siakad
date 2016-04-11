@@ -38,4 +38,18 @@ class MahasiswaFactory extends AbstractFactory
         ];
     }
 
+    /**
+     * Dapatkan status mahasiswa yang sudah tidak kuliah
+     * @return array
+     */
+    public function getStatusSudahTidakKuliahLagi()
+    {
+        return [
+            Mahasiswa::STATUS_DROP_OUT,
+            Mahasiswa::STATUS_KELUAR,
+            Mahasiswa::STATUS_LULUS,
+            Mahasiswa::STATUS_PINDAH
+        ];
+    }
+
 }

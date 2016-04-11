@@ -61,4 +61,13 @@ class Mahasiswa extends Model
     {
         return convert_date_to('Y-m-d', $value, 'd-m-Y');
     }
+
+    /**
+     * Informasi tentang login user ybs
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function user()
+    {
+        return $this->morphOne(User::class, 'owner');
+    }
 }

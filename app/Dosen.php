@@ -33,4 +33,13 @@ class Dosen extends Model
     {
         return $this->belongsToMany(Mahasiswa::class, 'pembimbing');
     }
+
+    /**
+     * Identifikasi user nya
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function user()
+    {
+        return $this->morphOne(User::class, 'owner');
+    }
 }
