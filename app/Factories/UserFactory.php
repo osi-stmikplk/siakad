@@ -12,6 +12,7 @@ namespace Stmik\Factories;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Stmik\Dosen;
+use Stmik\Events\PembuatanUserBaruBerhasil;
 use Stmik\Mahasiswa;
 use Stmik\Pegawai;
 use Stmik\User;
@@ -61,9 +62,11 @@ class UserFactory extends AbstractFactory
         $user = $modelEmpunyaUser->user; // ambil user, karena ini modal yang bisa punya user
         try {
             \DB::transaction(function () use ($user, $modelEmpunyaUser, $input) {
+                $userbaru = false;
                 if($user === null) {
                     // user baru
                     $user = new User();
+                    $userbaru = true;
                 }
                 if(isset($input['password'][0])) {
                     // ada di set password
@@ -71,7 +74,11 @@ class UserFactory extends AbstractFactory
                 }
                 $user->name = $input['name'];
                 $user->email = $input['email'];
-                $user->save();
+                if($user->save()) {
+                    if($userbaru) {
+                        \Event::fire(new PembuatanUserBaruBerhasil($user));
+                    }
+                }
                 // ingat ini polymorphic maka ... set ke dalam relasi milik modelEmpunyaUser
                 $modelEmpunyaUser->user()->save($user);
             });

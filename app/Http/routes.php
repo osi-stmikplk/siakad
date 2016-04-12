@@ -31,3 +31,7 @@ Route::group(['middleware' => ['web']], function () {
     // DATA DIRI Mahasiswa
     Route::get('/mhs/dataDiri/', ['as' => 'mhs.dataDiri', 'uses' => 'Mahasiswa\DataDiriController@index']);
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
