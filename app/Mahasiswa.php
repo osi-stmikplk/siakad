@@ -14,6 +14,7 @@ class Mahasiswa extends Model
 {
     protected $table = 'mahasiswa';
     protected $primaryKey = 'nomor_induk';
+    protected $fillable = ['alamat', 'hp']; // demi keamanan maka hanya alamat dan hp yang boleh
     public $incrementing = false;
 
     const STATUS_AKTIF = 'A';
@@ -23,6 +24,38 @@ class Mahasiswa extends Model
     const STATUS_LULUS = 'L';
     const STATUS_NON_AKTIF = 'N';
     const STATUS_PINDAH = 'P';
+
+    /**
+     * Dapatkan status dalam string yang lebih bisa dibaca dan dimengerti.
+     * @param $value
+     * @return string
+     */
+    public function getStatusAttribute($value)
+    {
+        $c = 'NO-STATUS';
+        switch($value) {
+            case self::STATUS_AKTIF: $c = 'Aktif'; break;
+            case self::STATUS_CUTI: $c = 'Cuti'; break;
+            case self::STATUS_DROP_OUT: $c = 'Drop Out'; break;
+            case self::STATUS_KELUAR: $c = 'Keluar'; break;
+            case self::STATUS_LULUS: $c = 'Lulus'; break;
+            case self::STATUS_NON_AKTIF: $c = 'Non Aktif'; break;
+            case self::STATUS_PINDAH: $c = 'Pindah'; break;
+        }
+        return $c;
+    }
+
+    /**
+     * Kembalikan nilai jenis kelamin
+     * todo: Bagaimana dengan transgender :D ?
+     * @param $value
+     * @return string
+     */
+    public function getJenisKelaminAttribute($value)
+    {
+        if($value=='L') return 'Laki-Laki';
+        return 'Perempuan';
+    }
 
     /**
      * Link ke nama jurusan dll.

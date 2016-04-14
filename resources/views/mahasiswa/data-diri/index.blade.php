@@ -8,7 +8,9 @@
         <div class="col-md-12">
             <div class="box box-default">
                 <div class="box-body">
-
+                    <p class="alert alert-info">
+                        <i class="fa fa-info-circle"></i> Segera hubungi AKMA untuk data yang tidak bisa Anda edit namun keliru dimasukkan.</p>
+                    @include('mahasiswa.data-diri.form')
                 </div>
             </div>
         </div>

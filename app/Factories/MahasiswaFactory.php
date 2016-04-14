@@ -9,6 +9,7 @@
 namespace Stmik\Factories;
 
 use Stmik\Mahasiswa;
+use Stmik\User;
 
 class MahasiswaFactory extends AbstractFactory
 {
@@ -50,6 +51,38 @@ class MahasiswaFactory extends AbstractFactory
             Mahasiswa::STATUS_LULUS,
             Mahasiswa::STATUS_PINDAH
         ];
+    }
+
+    /**
+     * Dapatkan data diri mahasiswa, bila $nim adalah null maka gunakan user yang saat ini login.
+     * @param null $nim
+     * @return mixed
+     */
+    public function getDataMahasiswa($nim = null)
+    {
+        if($nim===null) {
+            // kembalikan langsung saja link polymorphic nya yang pasti merupakan mahasiswa
+            return \Auth::user()->owner;
+        }
+        // kalau di sini cari manual
+        // karena id sudah diset sebagai nomor induk mahasiswa maka ...
+        return Mahasiswa::findOrFail($nim);
+    }
+
+    /**
+     * Kembalikan data Email Mahasiswa
+     * @param null $nim bila nilai null mahasiswa yang saat itu login
+     * @return mixed
+     */
+    public function getDataEmailMahasiswa($nim = null)
+    {
+        $dnim = $nim;
+        if($nim===null) {
+            $dnim = \Auth::user()->name;
+        }
+        // saat user melakukan update email, maka data yang ada di Auth::user adalah cache dari saat pertama login.
+        // Hal ini menyebabkan kita harus mengambil data dari table yang telah di update sebelumnya ...
+        return User::whereName($dnim)->first()->email;
     }
 
 }
