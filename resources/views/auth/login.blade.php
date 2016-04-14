@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout.no-wrapper')
 
 @section('content')
 <div class="container">
@@ -7,34 +7,26 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    <form id="formLogin" class="form-horizontal" role="form"
+                          method="POST" data-ic-post-to="{{ url('/login') }}">
+
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Alamat Email / Username</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                <input type="text" class="form-control" name="email" placeholder="Ketikkan email / username anda">
+                                <div id="error-email" class="help-block error"></div>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
                                 <input type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                                <div id="error-password" class="help-block error"></div>
                             </div>
                         </div>
 
@@ -51,7 +43,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login
+                                    <i class="fa fa-btn fa-sign-in"></i>Login @include('_ic-indicator')
                                 </button>
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
@@ -64,3 +56,22 @@
     </div>
 </div>
 @endsection
+
+@push('late-script')
+<script type="text/javascript">
+
+$('#formLogin')
+    .on('error.ic',function(evt, elt, status, str, xhr){
+        if(xhr.status==422) {
+            TSSTMIK.resetFormErrorMsg('form#formLogin div.error');
+            TSSTMIK.showFormErrorMsg(xhr.responseText);
+        } else {
+
+        }
+    });
+//    .on('success.ic',function(evt, elt, data, textStatus, xhr, requestId){
+//            window.location.replace("/");
+//    });
+TSSTMIK.resetFormErrorMsg('form#formLogin div.error');
+</script>
+@endpush

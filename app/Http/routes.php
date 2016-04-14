@@ -10,8 +10,15 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+//Route::auth();
 
 Route::group(['middleware' => ['web']], function () {
+
+    // Authentication Routes...
+    $this->get('login', 'Auth\AuthSelfController@showLoginForm');
+    $this->post('login', 'Auth\AuthSelfController@login');
+    $this->get('logout', 'Auth\AuthSelfController@logout');
+
     Route::get('/', ['as' => 'home', 'uses' => 'SiteController@index']);
 
     // USER
@@ -31,7 +38,3 @@ Route::group(['middleware' => ['web']], function () {
     // DATA DIRI Mahasiswa
     Route::get('/mhs/dataDiri/', ['as' => 'mhs.dataDiri', 'uses' => 'Mahasiswa\DataDiriController@index']);
 });
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');

@@ -2,7 +2,7 @@
     <!-- Logo -->
     <a href="{{ route('home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>e</b>KS</span>
+        <span class="logo-mini"><b>s</b>TM</span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg">{{ config('siakad.nama') }}</span>
     </a>
@@ -24,7 +24,7 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 {{--                        <img src="{{ asset('lte2.3/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">--}}
-                        <span class="hidden-xs"><i class="fa fa-user-md"></i> {{ "NAMA-USER"}}</span>
+                        <span class="hidden-xs"><i class="fa fa-user-md"></i> {{ Session::get('username') }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -32,8 +32,8 @@
                             <img src="{{ asset('lte/img/user2-160x160.jpg') }}" class="img-circle"
                                  alt="User Image">
                             <p>
-                                {{ "NAMA-USER" }}
-                                <small>Sejak {{ "4 April 2016" }}</small>
+                                {{ Session::get('nama') }}
+                                <small>{{ Session::get('type') }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
@@ -45,7 +45,7 @@
                             </div>
                             <div class="pull-right">
                                 <a onclick="return confirm('Yakin untuk logout?');"
-                                   href="/auth/logout" class="btn btn-default btn-flat">
+                                   href="{{ url('/logout') }}" class="btn btn-default btn-flat">
                                     <i class="fa fa-sign-out"></i>
                                     Sign out</a>
                             </div>

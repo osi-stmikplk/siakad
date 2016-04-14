@@ -76,9 +76,16 @@ $(document).ready(function () {
     });
     // setiap baru saja di load, set active menu sesuai dengan URL
     TSSTMIK.setMenuActiveBasedOnURL();
-    $('.modal').on('shown.bs.modal', function () {
+    $('.modal').on('shown.bs.modal', function (e) {
+        $b = $(e.relatedTarget);
+        title = $b.attr('title');
+        if(title.length<0) {
+            title = "Modal App.";
+        }
+        $(this).find('h4.modal-title').text(title);
         $(this).find('input[type=text],textarea,select').filter(':visible:first').focus();
     });
+
 }).ajaxError(function( event, request, settings, s ) {
     if(request.status == 401) {
         alert('Unauthorized, Login Ulang Dibutuhkan!');

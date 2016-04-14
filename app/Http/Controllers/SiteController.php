@@ -11,6 +11,10 @@ namespace Stmik\Http\Controllers;
 
 class SiteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Load default!
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -27,6 +27,7 @@ class DestroySessionUntukUserLogout
     public function handle(Logout $event)
     {
         \Session::set('type', null);
+        \Session::set('nama', null);
         \Session::set('username', '');
     }
 }

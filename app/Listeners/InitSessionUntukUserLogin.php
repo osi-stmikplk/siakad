@@ -2,6 +2,7 @@
 
 namespace Stmik\Listeners;
 
+use Illuminate\Support\Facades\Session;
 use IlluminateAuthEventsLogin;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -40,6 +41,7 @@ class InitSessionUntukUserLogin
         $user = User::find($event->user->getAuthIdentifier());
         $type = $this->userFactory->getTypeDari($user);
         \Session::set('type', $type);
+        \Session::set('nama', $user->owner->nama); // nama si user :D
         \Session::set('username', $user->name);
     }
 }
