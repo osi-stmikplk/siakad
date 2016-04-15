@@ -8,7 +8,6 @@
 
 namespace Stmik\Http\Controllers\Mahasiswa;
 
-
 use Stmik\Factories\DataDiriFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Requests\DataDiriRequest;
@@ -21,6 +20,9 @@ class DataDiriController extends Controller
     public function __construct(DataDiriFactory $factory)
     {
         $this->factory = $factory;
+
+        // check policies
+        $this->authorize('dataIniHanyaBisaDipakaiOleh', 'mahasiswa');
     }
 
     /**

@@ -21,6 +21,8 @@ class MasterController extends Controller
     public function __construct(MasterMahasiswaFactory $factory)
     {
         $this->factory = $factory;
+
+        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
     }
 
     public function index()
