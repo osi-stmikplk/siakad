@@ -3,9 +3,11 @@
 namespace Stmik;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Stmik\Otorisasi\HasRoleTrait;
 
 class User extends Authenticatable
 {
+    use HasRoleTrait;
     /**
      * The attributes that are mass assignable.
      *

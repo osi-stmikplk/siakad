@@ -38,7 +38,7 @@ class InitSessionUntukUserLogin
      */
     public function handle(\Illuminate\Auth\Events\Login $event)
     {
-        $user = User::find($event->user->getAuthIdentifier());
+        $user = User::with('owner')->find($event->user->getAuthIdentifier());
         $type = $this->userFactory->getTypeDari($user);
         \Session::set('type', $type);
         \Session::set('nama', $user->owner->nama); // nama si user :D

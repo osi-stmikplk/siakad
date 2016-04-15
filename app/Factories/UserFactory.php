@@ -43,9 +43,9 @@ class UserFactory extends AbstractFactory
     public function getTypeDari(User $user)
     {
         $type = 'pegawai';
-        if($user instanceof Mahasiswa) {
+        if($user->owner instanceof Mahasiswa) {
             $type = 'mahasiswa';
-        } elseif($user instanceof Dosen) {
+        } elseif($user->owner instanceof Dosen) {
             $type = 'dosen';
         }
         return $type;
@@ -81,6 +81,8 @@ class UserFactory extends AbstractFactory
                 }
                 // ingat ini polymorphic maka ... set ke dalam relasi milik modelEmpunyaUser
                 $modelEmpunyaUser->user()->save($user);
+                // yeah untuk Role default ...?
+                $user->assignRole($this->getTypeDari($user));
             });
         } catch (\Exception $e) {
             \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['input'=>Arr::flatten($input)]);
