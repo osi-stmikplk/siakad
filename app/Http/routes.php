@@ -31,8 +31,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/akma/spp/getDT', ['as' => 'akma.spp.getDT', 'uses' => 'Akma\StatusSPPController@getDataBtTable']);
 
     // master mahasiswa
-    Route::get('/mhs/master/', ['as' => 'mhs.master', 'uses' => 'Mahasiswa\MasterController@index']);
-    Route::get('/mhs/master/getDT', ['as' => 'mhs.master.getDT', 'uses' => 'Mahasiswa\MasterController@getDataBtTable']);
+    Route::get('/master/mahasiswa/', ['as' => 'master.mahasiswa', 'uses' => 'Master\MahasiswaController@index']);
+    Route::get('/master/mahasiswa/getDT', ['as' => 'master.mahasiswa.getDT', 'uses' => 'Master\MahasiswaController@getDataBtTable']);
 
 
     // DATA DIRI Mahasiswa

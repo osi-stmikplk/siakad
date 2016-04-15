@@ -18,7 +18,7 @@
                         </form>
                         <table id="master-mhs" class="table"
                                data-toolbar="#dt-toolbar"
-                               data-url="{{ route('mhs.master.getDT') }}"
+                               data-url="{{ route('master.mahasiswa.getDT') }}"
                                data-pagination="true"
                                data-classes="table table-hover table-condensed"
                                data-striped="true"

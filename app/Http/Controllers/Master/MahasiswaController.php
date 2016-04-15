@@ -6,13 +6,13 @@
  * Time: 12:54
  */
 
-namespace Stmik\Http\Controllers\Mahasiswa;
+namespace Stmik\Http\Controllers\Master;
 
 use Stmik\Factories\MasterMahasiswaFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
 
-class MasterController extends Controller
+class MahasiswaController extends Controller
 {
     use GetDataBTTableTrait;
     /** @var MasterMahasiswaFactory  */
@@ -27,7 +27,7 @@ class MasterController extends Controller
 
     public function index()
     {
-        return view('mahasiswa.master.index')
+        return view('master.mahasiswa.index')
             ->with('layout', $this->getLayout());
     }
 
