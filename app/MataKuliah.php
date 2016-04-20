@@ -18,6 +18,7 @@ class MataKuliah extends Model
 {
     protected $table = 'mata_kuliah';
     public $incrementing = false;
+    protected $fillable = ['kode', 'nama', 'sks', 'semester', 'jurusan_id'];
 
     /**
      * Status matakuliah adalah AKTIF
