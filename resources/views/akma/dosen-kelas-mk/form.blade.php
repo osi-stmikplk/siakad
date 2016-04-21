@@ -43,8 +43,13 @@
                 data-ic-indicator="#mata_kuliah_indicator"
                 data-ic-post-to="{{ route('master.mk.loadBasedOnJurusan') }}"
                 data-ic-target="#mata_kuliah_id">
-                {!! load_select_model('jurusan', \Stmik\Factories\JurusanFactory::getJurusanLists(),
-                    $data, [], ['Pilih Jurusan'], true) !!}
+                @if(is_null($data))
+                    {!! load_select('jurusan', \Stmik\Factories\JurusanFactory::getJurusanLists(),
+                        0, [], ['Pilih Jurusan'], true) !!}
+                @else
+                    {!! load_select('jurusan', \Stmik\Factories\JurusanFactory::getJurusanLists(),
+                        $data->mataKuliah->jurusan->id, [], ['Pilih Jurusan'], true) !!}
+                @endif
             </select>
             <div id="error-jurusan" class="error"></div>
         </div>
@@ -54,7 +59,12 @@
             Mata Kuliah Diampu <i id="mata_kuliah_indicator" class="fa fa-spin fa-spinner" style="display: none;"></i>
         </label>
         <div class="col-md-9">
-            <select name="mata_kuliah_id" id="mata_kuliah_id" class="form-control"></select>
+            <select name="mata_kuliah_id" id="mata_kuliah_id" class="form-control">
+                @if(!is_null($data))
+                    {!! load_select('mata_kuliah_id', \Stmik\Factories\MasterMataKuliahFactory::getMataKuliahListsBerdasarkan($data->mataKuliah->jurusan->id),
+                        $data->mataKuliah->id, [], ['Pilih Mata Kuliah'], true) !!}
+                @endif
+            </select>
             <div id="error-mata_kuliah_id" class="error"></div>
         </div>
     </div>

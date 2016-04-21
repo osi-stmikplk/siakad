@@ -82,4 +82,25 @@ class DosenKelasMKFactory extends AbstractFactory
         }
         return $this->errors->count() <= 0;
     }
+
+    /**
+     * Kembalikan data untuk kelas pengampu!
+     * @param string $id kode kelas pengampu
+     * @return mixed
+     */
+    public function getDataDosenKelasMKBerdasarkan($id)
+    {
+        return PengampuKelas::findOrFail($id);
+    }
+
+    /**
+     * Update data ini
+     * @param PengampuKelas $pengampuKelas
+     * @param $input
+     * @return bool
+     */
+    public function update(PengampuKelas $pengampuKelas, $input)
+    {
+        return $this->realSave($pengampuKelas, $input);
+    }
 }

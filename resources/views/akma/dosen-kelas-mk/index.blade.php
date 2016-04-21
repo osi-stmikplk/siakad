@@ -68,7 +68,11 @@
             });
         },
         loadAksi: function(value, row, index) {
-
+            return [
+                '<a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body" ' +
+                'title="Edit Dosen Pengampu Kelas" data-ic-get-from="/akma/dkmk/edit/' + row['id'] + '"' +
+                ' class="btn btn-xs bg-blue"><i class="fa fa-edit"></a>'
+            ].join('&nbsp;');
         },
         addFilter: function (p) {
             p.filter = {

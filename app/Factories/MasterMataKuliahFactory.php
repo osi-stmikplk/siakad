@@ -151,7 +151,7 @@ class MasterMataKuliahFactory extends AbstractFactory
      * @param string $jurusan kode jurusan
      * @return mixed
      */
-    public function getMataKuliahListsBerdasarkan($jurusan)
+    public static function getMataKuliahListsBerdasarkan($jurusan)
     {
         $r = MataKuliah::whereStatus(MataKuliah::STATUS_AKTIF)
             ->whereJurusanId($jurusan)

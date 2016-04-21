@@ -61,4 +61,30 @@ class DosenKelasMKController extends Controller
         }
         return response(json_encode($this->factory->getErrors()), 500);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function edit($id)
+    {
+        return view('akma.dosen-kelas-mk.form')
+            ->with('data', $this->factory->getDataDosenKelasMKBerdasarkan($id))
+            ->with('action', route('akma.dkmk.update', ['id'=>$id]));
+    }
+
+    /**
+     * Untuk edit
+     * @param $id
+     * @param DosenKelasMKRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update($id, DosenKelasMKRequest $request)
+    {
+        if($this->factory->update($this->factory->getDataDosenKelasMKBerdasarkan($id), $request->all())) {
+            return $this->edit($id)
+                ->with('success', 'Berhasil Update, silahkan update lagi data baru ...');
+        }
+        return response(json_encode($this->factory->getErrors()), 500);
+    }
 }

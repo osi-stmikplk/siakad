@@ -18,7 +18,7 @@ class PengampuKelas extends Model
     protected $table = 'pengampu_kelas';
     public $incrementing = false;
     protected $guarded = ['id'];
-    protected $fillable = ['tahun_ajaran', 'tgl_penetapan', 'kelas', 'quote', 'dosen_id', 'mata_kuliah_id'];
+    protected $fillable = ['tahun_ajaran', 'tgl_penetapan', 'kelas', 'quota', 'dosen_id', 'mata_kuliah_id'];
 
     /**
      * Proses migrasi memang membuat pusing :D daripada pusing harus entry ulang maka maksimalkan pattern terhadap
