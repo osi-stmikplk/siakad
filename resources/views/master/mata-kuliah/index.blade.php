@@ -43,8 +43,8 @@
                                 <th data-field="nama" data-sortable="true">Nama</th>
                                 <th data-field="sks" data-sortable="true">SKS</th>
                                 <th data-field="semester" data-sortable="true">Semester</th>
-                                <th data-field="status" data-sortable="true" data-formatter="MasterMK.loadStatus">Status</th>
-                                <th data-width="100px" data-formatter="MasterMK.loadAksi" data-events="eventAksi">Aksi</th>
+                                <th data-width="80px" data-field="status" data-sortable="true" data-formatter="MasterMK.loadStatus">Status</th>
+                                <th data-width="50px" data-formatter="MasterMK.loadAksi">&nbsp;</th>
                             </tr>
                             </thead>
                         </table>
@@ -92,6 +92,9 @@
         },
         attachIC: function () {
             Intercooler.processNodes($('table#master-mk tbody'));
+        },
+        onEditSucces: function() {
+            $('#master-mk').bootstrapTable('refresh');
         }
     };
     $(document).ready(function () {

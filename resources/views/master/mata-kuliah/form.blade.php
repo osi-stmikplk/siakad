@@ -79,6 +79,6 @@ $('#frmMK').on('error.ic', function (evt, elt, stat, str, xhr) {
 });
 @if(isset($success))
     $('#message-success').text("{{$success}}").closest('div.form-group').show();
-    $('#master-mk').bootstrapTable('refresh');
+    MasterMK.onEditSucces(); // trigger it!
 @endif
 </script>
