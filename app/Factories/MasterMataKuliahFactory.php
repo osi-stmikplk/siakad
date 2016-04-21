@@ -145,4 +145,21 @@ class MasterMataKuliahFactory extends AbstractFactory
     {
         return $this->realSave(new MataKuliah(), $input);
     }
+
+    /**
+     * Kembalikan data mata kuliah berdasarkan jurusan yang nanti dipergunakan untuk melakukan loading di select dll
+     * @param string $jurusan kode jurusan
+     * @return mixed
+     */
+    public function getMataKuliahListsBerdasarkan($jurusan)
+    {
+        $r = MataKuliah::whereStatus(MataKuliah::STATUS_AKTIF)
+            ->whereJurusanId($jurusan)
+            ->orderBy('nama')->get(['id', 'nama', 'sks', 'semester']);
+        $a = [];
+        foreach ($r as $item) {
+            $a[$item->id] = $item->nama . " (" . $item->sks . " SKS - Semester " . $item->semester .")";
+        }
+        return $a;
+    }
 }

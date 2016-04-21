@@ -18,6 +18,7 @@ class PengampuKelas extends Model
     protected $table = 'pengampu_kelas';
     public $incrementing = false;
     protected $guarded = ['id'];
+    protected $fillable = ['tahun_ajaran', 'tgl_penetapan', 'kelas', 'quote', 'dosen_id', 'mata_kuliah_id'];
 
     /**
      * Proses migrasi memang membuat pusing :D daripada pusing harus entry ulang maka maksimalkan pattern terhadap
@@ -28,7 +29,7 @@ class PengampuKelas extends Model
      * @param $kelas_diampu
      * @return string hasil kalkulasi md5 dengan panjang 32 karakter!
      */
-    protected function kalkulasiPK($mata_kuliah_id, $nomor_induk_dosen, $tahun_ajaran, $kelas_diampu)
+    public function kalkulasiPK($mata_kuliah_id, $nomor_induk_dosen, $tahun_ajaran, $kelas_diampu)
     {
         return md5("{$mata_kuliah_id}{$nomor_induk_dosen}{$tahun_ajaran}{$kelas_diampu}");
     }

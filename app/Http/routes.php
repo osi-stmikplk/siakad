@@ -30,6 +30,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/akma/spp/setStatus/{nim}/{ta}', ['as' => 'akma.spp.setStatus', 'uses' => 'Akma\StatusSPPController@setStatus']);
     Route::get('/akma/spp/getDT', ['as' => 'akma.spp.getDT', 'uses' => 'Akma\StatusSPPController@getDataBtTable']);
 
+    // AKMA set Dosen - MK - Kelas
+    Route::get('/akma/dkmk/', ['as' => 'akma.dkmk', 'uses' => 'Akma\DosenKelasMKController@index']);
+    Route::get('/akma/dkmk/create', ['as' => 'akma.dkmk.create', 'uses' => 'Akma\DosenKelasMKController@create']);
+    Route::post('/akma/dkmk/store', ['as' => 'akma.dkmk.store', 'uses' => 'Akma\DosenKelasMKController@store']);
+    Route::get('/akma/dkmk/getDT', ['as' => 'akma.dkmk.getDT', 'uses' => 'Akma\DosenKelasMKController@getDataBtTable']);
+
     // master mahasiswa
     Route::get('/master/mahasiswa/', ['as' => 'master.mahasiswa', 'uses' => 'Master\MahasiswaController@index']);
     Route::get('/master/mahasiswa/getDT', ['as' => 'master.mahasiswa.getDT', 'uses' => 'Master\MahasiswaController@getDataBtTable']);
@@ -42,6 +48,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/master/mk/update/{id}', ['as' => 'master.mk.update', 'uses' => 'Master\MataKuliahController@update']);
     Route::post('/master/mk/setStatus/{id}', ['as' => 'master.mk.setStatus', 'uses' => 'Master\MataKuliahController@setStatus']);
     Route::get('/master/mk/getDT', ['as' => 'master.mk.getDT', 'uses' => 'Master\MataKuliahController@getDataBtTable']);
+    Route::post('/master/mk/loadBasedOnJurusan', ['as' => 'master.mk.loadBasedOnJurusan', 'uses' => 'Master\MataKuliahController@loadBasedOnJurusan']);
 
     // DATA DIRI Mahasiswa
     Route::get('/mhs/dataDiri/', ['as' => 'mhs.dataDiri', 'uses' => 'Mahasiswa\DataDiriController@index']);

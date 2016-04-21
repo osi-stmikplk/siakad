@@ -79,6 +79,12 @@ class MataKuliahController extends Controller
             ->with('data', $this->factory->getDataMataKuliah($id));
     }
 
+    /**
+     * Lakukan update
+     * @param $id
+     * @param Requests\MataKuliahRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function update($id, Requests\MataKuliahRequest $request)
     {
         $input = $request->all();
@@ -126,6 +132,25 @@ class MataKuliahController extends Controller
             return $this->create()->with('success', 'Data berhasil di tambah! Silahkan tambahkan data baru');
         }
         return response(json_encode($this->factory->getErrors()), 500);
+    }
+
+    /**
+     * Load select yang menampilkan daftar mata kuliah berdasarkan pilihan jurusan nya. Karena ini bisa saja dipanggil
+     * dari intercoolerjs atau bagian lain yang tidak flexible apabila di set menggunakan paramater, maka dibuatkanlah
+     * menggunakan post, perhatikan pada $request untuk mendapatkan field yang dibutuhkan.
+     * Ini digunakan untuk dependent select
+     * @param Request $requests
+     */
+    public function loadBasedOnJurusan(Request $requests)
+    {
+        $jurusan = $requests->input('jurusan');
+        if($jurusan===null) {
+            return response("");
+        }
+        return response(load_select(
+            $requests->input('ic-target-id'),
+            $this->factory->getMataKuliahListsBerdasarkan($jurusan),
+            0, [], ['Pilih Mata Kuliah'], true));
     }
 
 }
