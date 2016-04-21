@@ -1,6 +1,6 @@
 @extends($layout)
 @section('content-header')
-    <h1>Status Pembayaran SPP<small>status pelunasan</small></h1>
+    <h1>Kelas, Mata Kuliah & Dosen Pengampunya<small>sesuaikan dengan keahlian</small></h1>
 @endsection
 @section('content')
     <section id="status-spp">
