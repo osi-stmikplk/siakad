@@ -83,8 +83,21 @@ class DosenKelasMKController extends Controller
     {
         if($this->factory->update($this->factory->getDataDosenKelasMKBerdasarkan($id), $request->all())) {
             return $this->edit($id)
-                ->with('success', 'Berhasil Update, silahkan update lagi data baru ...');
+                ->with('success', 'Berhasil Update, silahkan update lagi ...');
         }
         return response(json_encode($this->factory->getErrors()), 500);
+    }
+
+    /**
+     * Hapus data ini!
+     * @param $id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function delete($id)
+    {
+        if($this->factory->delete($this->factory->getDataDosenKelasMKBerdasarkan($id))) {
+            return response("", 200,['X-IC-Remove'=>true]);
+        }
+        return response(json_encode($this->factory->getErrors()), 500,['X-IC-Remove'=>false]);
     }
 }

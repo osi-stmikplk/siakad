@@ -71,7 +71,10 @@
             return [
                 '<a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body" ' +
                 'title="Edit Dosen Pengampu Kelas" data-ic-get-from="/akma/dkmk/edit/' + row['id'] + '"' +
-                ' class="btn btn-xs bg-blue"><i class="fa fa-edit"></a>'
+                ' class="btn btn-xs bg-blue"><i class="fa fa-edit"></i></a>',
+                '<a data-ic-confirm="Data yang terhapus tidak dapat dikembalikan, yakin menghapus?" ' +
+                'data-ic-target="closest tr" data-ic-delete-from="/akma/dkmk/delete/' + row['id'] + '" title="Hapus ..." ' +
+                'class="btn btn-xs bg-red"><i class="fa fa-trash-o"></i></a>'
             ].join('&nbsp;');
         },
         addFilter: function (p) {

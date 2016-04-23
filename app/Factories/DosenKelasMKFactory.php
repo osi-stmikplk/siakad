@@ -103,4 +103,23 @@ class DosenKelasMKFactory extends AbstractFactory
     {
         return $this->realSave($pengampuKelas, $input);
     }
+
+    /**
+     * Hapus pengampu kelas
+     * TODO: PERHATIKAN INI SEHARUSNYA SEBELUM MENGHAPUS, di test apakah ada data mereferensi ke data ini? NOTE: gunakan foreign key saja lebih praktis!
+     * @param PengampuKelas $pk
+     * @return bool
+     */
+    public function delete(PengampuKelas $pk)
+    {
+        try {
+            \DB::transaction(function () use ($pk) {
+                $pk->delete();
+            });
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['id'=>$pk->id]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+        return $this->errors->count() <= 0;
+    }
 }
