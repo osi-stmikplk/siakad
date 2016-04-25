@@ -42,6 +42,10 @@ Route::group(['middleware' => ['web']], function () {
     // master mahasiswa
     Route::get('/master/mahasiswa/', ['as' => 'master.mahasiswa', 'uses' => 'Master\MahasiswaController@index']);
     Route::get('/master/mahasiswa/getDT', ['as' => 'master.mahasiswa.getDT', 'uses' => 'Master\MahasiswaController@getDataBtTable']);
+    Route::get('/master/mahasiswa/create', ['as' => 'master.mahasiswa.create', 'uses' => 'Master\MahasiswaController@create']);
+    Route::post('/master/mahasiswa/store', ['as' => 'master.mahasiswa.store', 'uses' => 'Master\MahasiswaController@store']);
+    Route::get('/master/mahasiswa/edit/{nim}', ['as' => 'master.mahasiswa.edit', 'uses' => 'Master\MahasiswaController@edit']);
+    Route::post('/master/mahasiswa/update/{nim}', ['as' => 'master.mahasiswa.update', 'uses' => 'Master\MahasiswaController@update']);
 
     // master mata kuliah
     Route::get('/master/mk/', ['as' => 'master.mk', 'uses' => 'Master\MataKuliahController@index']);

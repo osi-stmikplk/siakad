@@ -9,10 +9,17 @@
                 <div class="box box-default">
                     <div class="box-body">
                         <form id="dt-toolbar" class="form-inline" role="form">
+                            <a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body"
+                               data-ic-get-from="/master/mahasiswa/create" title="Tambah Mahasiswa"
+                               class="btn btn-default form-control"><i class="fa fa-plus-circle"></i> Tambah</a>&nbsp;
                             <label for="ta">Filter:&nbsp;</label>
                             <select class="form-control" id="jurusan">
                                 {!! load_select('ta', \Stmik\Factories\JurusanFactory::getJurusanLists(),
                                     0, [], ['Pilih Jurusan'], true) !!}
+                            </select>
+                            <select class="form-control" id="status">
+                                {!! load_select('ta', \Stmik\Factories\MahasiswaFactory::getStatusLists(),
+                                    0, [], ['Pilih Status'], true) !!}
                             </select>
                             <a onclick="MasterMhs.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
                         </form>
@@ -59,13 +66,17 @@
         loadAksi: function(value, row, index) {
             return [
                 '<a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body" ' +
+                'title="Edit Mahasiswa Ini" data-ic-get-from="/master/mahasiswa/edit/' + row['nomor_induk'] + '"' +
+                ' class="btn btn-xs bg-blue"><i class="fa fa-edit"></i></a>',
+                '<a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body" ' +
                     'title="Set User Account" data-ic-get-from="/user/setUserUntuk/' + row['nomor_induk'] + '/mahasiswa" '+
                     ' class="btn btn-xs bg-red"><i class="fa fa-user"></a>'
             ].join('&nbsp;');
         },
         addFilter: function (p) {
             p.filter = {
-                'jurusan': $('#jurusan').val()
+                'jurusan': $('#jurusan').val(),
+                'status': $('#status').val()
             };
             return p;
         },

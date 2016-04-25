@@ -85,4 +85,39 @@ class MahasiswaFactory extends AbstractFactory
         return User::whereName($dnim)->first()->email;
     }
 
+    /**
+     * Kembalikan daftar status mahasiswa
+     * @param int $value bila nilainya adalah -1 (default) maka akan mengembalikan semua daftar sebagai array
+     * @return array|string
+     */
+    public static function getStatusLists($value=-1)
+    {
+        $r = [
+            Mahasiswa::STATUS_AKTIF => 'Aktif',
+            Mahasiswa::STATUS_CUTI => 'Cuti',
+            Mahasiswa::STATUS_DROP_OUT => 'Drop Out',
+            Mahasiswa::STATUS_KELUAR => 'Keluar',
+            Mahasiswa::STATUS_LULUS => 'Lulus',
+            Mahasiswa::STATUS_NON_AKTIF => 'Non Aktif',
+            Mahasiswa::STATUS_PINDAH => 'Pindah'
+        ];
+        if($value===-1) return $r;
+        return $r[$value];
+    }
+
+    /**
+     * Kembalikan daftar status awal masuk mahasiswa
+     * @param int $value
+     * @return array|String
+     */
+    public static function getStatusAwalMasukLists($value = -1)
+    {
+        $r = [
+            Mahasiswa::AWAL_MASUK_BARU => 'Mahasiswa Baru',
+            Mahasiswa::AWAL_MASUK_PINDAH => 'Mahasiswa Pindahan'
+        ];
+        if($value===-1) return $r;
+        return $r[$value];
+    }
+
 }

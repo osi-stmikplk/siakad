@@ -4,6 +4,7 @@ namespace Stmik;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Stmik\Factories\MahasiswaFactory;
 
 /**
  * Class Mahasiswa
@@ -25,24 +26,30 @@ class Mahasiswa extends Model
     const STATUS_NON_AKTIF = 'N';
     const STATUS_PINDAH = 'P';
 
+    const AWAL_MASUK_BARU = 'B';
+    const AWAL_MASUK_PINDAH = 'P';
+
+
     /**
      * Dapatkan status dalam string yang lebih bisa dibaca dan dimengerti.
      * @param $value
      * @return string
      */
-    public function getStatusAttribute($value)
+    public function getStatusStringAttribute($value=null)
     {
-        $c = 'NO-STATUS';
-        switch($value) {
-            case self::STATUS_AKTIF: $c = 'Aktif'; break;
-            case self::STATUS_CUTI: $c = 'Cuti'; break;
-            case self::STATUS_DROP_OUT: $c = 'Drop Out'; break;
-            case self::STATUS_KELUAR: $c = 'Keluar'; break;
-            case self::STATUS_LULUS: $c = 'Lulus'; break;
-            case self::STATUS_NON_AKTIF: $c = 'Non Aktif'; break;
-            case self::STATUS_PINDAH: $c = 'Pindah'; break;
-        }
-        return $c;
+        $value = (is_null($value)? $this->attributes['status']: $value);
+        return MahasiswaFactory::getStatusLists($value);
+    }
+
+    /**
+     * Dapatkan status awal masuk dalam mode string yang bisa dibaca!
+     * @param $value
+     * @return string
+     */
+    public function getStatusAwalMasukStringAttribute($value)
+    {
+        $value = (is_null($value)? $this->attributes['status_awal_masuk']:$value);
+        return MahasiswaFactory::getStatusAwalMasukLists($value);
     }
 
     /**
@@ -51,8 +58,9 @@ class Mahasiswa extends Model
      * @param $value
      * @return string
      */
-    public function getJenisKelaminAttribute($value)
+    public function getJenisKelaminStringAttribute($value)
     {
+        $value = (is_null($value)? $this->attributes['jenis_kelamin']:$value);
         if($value=='L') return 'Laki-Laki';
         return 'Perempuan';
     }
