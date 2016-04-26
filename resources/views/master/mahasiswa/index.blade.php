@@ -83,6 +83,9 @@
         sendFilter: function (e) {
             $('#master-mhs').bootstrapTable('refresh');
         },
+        onEditSuccess: function() {
+            $('#master-mhs').bootstrapTable('refresh');
+        },
         attachIC: function () {
             Intercooler.processNodes($('table#master-mhs tbody'));
         }

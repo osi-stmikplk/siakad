@@ -112,5 +112,17 @@
 </form>
 
 <script type="text/javascript">
-
+$('#frmMMhs').on('error.ic', function (evt, elt, stat, str, xhr) {
+    $('#alerter-error, #alerter-success').hide();
+    TSSTMIK.resetFormErrorMsg('#frmMMhs div.error');
+    if(xhr.status==422){
+        TSSTMIK.showFormErrorMsg(xhr.responseText);
+    } else {
+        $('#message-error').text(str).closest('div.form-group').show();
+    }
+});
+@if(isset($success))
+    $('#message-success').text("{{$success}}").closest('div.form-group').show();
+    MasterMhs.onEditSuccess(); // trigger it!
+@endif
 </script>

@@ -90,7 +90,7 @@
         attachIC: function () {
             Intercooler.processNodes($('table#kelas-mk-dosen tbody'));
         },
-        onEditSucces: function() {
+        onEditSuccess: function() {
             $('#kelas-mk-dosen').bootstrapTable('refresh');
         }
     };

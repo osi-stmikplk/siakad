@@ -89,6 +89,6 @@ $('#frmMKD').on('error.ic', function (evt, elt, stat, str, xhr) {
 });
 @if(isset($success))
     $('#message-success').text("{{$success}}").closest('div.form-group').show();
-    DosenKlsMK.onEditSucces(); // trigger it!
+    DosenKlsMK.onEditSuccess(); // trigger it!
 @endif
 </script>
