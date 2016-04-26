@@ -70,7 +70,10 @@
                 ' class="btn btn-xs bg-blue"><i class="fa fa-edit"></i></a>',
                 '<a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body" ' +
                     'title="Set User Account" data-ic-get-from="/user/setUserUntuk/' + row['nomor_induk'] + '/mahasiswa" '+
-                    ' class="btn btn-xs bg-red"><i class="fa fa-user"></a>'
+                    ' class="btn btn-xs bg-red"><i class="fa fa-user"></i></a>',
+                '<a title="Hapus Data Mahasiswa Ini" data-ic-delete-from="/master/mahasiswa/delete/' + row['nomor_induk'] + '"' +
+                    ' data-ic-target="closest tr" data-ic-confirm="Yakin menghapus data mahasiswa ini?" ' +
+                    ' class="btn btn-xs bg-red-active"><i class="fa fa-trash"></i></a>'
             ].join('&nbsp;');
         },
         addFilter: function (p) {

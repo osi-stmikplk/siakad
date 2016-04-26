@@ -74,6 +74,11 @@ class MahasiswaController extends Controller
             ->with('action', route('master.mahasiswa.store'));
     }
 
+    /**
+     * Simpan data baru
+     * @param MasterMahasiswaRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function store(MasterMahasiswaRequest $request)
     {
         $input = $request->all();
@@ -81,5 +86,13 @@ class MahasiswaController extends Controller
             return $this->create()->with('success', "Data NIM {$this->factory->getLastInsertId()} telah ditambahkan, silahkan lakukan proses penambahan lainnya!");
         }
         return response(json_encode($this->factory->getErrors()), 500);
+    }
+
+    public function delete($nim)
+    {
+        if($this->factory->delete($nim)) {
+            return response("", 200,['X-IC-Remove'=>true]);
+        }
+        return response(json_encode($this->factory->getErrors()), 500,['X-IC-Remove'=>false]);
     }
 }

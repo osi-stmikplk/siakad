@@ -11,6 +11,7 @@ namespace Stmik\Factories;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Stmik\Mahasiswa;
 use Stmik\MahasiswaUtkAkma;
 
 class MasterMahasiswaFactory extends MahasiswaFactory
@@ -92,6 +93,25 @@ class MasterMahasiswaFactory extends MahasiswaFactory
     public function store($input)
     {
         return $this->realSave(new MahasiswaUtkAkma(), $input);
+    }
+
+    /**
+     * Hapuskan mahasiswa ini
+     * TODO: WARNING test terhadap data berelasi dengan master ini belum dilakukan :D Tambahkan fungsi utk check atau tambahkan foreign key
+     * @param $nim
+     * @return bool
+     */
+    public function delete($nim)
+    {
+        try {
+            \DB::transaction(function () use ($nim) {
+                Mahasiswa::findOrFail($nim)->delete();
+            });
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['id'=>$pk->id]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+        return $this->errors->count() <= 0;
     }
 
 }

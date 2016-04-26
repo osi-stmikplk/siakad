@@ -46,6 +46,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/master/mahasiswa/store', ['as' => 'master.mahasiswa.store', 'uses' => 'Master\MahasiswaController@store']);
     Route::get('/master/mahasiswa/edit/{nim}', ['as' => 'master.mahasiswa.edit', 'uses' => 'Master\MahasiswaController@edit']);
     Route::post('/master/mahasiswa/update/{nim}', ['as' => 'master.mahasiswa.update', 'uses' => 'Master\MahasiswaController@update']);
+    Route::delete('/master/mahasiswa/delete/{nim}', ['as' => 'master.mahasiswa.delete', 'uses' => 'Master\MahasiswaController@delete']);
 
     // master mata kuliah
     Route::get('/master/mk/', ['as' => 'master.mk', 'uses' => 'Master\MataKuliahController@index']);
