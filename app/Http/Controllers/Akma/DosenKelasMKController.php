@@ -25,6 +25,8 @@ class DosenKelasMKController extends Controller
     public function __construct(DosenKelasMKFactory $factory)
     {
         $this->factory = $factory;
+        
+        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
     }
 
     /**

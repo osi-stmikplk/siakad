@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
             if($ability != 'dataIniHanyaBisaDipakaiOleh' && $user->hasRole('admin')) {
                 return true;
             }
-            return false;
+            //return false;
         });
         // digunakan untuk mencheck role, misalnya untuk akses harus role mahasiswa maka dipanggil
         // \Gate::authorize('mengaksesIniRolenyaHarus', 'mahasiswa')

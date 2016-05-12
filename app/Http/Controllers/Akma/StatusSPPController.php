@@ -24,6 +24,8 @@ class StatusSPPController extends Controller
     public function __construct(StatusSPPFactory $statusSPPFactory)
     {
         $this->factory = $statusSPPFactory;
+        
+        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
     }
 
     /**
