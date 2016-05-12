@@ -1,6 +1,6 @@
 @extends($layout)
 @section('content-header')
-    <h1>Status Pembayaran SPP<small>status pelunasan</small></h1>
+    <h1>Hasil Study Mahasiswa<small>tidak pernah menyerah</small></h1>
 @endsection
 @section('content')
     <section id="status-spp">
@@ -14,15 +14,11 @@
                                 {!! load_select('ta', \Stmik\Factories\ReferensiAkademikFactory::getTALists(),
                                     0, [], ['Pilih Tahun Ajaran'], true) !!}
                             </select>
-                            <select class="form-control" id="jurusan">
-                                {!! load_select('jurusan', \Stmik\Factories\JurusanFactory::getJurusanLists(),
-                                    0, [], ['Pilih Jurusan'], true) !!}
-                            </select>
-                            <a onclick="StSPP.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
+                            <a onclick="KHS.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
                         </form>
-                        <table id="spp-data-table" class="table"
+                        <table id="mhs-hasil-study" class="table"
                                data-toolbar="#dt-toolbar"
-                               data-url="{{ route('akma.spp.getDT') }}"
+                               data-url="{{ route('mhs.hasilStudy.getDT') }}"
                                data-pagination="true"
                                data-classes="table table-hover table-condensed"
                                data-striped="true"
@@ -30,16 +26,22 @@
                                data-page-list="[5, 10, 20, 50, 100, 200]"
                                data-search="true"
                                data-show-toggle="true"
-                               data-query-params="StSPP.addFilter"
+                               data-query-params="KHS.addFilter"
                                data-mobile-responsive="true">
                             <thead>
                             <tr>
-                                <th data-field="nomor_induk" data-sortable="true" data-visible="true">Nomor Induk</th>
-                                <th data-field="nama" data-sortable="true">Nama</th>
+                                <th data-field="tahun_ajaran" data-sortable="true" data-visible="true">Tahun Ajaran</th>
+                                <th data-field="semester" data-sortable="true">Semester</th>
+                                <th data-field="kode_mata_kuliah" data-sortable="true">Kode Mata Kuliah</th>
+                                <th data-field="mata_kuliah" data-sortable="true">Mata Kuliah</th>
+                                <th data-field="sks" data-sortable="true">SKS</th>
+                                <th data-field="nilai_huruf" data-sortable="true">Nilai Huruf</th>
+                                <th data-field="nilai_angka" data-sortable="true" data-visible="false">Nilai Angka</th>
+                                <th data-field="status_lulus" data-sortable="true">Status</th>
                                 {{--<th data-field="tahun_ajaran" data-sortable="true">TA</th>--}}
                                 {{--<th data-field="status_bayar" data-sortable="true">Status Pelunasan</th>--}}
                                 {{--<th data-field="jenis_aturan" data-sortable="true">Jenis Aturan</th>--}}
-                                <th data-width="100px" data-formatter="StSPP.loadAksi" data-events="eventAksi">Aksi</th>
+                                {{--<th data-width="100px" data-formatter="KHS.loadAksi" data-events="eventAksi">Aksi</th>--}}
                             </tr>
                             </thead>
                         </table>
@@ -51,12 +53,12 @@
 @endsection
 @push('late-script')
 <script type="text/javascript">
-    var StSPP = {
+    var KHS = {
         init: function() {
-            $spp = $('#spp-data-table');
+            $spp = $('#mhs-hasil-study');
             $spp.bootstrapTable();
             $spp.on('load-success.bs.table', function(e,data){
-                StSPP.attachIC();
+                KHS.attachIC();
             });
         },
         loadAksi: function(value, row, index) {
@@ -74,20 +76,19 @@
         },
         addFilter: function (p) {
             p.filter = {
-                'ta' : $('#ta').val(),
-                'jurusan': $('#jurusan').val()
+                'ta' : $('#ta').val()
             };
             return p;
         },
         sendFilter: function (e) {
-            $('#spp-data-table').bootstrapTable('refresh');
+            $('#mhs-hasil-study').bootstrapTable('refresh');
         },
         attachIC: function () {
-            Intercooler.processNodes($('table#spp-data-table tbody'));
+            Intercooler.processNodes($('table#mhs-hasil-study tbody'));
         }
     };
     $(document).ready(function () {
-        StSPP.init();
+        KHS.init();
     });
 </script>
 @endpush

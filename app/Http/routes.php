@@ -61,4 +61,8 @@ Route::group(['middleware' => ['web']], function () {
     // DATA DIRI Mahasiswa
     Route::get('/mhs/dataDiri/', ['as' => 'mhs.dataDiri', 'uses' => 'Mahasiswa\DataDiriController@index']);
     Route::post('/mhs/dataDiri/', ['as' => 'mhs.postDataDiri', 'uses' => 'Mahasiswa\DataDiriController@postDataDiri']);
+
+    // Hasil Study
+    Route::get('/mhs/hasilStudy/', ['as' => 'mhs.hasilStudy', 'uses' => 'Mahasiswa\HasilStudyController@index']);
+    Route::get('/mhs/hasilStudy/getDT', ['as' => 'mhs.hasilStudy.getDT', 'uses' => 'Mahasiswa\HasilStudyController@getDataBtTable']);
 });

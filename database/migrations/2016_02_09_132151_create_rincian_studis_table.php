@@ -30,6 +30,11 @@ class CreateRincianStudisTable extends Migration
             $table->string('status_lulus', 15)->default('TIDAK LULUS')->index();
             // link ke rencana studi
             $table->string('rencana_studi_id', 17)->index();
+            // terpaksa :D harusnya masukkan ke bagian proses perubahan
+            // tapi karena terjadi waktu dapat dari Erfan pada proses awal apa boleh buat
+            // ditambahkan edit langsung di DB  dan di synchron kan disini manual
+            $table->tinyInteger('semester', false, true)->index()->nullable();
+            $table->string('kode_nilai', 2)->nullable();
 
 //            $table->timestamps();
         });
