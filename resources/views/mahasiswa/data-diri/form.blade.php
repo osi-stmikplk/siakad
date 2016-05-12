@@ -30,7 +30,7 @@
     <div class="form-group">
         <label for="jenis_kelamin" class="col-md-3 control-label">Jenis Kelamin</label>
         <div class="col-md-9">
-            <p class="form-control-static">{{ load_input_value($data, "jenis_kelamin") }}</p>
+            <p class="form-control-static">{{ load_input_value($data, "jenis_kelamin_string") }}</p>
         </div>
     </div>
     <div class="form-group">
