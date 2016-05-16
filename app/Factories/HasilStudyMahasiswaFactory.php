@@ -10,7 +10,6 @@ namespace Stmik\Factories;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class HasilStudyMahasiswaFactory extends MahasiswaFactory
 {
@@ -56,12 +55,37 @@ class HasilStudyMahasiswaFactory extends MahasiswaFactory
     }
 
     /**
-     * Lakukan proses perhitungan IPK dan IPS di sini.
+     * Lakukan proses perhitungan IPS di sini. Nilai yang dikembalikan adalah array dari hasil study yang dibagi per
+     * semester, di mana masing-masing array memiliki index semester, jumBobotSKS, jumSKS. Diharapkan agar pada tampilan
+     * nanti baru dibuatkan perhitungan untuk nilai IPS nya!
      * @param string $nim Nomor Induk Mahasiswa
-     * @return bool
+     * @return array|bool
      */
-    public function hitungIPKdanIPS($nim)
+    public function loadDataPerhitunganIPS($nim)
     {
+        try {
+            // render dulu SQL untuk pengambilan semester dan jumBobot*SKS serta jumSKS yang di group berdasarkan semester
+            $sqlSelect = <<<SQL
+ris.semester,
+sum(ris.nilai_angka * mk.sks) as jumBobotSKS,
+sum(mk.sks) as jumSKS
+SQL;
+            $builder = \DB::table('rencana_studi as rs')
+                ->selectRaw($sqlSelect)
+                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
+                ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+                ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+                ->groupBy('ris.semester')
+                ->where('rs.mahasiswa_id', '=', $nim);
+
+            // sekarang eksekusi builder!
+            // TODO: tambahkan CACHE?
+            return $builder->get();
+
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);
+            $this->errors->add('sys', $e->getMessage());
+        }
 
         return $this->errors->count() <= 0;
     }

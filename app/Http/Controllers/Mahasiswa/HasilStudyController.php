@@ -33,5 +33,18 @@ class HasilStudyController extends Controller
             ->with('layout', $this->getLayout());
     }
 
+    /**
+     * Tampilkan IPS untuk mahasiswa terpilih, namun apabila nilai param $nim tidak ada berarti yang login saat itu yang
+     * mengaksesnya. Di load untuk ajax saja!
+     * @param null $nim
+     */
+    public function ips($nim = null)
+    {
+        $nim = ($nim === null? \Session::get('username', 'NOTHING') : $nim);
+
+        return view('mahasiswa.hasil-study.ips')
+            ->with('data', $this->factory->loadDataPerhitunganIPS($nim));
+    }
+
 
 }
