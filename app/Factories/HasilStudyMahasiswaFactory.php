@@ -90,4 +90,43 @@ SQL;
         return $this->errors->count() <= 0;
     }
 
+    /**
+     * Lakukan loading data hasil study yang datanya nanti akan digunakan untuk mencetak transkrip nilai dan melakukan
+     * perhitungan IPK. Pada proses ini akan dilakukan grouping dan dicarikan nilai tertinggi berdasarkan huruf serta
+     * nilai tertinggi berdasarkan nilai_angka lalu pada view yang melakukan proses tampilan akan melakukan render
+     * serta perhitungan IPK.
+     * Hasil eksekusi adalah array dengan item yang memiliki indeks mata_kuliah_id, nama, sks, nilai_huruf, nilai_angka
+     * @param string $nim mahasiswa yang ingin ditampilkan
+     * @return array|bool|static[]
+     */
+    public function loadDataHasilStudy($nim)
+    {
+        try {
+            // render dulu SQL untuk pengambilan semester dan jumBobot*SKS serta jumSKS yang di group berdasarkan semester
+            $sqlSelect = <<<SQL
+  mk.kode, mk.nama,
+  mk.sks,
+  min(ris.nilai_huruf) as nilai_huruf,
+  max(ris.nilai_angka) as nilai_angka
+SQL;
+            $builder = \DB::table('rencana_studi as rs')
+                ->selectRaw($sqlSelect)
+                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
+                ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+                ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+                ->groupBy('rs.mahasiswa_id', 'pk.mata_kuliah_id', 'mk.kode', 'mk.nama', 'mk.sks')
+                ->orderBy('mk.nama')
+                ->where('rs.mahasiswa_id', '=', $nim);
+
+            // sekarang eksekusi builder!
+            // TODO: tambahkan CACHE?
+            return $builder->get();
+
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+
+        return $this->errors->count() <= 0;
+    }
 }

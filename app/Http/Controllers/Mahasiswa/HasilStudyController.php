@@ -46,5 +46,17 @@ class HasilStudyController extends Controller
             ->with('data', $this->factory->loadDataPerhitunganIPS($nim));
     }
 
+    /**
+     * Tampilkan perhitungan IPK, bila NIM tidak terpilih tampilkan yang saat itu aktif saja!
+     * @param null $nim
+     */
+    public function ipk($nim = null)
+    {
+        $nim = ($nim === null? \Session::get('username', 'NOTHING') : $nim);
+
+        return view('mahasiswa.hasil-study.ipk')
+            ->with('data', $this->factory->loadDataHasilStudy($nim));
+    }
+
 
 }
