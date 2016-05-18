@@ -19,6 +19,7 @@ namespace Stmik\Http\Controllers\Mahasiswa;
 
 
 use Stmik\Factories\IsiFRSFactory;
+use Stmik\Factories\ReferensiAkademikFactory;
 use Stmik\Http\Controllers\Controller;
 
 class IsiFRSController extends Controller
@@ -37,6 +38,27 @@ class IsiFRSController extends Controller
      * Tampilkan index
      */
     public function index()
+    {
+        $view = 'index';
+        $mode = $this->factory->tentukanModeAwal();
+        if($mode == IsiFRSFactory::MA_BUKAN_WAKTUNYA) {
+            $view = 'index-bukan-waktunya';
+        } elseif($mode == IsiFRSFactory::MA_MULAI_ISI) {
+            $view = 'index-mulai-pengisian';
+        } elseif($mode == IsiFRSFactory::MA_KEWAJIBAN_DULU) {
+            $view = 'index-kewajiban-dulu-coy';
+        }
+
+        return view('mahasiswa.frs.'.$view)
+            ->with('infoTA', ReferensiAkademikFactory::getTAAktif())
+            ->with('layout', $this->getLayout());
+
+    }
+
+    /**
+     * Lakukan insialisasi yang dibutuhkan saat mulai melakukan pengisian FRS
+     */
+    public function mulaiPengisianFRS()
     {
 
     }

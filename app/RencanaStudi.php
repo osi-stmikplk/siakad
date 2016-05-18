@@ -15,6 +15,9 @@ class RencanaStudi extends Model
     protected $table = 'rencana_studi';
     public $incrementing = false;
 
+    const STATUS_DRAFT = 'DRAFT';
+    const STATUS_DISETUJUI = 'DISETUJUI';
+
     /**
      * Milik siapa rencana studi ini?
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

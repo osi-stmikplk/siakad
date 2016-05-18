@@ -67,4 +67,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/mhs/hasilStudy/ips/{nim?}', ['as' => 'mhs.hasilStudy.ips', 'uses' => 'Mahasiswa\HasilStudyController@ips']);
     Route::get('/mhs/hasilStudy/ipk/{nim?}', ['as' => 'mhs.hasilStudy.ipk', 'uses' => 'Mahasiswa\HasilStudyController@ipk']);
     Route::get('/mhs/hasilStudy/getDT', ['as' => 'mhs.hasilStudy.getDT', 'uses' => 'Mahasiswa\HasilStudyController@getDataBtTable']);
+
+    // isi FRS
+    Route::get('/mhs/frs/', ['as' => 'mhs.frs', 'uses' => 'Mahasiswa\IsiFRSController@index']);
 });
