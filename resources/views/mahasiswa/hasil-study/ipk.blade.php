@@ -7,9 +7,9 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
 <table class="table">
     <thead>
     <tr>
-        <th>Kode MK</th>
-        <th>Nama MK</th>
-        <th>SKS</th>
+        <th>Kode</th>
+        <th>Mata Kuliah</th>
+        <th>Kredit</th>
         <th>Nilai</th>
         <th>Bobot</th>
     </tr>
@@ -33,10 +33,9 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
         <tr>
             <th colspan="4">Total SKS</th>
             <th>{{ number_format($nilaiAkum['total_sks'], 2, ",", ".") }}</th>
-
         </tr>
         <tr>
-            <th colspan="4">Total Bobot * SKS</th>
+            <th colspan="4">Total Kredit * Bobot</th>
             <th>{{ number_format($nilaiAkum['total_bobot'], 2, ",", ".") }}</th>
         </tr>
         <tr>
