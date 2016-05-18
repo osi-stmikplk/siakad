@@ -15,8 +15,25 @@
                     {{ $infoTA->tgl_mulai_isi_krs }} sampai dengan {{ $infoTA->tgl_berakhir_isi_krs }}, keterlambatan
                     tidak dapat ditolerir.</p>
                 </div>
-                <a href="#" class="btn btn-lg btn-primary"><i class="fa fa-coffee"></i> Klik Untuk Memulai Pengisian!</a>
+                <a id="cmdMulaiIsiFRS"
+                   data-ic-post-to="{{ route('mhs.frs.mulai') }}" data-ic-confirm="Yakin untuk memulai pengisian?"
+                   class="btn btn-lg btn-primary">
+                    <i class="fa fa-coffee"></i> Klik Untuk Memulai Pengisian!
+                    @include("_ic-indicator")
+                </a>
             </div>
         </div>
     </section>
 @endsection
+
+@push('late-script')
+<script type="text/javascript">
+$('#cmdMulaiIsiFRS')
+    .on('error.ic',function(evt, elt, status, str, xhr){
+        alert('UPS gagal melakukan penambahan :( ...');
+    })
+    .on('success.ic',function(evt, elt, data, textStatus, xhr, requestId){
+            window.location.reload();
+    });
+</script>
+@endpush

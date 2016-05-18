@@ -111,4 +111,18 @@ class Mahasiswa extends Model
     {
         return $this->morphOne(User::class, 'owner');
     }
+
+    /**
+     * Dapatkan semester untuk $tahun_ajaran yang dimasukkan bagi mahasiswa yang terpilih
+     * Rumus untuk mendapatkan semester mahasiswa adalah ( Pak Parno punya :D ):
+     * rumus menghitung semester: ( tahunIni - tahunMasuk ) * 2 + ( semesterGanjil=1||semesterGenap=2)
+     * @param string $tahun_ajaran tahun ajaran yang ingin di test
+     * @return int
+     */
+    public function dapatkanSemester($tahun_ajaran)
+    {
+        $ganjilGenap = (int) substr($tahun_ajaran, -1);
+        $tahun = (int) substr($tahun_ajaran, 0, 4);
+        return ($tahun - $this->tahun_masuk) * 2 + $ganjilGenap;
+    }
 }

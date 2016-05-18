@@ -60,7 +60,11 @@ class IsiFRSController extends Controller
      */
     public function mulaiPengisianFRS()
     {
-
+        if($this->factory->mulaiPengisianFRS()) {
+            // paksa halaman untuk melakukan refresh dengan hanya mengirimkan pesan
+            return response("<h2>Tunggu beberapa saat untuk melakukan loading terhadap Form Rencana Studi</h2>");
+        }
+        return response(json_encode($this->factory->getErrorsString()), 500);
     }
 
     /**

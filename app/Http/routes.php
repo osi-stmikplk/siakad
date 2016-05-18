@@ -70,4 +70,5 @@ Route::group(['middleware' => ['web']], function () {
 
     // isi FRS
     Route::get('/mhs/frs/', ['as' => 'mhs.frs', 'uses' => 'Mahasiswa\IsiFRSController@index']);
+    Route::post('/mhs/frs/mulai', ['as' => 'mhs.frs.mulai', 'uses' => 'Mahasiswa\IsiFRSController@mulaiPengisianFRS']);
 });
