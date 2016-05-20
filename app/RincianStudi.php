@@ -15,6 +15,7 @@ class RincianStudi extends Model
 {
     protected $table = 'rincian_studi';
     public $incrementing = false;
+    public $timestamps = false;
 
     /**
      * Nilai dari PK didapatkan dari kalkulasi md5 terhadap nilai $pengampu_kelas_id dan $nim
@@ -22,9 +23,9 @@ class RincianStudi extends Model
      * @param $nim
      * @return string hasil kalkulasi 32 karakter
      */
-    protected function kalkulasiPK($pengampu_kelas_id, $nim)
+    public function kalkulasiPK($pengampuKelasId, $nim)
     {
-        return md5("{$pengampu_kelas_id}{$nim}");
+        return md5("{$pengampuKelasId}{$nim}");
     }
 
     /**

@@ -16,12 +16,20 @@ class ReferensiAkademikFactory extends AbstractFactory
     /**
      * Dapatkan Tahun Ajaran yang aktif saat ini. Tahun Ajaran yang aktif sendiri adalah record terakhir yang di urut
      * berdasarkan id
-     * TODO: tambahkan cache untuk hasil query ini di production
      * @return mixed
      */
     public static function getTAAktif()
     {
-        return ReferensiAkademik::orderBy('id', 'desc')->first();
+        $result = null;
+        if(\App::environment() !== 'local') {
+            // jangan dilakukan di local - saat pengembangan
+            $result = \Cache::remember('tahun-ajaran-aktif', \Config::get('siakad.cache-diingat.lama'), function() {
+                return ReferensiAkademik::orderBy('id', 'desc')->first();
+            });
+        } else {
+            $result = ReferensiAkademik::orderBy('id', 'desc')->first();
+        }
+        return $result;
     }
 
     /**

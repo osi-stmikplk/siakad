@@ -10,9 +10,12 @@ namespace Stmik\Factories;
 
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Stmik\Mahasiswa;
+use Stmik\PengampuKelas;
 use Stmik\ReferensiAkademik;
 use Stmik\RencanaStudi;
+use Stmik\RincianStudi;
 
 class IsiFRSFactory extends AbstractFactory
 {
@@ -66,6 +69,118 @@ class IsiFRSFactory extends AbstractFactory
             $rs->save();
         } catch (\Exception $e) {
             \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+        return $this->errors->count() <= 0;
+    }
+
+    /**
+     * Lakukan penampilan grid pilihan
+     * @param $pagination
+     * @param Request $request
+     */
+    public function getBTTable($pagination, Request $request)
+    {
+        $filter = isset($pagination['otherQuery']['filter'])? $pagination['otherQuery']['filter']: [];
+        // TA Aktif?
+        $ta = ReferensiAkademikFactory::getTAAktif();
+        $nim = \Session::get("username", "NOTHING");
+        $jurusan = \Auth::user()->owner->jurusan_id;
+        // apa yang ditampilkan di sini?
+        $tampil = (int)isset($filter['tampil'][0]) ? $filter['tampil']: null;
+
+        $leftJoinTable = <<<SQL
+    SELECT
+      rs.tahun_ajaran,
+      ris.kelas_diambil_id
+    FROM rencana_studi as rs
+    JOIN rincian_studi as ris on ris.rencana_studi_id = rs.id
+    WHERE rs.mahasiswa_id = ? and rs.tahun_ajaran = ?
+SQL;
+        // tambahkan nama table
+        $leftJoinTable = "($leftJoinTable) mdm";
+        $builder = \DB::table('pengampu_kelas as pk')
+            ->join('mata_kuliah as mk', 'mk.id' , '=', 'pk.mata_kuliah_id')
+            ->leftJoin(\DB::raw($leftJoinTable), function($join) {
+                $join->on('mdm.tahun_ajaran', '=', 'pk.tahun_ajaran')
+                    ->on('mdm.kelas_diambil_id', '=', 'pk.id');
+            })
+            ->setBindings([$nim, $ta->tahun_ajaran])
+            ->where('mk.jurusan_id', '=', $jurusan)
+            ->where('pk.tahun_ajaran', '=', $ta->tahun_ajaran)
+            ->where('pk.kelas', '<>', '-')
+            ->orderByRaw('mk.semester');
+
+        $builder = $builder
+            ->selectRaw('pk.id,mk.semester, mk.kode, mk.nama, pk.quota, pk.jumlah_peminat, pk.jumlah_pengambil, mk.sks, pk.kelas,
+  case WHEN mdm.kelas_diambil_id IS NULL THEN 0 ELSE 1 END as terpilih');
+
+        // yang mana yang tampil?
+        if($tampil!==null) {
+            if($tampil==0) { // MK yang terpilih
+                $builder = $builder->whereRaw('NOT mdm.kelas_diambil_id IS NULL');
+            } elseif($tampil==1) { // hanya MK yang belum terpilih
+                $builder = $builder->whereRaw('mdm.kelas_diambil_id IS NULL');
+            }
+        }
+
+        return $this->getBTData($pagination,
+            $builder,
+            ['semester', 'kode', 'nama', 'kelas']);
+    }
+
+    /**
+     * Lakukan proses pemilihan kelas, tambahkan kodeKelas yang diambil ke dalam rincian_study
+     * @param string $kodeKelas
+     * @param array $input
+     */
+    public function pilihKelasIni($kodeKelas, $nim = null)
+    {
+        $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        try {
+            \DB::transaction(function () use ($kodeKelas, $nim) {
+                $ta = ReferensiAkademikFactory::getTAAktif();
+                // dapatkan rencana studi yang sudah pasti terbuat untuk tahun ajaran aktif ini!
+                $rs = RencanaStudi::whereTahunAjaran($ta->tahun_ajaran)->whereMahasiswaId($nim)->first();
+                // lakukan proses pembuatan rincian study
+                $ris = new RincianStudi();
+                $ris->kelas_diambil_id = $kodeKelas;
+                $ris->semester = $rs->semester; // utk kemudahan report jer :D
+                // default nilai adalah E
+                $ris->nilai_huruf = 'E';
+                $ris->nilai_angka = 0;
+                $ris->id = $ris->kalkulasiPK($kodeKelas, $nim);
+                $rs->rincianStudi()->save($ris); // simpan sebagai relasinya!
+                // sekarang update pada jumlah peminat
+                DosenKelasMKFactory::tambahPeminatKelasIni($kodeKelas);
+            });
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['kodeKelas'=>$kodeKelas]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+        return $this->errors->count() <= 0;
+    }
+
+    /**
+     * Batalkan pemilihan yang dilakukan pada kelas ini
+     * @param $kodeKelas
+     * @return bool
+     */
+    public function batalkanPemilihanKelasIni($kodeKelas, $nim = null)
+    {
+        $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        try {
+            \DB::transaction(function () use ($kodeKelas, $nim) {
+                $ta = ReferensiAkademikFactory::getTAAktif();
+                // ambil rincian studi terlebih dahulu karena di sini ada nim
+                $rs = RencanaStudi::whereTahunAjaran($ta->tahun_ajaran)->whereMahasiswaId($nim)->first();
+                // lalu lakukan penghapusan berdasarkan kodeKelas ...
+                $rs->rincianStudi()->whereKelasDiambilId($kodeKelas)->delete();
+                // update peminat dengan mengurangi jumlahnya
+                DosenKelasMKFactory::kurangiPeminatKelasIni($kodeKelas);
+            });
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['kodeKelas'=>$kodeKelas]);
             $this->errors->add('sys', $e->getMessage());
         }
         return $this->errors->count() <= 0;

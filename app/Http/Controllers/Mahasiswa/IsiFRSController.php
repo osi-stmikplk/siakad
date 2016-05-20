@@ -18,12 +18,17 @@
 namespace Stmik\Http\Controllers\Mahasiswa;
 
 
+use Illuminate\Http\Request;
+use Stmik\Factories\DosenKelasMKFactory;
 use Stmik\Factories\IsiFRSFactory;
 use Stmik\Factories\ReferensiAkademikFactory;
 use Stmik\Http\Controllers\Controller;
+use Stmik\Http\Controllers\GetDataBTTableTrait;
 
 class IsiFRSController extends Controller
 {
+    use GetDataBTTableTrait;
+
     /** @var IsiFRSFactory */
     protected $factory;
 
@@ -62,7 +67,7 @@ class IsiFRSController extends Controller
     {
         if($this->factory->mulaiPengisianFRS()) {
             // paksa halaman untuk melakukan refresh dengan hanya mengirimkan pesan
-            return response("<h2>Tunggu beberapa saat untuk melakukan loading terhadap Form Rencana Studi</h2>");
+            return response("<h2>Tunggu beberapa saat lagi untuk melakukan loading terhadap Form Rencana Studi</h2>");
         }
         return response(json_encode($this->factory->getErrorsString()), 500);
     }
@@ -85,21 +90,70 @@ class IsiFRSController extends Controller
     }
 
     /**
-     * Pilih $kodeKelas yang dipilih dan masukkan sebagai bagian dari MK yang diambil oleh Mahasiswa ini
+     * Lakukan validasi terhadap pemilihan kelas.
+     * Kelas boleh dipilih bila:
+     * - jumlah quota mencukupi, artinya yang mengambil masih dalam quota!
+     * TODO: pastikan agar tidak terpilih mata kuliah yang sama pada satu waktu pengambilan!
+     * @param $kodeKelas
+     * @param Request $request
+     */
+    protected function validasiPemilihanKelas($kodeKelas, Request $request)
+    {
+        $request->merge(['kodeKelasTerpilih'=>$kodeKelas]);
+        $rules = [
+            'kodeKelasTerpilih' => "exists:pengampu_kelas,id"
+        ];
+        $this->validate($request, $rules);
+    }
+
+    /**
+     * Pilih $kodeKelas yang dipilih dan masukkan sebagai bagian dari MK yang diambil oleh Mahasiswa ini.
+     * Saat terpilih pastikan untuk melakukan beberapa hal:
+     * - update terhadap jumlah peminat pada kelas yang dipilih
+     * - update terhadap tampilan colom aksi di User Interface
+     * - update terhadap nilai peminat dan pengambil dengan yang terbaru!
+     *   untuk melakukan update ini akan mengunakan response Header milik intercooler-js dengan menggunakan X-IC-Trigger
      * @param $kodeKelas
      */
-    public function pilihKelasIni($kodeKelas)
+    public function pilihKelasIni($kodeKelas, Request $request)
     {
-
+        $this->validasiPemilihanKelas($kodeKelas, $request);
+        if($this->factory->pilihKelasIni($kodeKelas)) {
+            // dapatkan jumlah peminat dan pengambil sekarang
+            $peminat = $pengambil = 0;
+            DosenKelasMKFactory::dapatkanJumlahPeminatPengambilKelasIni($kodeKelas, $peminat, $pengambil);
+            // kita perlu mekanisme update data untuk jumlah peminat dan pemilih kelas, jadi di sini kita gunakan
+            // mekanisme yang dimiliki oleh intercoolerjs menggunakan response header X-IC-Trigger
+            $triggerini['padaSetelahMemilih'] = [$kodeKelas, $peminat, $pengambil, 1];
+            // karena bootstrap table akan melakukan rewrite lagi pada tampilan saat trigger dijalankan, maka ini tidak
+            // dibutuhkan lagi ...
+//            return response(
+//                "<a data-ic-replace-target=true data-ic-post-to=\"/mhs/frs/batalkanPemilihanKelasIni/$kodeKelas\" class=\"btn btn-xs bg-red\""
+//                        . " data-ic-confirm=\"Pilihan akan membatalkan pemilihan kelas ini, yakin?\""
+//                        . " title=\"Batalkan Pemilihan Kelas Ini\">&nbsp;"
+//                        . "<i class=\"fa fa-flag\"></i> Terpilih</a>",
+            return response("",200,
+                ['X-IC-Trigger' => json_encode($triggerini) ]);
+        }
+        return response(json_encode($this->factory->getErrors()), 500);
     }
 
     /**
      * Batalkan pemilihan kelas dari MK yang terpilih sesuai dengan $kodeKelas
      * @param $kodeKelas
      */
-    public function batalkanPemilihanKelasIni($kodeKelas)
+    public function batalkanPemilihanKelasIni($kodeKelas, Request $request)
     {
-
+        $this->validasiPemilihanKelas($kodeKelas, $request);
+        if($this->factory->batalkanPemilihanKelasIni($kodeKelas)) {
+            // dapatkan jumlah peminat dan pengambil sekarang
+            $peminat = $pengambil = 0;
+            DosenKelasMKFactory::dapatkanJumlahPeminatPengambilKelasIni($kodeKelas, $peminat, $pengambil);
+            $triggerini['padaSetelahMemilih'] = [$kodeKelas, $peminat, $pengambil, 0];
+            return response("",200,
+                ['X-IC-Trigger' => json_encode($triggerini) ]);
+        }
+        return response(json_encode($this->factory->getErrors()), 500);
     }
 
     /**

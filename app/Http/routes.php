@@ -71,4 +71,7 @@ Route::group(['middleware' => ['web']], function () {
     // isi FRS
     Route::get('/mhs/frs/', ['as' => 'mhs.frs', 'uses' => 'Mahasiswa\IsiFRSController@index']);
     Route::post('/mhs/frs/mulai', ['as' => 'mhs.frs.mulai', 'uses' => 'Mahasiswa\IsiFRSController@mulaiPengisianFRS']);
+    Route::post('/mhs/frs/pilihKelasIni/{kodeKelas}', ['as' => 'mhs.frs.pilihKelasIni', 'uses' => 'Mahasiswa\IsiFRSController@pilihKelasIni']);
+    Route::post('/mhs/frs/batalkanPemilihanKelasIni/{kodeKelas}', ['as' => 'mhs.frs.batalkanPemilihanKelasIni', 'uses' => 'Mahasiswa\IsiFRSController@batalkanPemilihanKelasIni']);
+    Route::get('/mhs/frs/getDT', ['as' => 'mhs.frs.getDT', 'uses' => 'Mahasiswa\IsiFRSController@getDataBtTable']);
 });

@@ -19,6 +19,15 @@ class RencanaStudi extends Model
     const STATUS_DISETUJUI = 'DISETUJUI';
 
     /**
+     * Dapatkan rincian studi milik rencana studi ini!
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rincianStudi()
+    {
+        return $this->hasMany(RincianStudi::class, 'rencana_studi_id');
+    }
+
+    /**
      * Milik siapa rencana studi ini?
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
