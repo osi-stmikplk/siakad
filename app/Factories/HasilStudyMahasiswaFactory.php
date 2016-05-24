@@ -10,6 +10,7 @@ namespace Stmik\Factories;
 
 
 use Illuminate\Http\Request;
+use Stmik\RencanaStudi;
 
 class HasilStudyMahasiswaFactory extends MahasiswaFactory
 {
@@ -76,6 +77,7 @@ SQL;
                 ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
                 ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
                 ->groupBy('ris.semester')
+                ->where('rs.status', '=', RencanaStudi::STATUS_DISETUJUI) // hanya tampilkan yang sudah disetujui
                 ->where('rs.mahasiswa_id', '=', $nim);
 
             // sekarang eksekusi builder!

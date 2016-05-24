@@ -7,7 +7,9 @@ Untuk melakukan testing pada versi awal ini silahkan dari branch dev, kemudian l
 instalasi
 
 $ composer install
+
 $ php artisan migrate
+
 $ php artisan db:seed
 
 Silahkan untuk testing userid: admin atau userid: CMHSTEST01 dengan password untuk keduanya adalah rahasia.
