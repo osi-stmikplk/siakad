@@ -288,7 +288,7 @@ if(!function_exists('pakai_cache')) {
     {
         $result = null;
         $lamaDiCache = ($lamaDiCache===null? \Config::get('siakad.cache-diingat.lama'): $lamaDiCache);
-        if(\App::environment('local', 'test')) {
+        if(!\App::environment('local', 'test')) {
             $result = \Cache::remember($idCache, $lamaDiCache, $callAbleFunction);
         } else {
             $result = $callAbleFunction;
