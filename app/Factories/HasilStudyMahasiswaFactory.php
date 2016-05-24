@@ -81,8 +81,9 @@ SQL;
                 ->where('rs.mahasiswa_id', '=', $nim);
 
             // sekarang eksekusi builder!
-            // TODO: tambahkan CACHE?
-            return $builder->get();
+            return pakai_cache("perhitunganIPS-$nim", function() use($builder) {
+                return $builder->get();
+            });
 
         } catch (\Exception $e) {
             \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);

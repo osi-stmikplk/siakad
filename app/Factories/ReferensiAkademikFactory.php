@@ -20,26 +20,20 @@ class ReferensiAkademikFactory extends AbstractFactory
      */
     public static function getTAAktif()
     {
-        $result = null;
-        if(\App::environment() !== 'local') {
-            // jangan dilakukan di local - saat pengembangan
-            $result = \Cache::remember('tahun-ajaran-aktif', \Config::get('siakad.cache-diingat.lama'), function() {
+        return pakai_cache('tahun-ajaran-aktif', function() {
                 return ReferensiAkademik::orderBy('id', 'desc')->first();
             });
-        } else {
-            $result = ReferensiAkademik::orderBy('id', 'desc')->first();
-        }
-        return $result;
     }
 
     /**
      * Dapatkan daftar Tahun Ajaran
-     * TODO: tambahkan cache untuk hasil query ini di production
      * @return mixed
      */
     public static function getTALists()
     {
-        return ReferensiAkademik::pluck('tahun_ajaran', 'tahun_ajaran')->all();
+        return pakai_cache('daftar-tahun-ajaran', function() {
+            return ReferensiAkademik::pluck('tahun_ajaran', 'tahun_ajaran')->all();
+        });
     }
 
     /**

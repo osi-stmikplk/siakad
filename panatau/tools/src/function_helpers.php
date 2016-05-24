@@ -274,3 +274,25 @@ if(!function_exists('bulan_indonesia'))
         return $bulanS[$bulanD];
     }
 }
+
+if(!function_exists('pakai_cache')) {
+    /**
+     * Lakukan proses penggunaan cache kecuali di local dan test. Load data default dari configurasi untuk nilai berapa
+     * lama cache diingat bila nilai dari $lamaDiCache adalah  NULL.
+     * @param string $idCache ID untuk cache
+     * @param int $lamaDiCache berapa menit nilai disimpan di cache?
+     * @param Closure $callAbleFunction closure untuk dijalankan saat mengambil nilai
+     * @return mixed $result
+     */
+    function pakai_cache($idCache, $callAbleFunction, $lamaDiCache = null)
+    {
+        $result = null;
+        $lamaDiCache = ($lamaDiCache===null? \Config::get('siakad.cache-diingat.lama'): $lamaDiCache);
+        if(\App::environment('local', 'test')) {
+            $result = \Cache::remember($idCache, $lamaDiCache, $callAbleFunction);
+        } else {
+            $result = $callAbleFunction;
+        }
+        return $result;
+    }
+}
