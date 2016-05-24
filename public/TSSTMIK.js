@@ -21,7 +21,19 @@ var TSSTMIK = {
             $('#error-'+i).removeClass('hidden').empty().append(v.toString())
                 .closest('div.form-group').addClass('has-error');
         });
-    },/**
+    },
+    /**
+     * tampilkan pesan kesalahan yang dilakukan setelah suatu proses AJAX, didapatkan dari xhr.responseText
+     * @param responseText
+     */
+    alertAboutErrorMsg:function(responseText){
+        theM = "";
+        $.each($.parseJSON(responseText),function(i,v){
+            theM += "Pada inputan " + i + " : " + v.toString();
+        });
+        alert("Terdapat kesalahan: \n" + theM);
+    },
+    /**
      * Load CSS dynamically, to use it: LoadCss('plugin/foo/bar.css')
      * @param href target
      */

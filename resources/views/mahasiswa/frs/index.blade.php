@@ -21,6 +21,7 @@
                         <a onclick="FRSan.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
                     </form>
                     <table id="mhs-mk-frs" class="table"
+                           data-ic-on-error="FRSan.onError(xhr)"
                            data-toolbar="#dt-toolbar"
                            data-url="{{ route('mhs.frs.getDT') }}"
                            data-unique-id="id"
@@ -70,11 +71,13 @@
         },
         loadStatus: function(value, row, index) {
             if(row['terpilih']==1) {
-                return '<a data-ic-replace-target=true data-ic-post-to="/mhs/frs/batalkanPemilihanKelasIni/' + row['id'] + '" class="btn btn-xs bg-red" '
-                        + ' data-ic-confirm="Yakin untuk membatalkan pemilihan kelas ini?" title="Batalkan Pemilihan Kelas Ini">&nbsp;<i class="fa fa-flag">'
-                        + '</i> Terpilih</a>';
+                return '<a data-ic-replace-target=true data-ic-post-to="/mhs/frs/batalkanPemilihanKelasIni/' + row['id']
+                    + '" class="btn btn-xs bg-red" '
+                    + ' data-ic-confirm="Yakin untuk membatalkan pemilihan kelas ini?" title="Batalkan Pemilihan Kelas Ini">&nbsp;<i class="fa fa-flag">'
+                    + '</i> Terpilih</a>';
             } else {
-                return '<a data-ic-replace-target=true data-ic-post-to="/mhs/frs/pilihKelasIni/' + row['id'] + '" class="btn btn-xs bg-green" '
+                return '<a data-ic-replace-target=true data-ic-post-to="/mhs/frs/pilihKelasIni/' + row['id']
+                    + '" class="btn btn-xs bg-green"'
                     + ' data-ic-confirm="Yakin memilih ini?" title="Pilih Kelas Ini">&nbsp;<i class="fa fa-check-circle">'
                     + '</i> Pilih</a>';
 
@@ -94,6 +97,9 @@
         },
         attachIC: function () {
             Intercooler.processNodes($('table#mhs-mk-frs tbody'));
+        },
+        onError: function(xhr) {
+            TSSTMIK.alertAboutErrorMsg(xhr.responseText);
         },
         padaSetelahMemilih: function(elt, id, peminat, pengambil, terpilih) {
             // update berdasarkan id
