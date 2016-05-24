@@ -14,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // lakukan registrasi custom validator
+        $path = \Stmik\Http\Validators\IsiFRSValidator::class . '@kelasBisaDiambil';
+        \Validator::extend('kelas_bisa_diambil', $path);
     }
 
     /**

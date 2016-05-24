@@ -291,7 +291,7 @@ if(!function_exists('pakai_cache')) {
         if(!\App::environment('local', 'test')) {
             $result = \Cache::remember($idCache, $lamaDiCache, $callAbleFunction);
         } else {
-            $result = $callAbleFunction;
+            $result = call_user_func($callAbleFunction);
         }
         return $result;
     }

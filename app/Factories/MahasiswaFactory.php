@@ -120,4 +120,14 @@ class MahasiswaFactory extends AbstractFactory
         return $r[$value];
     }
 
+    /**
+     * Fungsi untuk mendapatkan Nomor Induk Mahasiswa. Bila nilai param $nim adalah NULL maka diambil dari session dan
+     * dianggap bahwa yang login sekarang adalah mahasiswa.
+     * @param string $nim
+     */
+    public static function getNIM($nim = null)
+    {
+        return $nim === null ? \Session::get('username', 'NOTHING'): $nim;
+    }
+
 }

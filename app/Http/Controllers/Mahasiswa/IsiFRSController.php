@@ -21,6 +21,7 @@ namespace Stmik\Http\Controllers\Mahasiswa;
 use Illuminate\Http\Request;
 use Stmik\Factories\DosenKelasMKFactory;
 use Stmik\Factories\IsiFRSFactory;
+use Stmik\Factories\MahasiswaFactory;
 use Stmik\Factories\ReferensiAkademikFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
@@ -95,15 +96,28 @@ class IsiFRSController extends Controller
      * - jumlah quota mencukupi, artinya yang mengambil masih dalam quota!
      * TODO: pastikan agar tidak terpilih mata kuliah yang sama pada satu waktu pengambilan!
      * @param $kodeKelas
+     * @param bool $pembatalan beberapa validator jangan dijalankan pada saat melakukan proses pembatalan kelas!
      * @param Request $request
      */
-    protected function validasiPemilihanKelas($kodeKelas, Request $request)
+    protected function validasiPemilihanKelas($kodeKelas, Request $request, $pembatalan=false)
     {
+        $nim = MahasiswaFactory::getNIM();
         $request->merge(['kodeKelasTerpilih'=>$kodeKelas]);
-        $rules = [
-            'kodeKelasTerpilih' => "exists:pengampu_kelas,id"
+        $message = [
+            'kodeKelasTerpilih.kelas_bisa_diambil' => 'Quota telah terlampaui atau pada semester aktif anda mengambil MK '
+                                                    .'yang sama walaupun beda kelas'
         ];
-        $this->validate($request, $rules);
+        $rules = [];
+        if($pembatalan) {
+            $rules = [
+                'kodeKelasTerpilih' => "exists:pengampu_kelas,id"
+            ];
+        } else {
+            $rules = [
+                'kodeKelasTerpilih' => "exists:pengampu_kelas,id|kelas_bisa_diambil:$nim"
+            ];
+        }
+        $this->validate($request, $rules, $message);
     }
 
     /**
@@ -125,13 +139,8 @@ class IsiFRSController extends Controller
             // kita perlu mekanisme update data untuk jumlah peminat dan pemilih kelas, jadi di sini kita gunakan
             // mekanisme yang dimiliki oleh intercoolerjs menggunakan response header X-IC-Trigger
             $triggerini['padaSetelahMemilih'] = [$kodeKelas, $peminat, $pengambil, 1];
-            // karena bootstrap table akan melakukan rewrite lagi pada tampilan saat trigger dijalankan, maka ini tidak
-            // dibutuhkan lagi ...
-//            return response(
-//                "<a data-ic-replace-target=true data-ic-post-to=\"/mhs/frs/batalkanPemilihanKelasIni/$kodeKelas\" class=\"btn btn-xs bg-red\""
-//                        . " data-ic-confirm=\"Pilihan akan membatalkan pemilihan kelas ini, yakin?\""
-//                        . " title=\"Batalkan Pemilihan Kelas Ini\">&nbsp;"
-//                        . "<i class=\"fa fa-flag\"></i> Terpilih</a>",
+            // karena bootstrap table akan melakukan rewrite lagi pada tampilan saat trigger dijalankan, maka pengaturan
+            // tampilan dari controller ini tidak dibutuhkan lagi
             return response("",200,
                 ['X-IC-Trigger' => json_encode($triggerini) ]);
         }
@@ -144,7 +153,7 @@ class IsiFRSController extends Controller
      */
     public function batalkanPemilihanKelasIni($kodeKelas, Request $request)
     {
-        $this->validasiPemilihanKelas($kodeKelas, $request);
+        $this->validasiPemilihanKelas($kodeKelas, $request, true);
         if($this->factory->batalkanPemilihanKelasIni($kodeKelas)) {
             // dapatkan jumlah peminat dan pengambil sekarang
             $peminat = $pengambil = 0;
