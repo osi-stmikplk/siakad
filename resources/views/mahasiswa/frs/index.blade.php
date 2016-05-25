@@ -11,14 +11,16 @@
             <div class="box box-default">
                 <div class="box-body">
                     <form id="dt-toolbar" class="form-inline" role="form">
-                        <a target="_blank" href="#"
+                        <a target="_blank" href="{{ route('mhs.frs.cetakKRS') }}"
+                           title="Cek Kartu Rencana Studi"
                            class="form-control btn btn-info">Cek KRS</a>
                         <label for="ta">Filter:&nbsp;</label>
                         <select class="form-control" id="tampil">
                             {!! load_select('tampil', ['MK Terpilih', 'MK Belum Terpilih', 'Semua'],
                                 -1, [], ['Pilih Filter MK'], true) !!}
                         </select>
-                        <a onclick="FRSan.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
+                        <a onclick="FRSan.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning">
+                            <i class="fa fa-exchange"></i> </a>
                     </form>
                     <table id="mhs-mk-frs" class="table"
                            data-ic-on-error="FRSan.onError(xhr)"

@@ -25,6 +25,7 @@ use Stmik\Factories\MahasiswaFactory;
 use Stmik\Factories\ReferensiAkademikFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
+use Stmik\RencanaStudi;
 
 class IsiFRSController extends Controller
 {
@@ -163,6 +164,24 @@ class IsiFRSController extends Controller
                 ['X-IC-Trigger' => json_encode($triggerini) ]);
         }
         return response(json_encode($this->factory->getErrors()), 500);
+    }
+
+    /**
+     * Tampilkan KRS
+     * @param null $nim
+     * @param null $ta
+     */
+    public function cetakKRS($nim = null, $ta = null)
+    {
+        $mhsFactory = new MahasiswaFactory();
+        $nim = $mhsFactory->getNIM($nim);
+        $ta  = ($ta === null ? ReferensiAkademikFactory::getTAAktif()->tahun_ajaran : $ta);
+        $mhs = $mhsFactory->getDataMahasiswa($nim);
+        // lakukan pengambilan data mahasiswa
+        return view('mahasiswa.frs.krs')
+            ->with('ta', $ta)
+            ->with('mhs', $mhs)
+            ->with('rincianStudi', $this->factory->dapatkanRincianStudi($nim, $ta));
     }
 
     /**

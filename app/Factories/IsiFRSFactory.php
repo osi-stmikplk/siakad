@@ -185,4 +185,24 @@ SQL;
         }
         return $this->errors->count() <= 0;
     }
+
+    /**
+     * Dapatkan rincian studi milik mahasiswa ini!
+     * @param $nim
+     * @param $ta
+     * @return array
+     */
+    public function dapatkanRincianStudi($nim, $ta)
+    {
+        return \DB::table('rincian_studi as ris')
+            ->join('rencana_studi as rs', function($join) use($nim, $ta) {
+                $join->on('rs.id', '=', 'ris.rencana_studi_id');
+                $join->where('rs.tahun_ajaran', '=', $ta);
+                $join->where('rs.mahasiswa_id', '=', $nim);
+            })
+            ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+            ->select(['mk.kode as kode_mk', 'mk.nama as nama_mk', 'mk.sks', 'pk.kelas'])
+            ->get();
+    }
 }
