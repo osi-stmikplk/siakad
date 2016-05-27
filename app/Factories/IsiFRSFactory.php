@@ -23,6 +23,7 @@ class IsiFRSFactory extends AbstractFactory
     const MA_KEWAJIBAN_DULU = 0;
     const MA_MULAI_ISI = 1;
     const MA_MULAI_PILIH = 2;
+    const MA_SUDAH_TDK_KULIAH = 3;
 
     /**
      * Tentukan mode awal Mahasiswa ini, apakah dia:
@@ -34,6 +35,12 @@ class IsiFRSFactory extends AbstractFactory
     public function tentukanModeAwal($nim = null)
     {
         $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        // check bila mahasiswa ini sudah lulus?
+        $mhs = Mahasiswa::whereNomorInduk($nim)->first();
+        if(array_search($mhs->status, MahasiswaFactory::getStatusSudahTidakKuliahLagi()) !== false) {
+            return self::MA_SUDAH_TDK_KULIAH;
+        }
+
         if( !ReferensiAkademikFactory::hariIniMasihBisaIsiFRS() ) {
             return self::MA_BUKAN_WAKTUNYA;
         }

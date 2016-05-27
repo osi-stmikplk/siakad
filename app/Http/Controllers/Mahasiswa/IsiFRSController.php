@@ -54,6 +54,8 @@ class IsiFRSController extends Controller
             $view = 'index-mulai-pengisian';
         } elseif($mode == IsiFRSFactory::MA_KEWAJIBAN_DULU) {
             $view = 'index-kewajiban-dulu-coy';
+        } elseif($mode == IsiFRSFactory::MA_SUDAH_TDK_KULIAH) {
+            $view = 'index-sudah-tdk-kuliah';
         }
 
         return view('mahasiswa.frs.'.$view)
