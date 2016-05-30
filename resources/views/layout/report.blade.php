@@ -11,6 +11,9 @@ TODO: tambahkan css untuk reporting, sementara hanya css kosong
     <meta charset="utf-8">
     <title>{{ config('kejar.title') }}</title>
     <link rel="stylesheet" href="{{ asset('reportingstyle.css') }}">
+	<link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<script src="/plugins/bootstrap/jQuery-2.2.0.min.js"></script>
+	<script src="/plugins/bootstrap/bootstrap.min.js"></script>
 </head>
 <body>
 <!-- Site wrapper -->
