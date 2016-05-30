@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+        <div class="" style="margin: 15% 35%;">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-center">Login</div>
                 <div class="panel-body">
                     <form id="formLogin" class="form-horizontal" role="form"
                           method="POST" data-ic-post-to="{{ url('/login') }}">
@@ -13,25 +13,25 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Alamat Email / Username</label>
+                            <!--label class="col-md-4 control-label">Alamat Email / Username</label-->
 
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="email" placeholder="Ketikkan email / username anda">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="email" placeholder="User ID">
                                 <div id="error-email" class="help-block error"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4 control-label">Password</label>
+                            <!--label class="col-md-4 control-label">Password</label-->
 
-                            <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" name="password" placeholder="Password">
                                 <div id="error-password" class="help-block error"></div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-sm-12">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember"> Remember Me
@@ -41,9 +41,9 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-sm-12">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i>Login @include('_ic-indicator')
+                                    <i class="fa fa-btn fa-sign-in"></i> Login @include('_ic-indicator')
                                 </button>
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>

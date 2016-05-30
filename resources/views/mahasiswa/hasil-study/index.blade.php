@@ -11,9 +11,9 @@
                         <form id="dt-toolbar" class="form-inline" role="form">
                             <a data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body"
                                data-ic-get-from="/mhs/hasilStudy/ips" title="Indek Prestasi Sementara Per Semester"
-                               class="form-control btn btn-primary">Cek IPS</a>
+                               class="form-control btn btn-primary">Riwayat IPS</a>
                             <a target="_blank" href="{{ route('mhs.hasilStudy.ipk') }}"
-                               class="form-control btn btn-info">Cek KHS</a>
+                               class="form-control btn btn-info">Transkrip</a>
                             <label for="ta">Filter:&nbsp;</label>
                             <select class="form-control" id="ta">
                                 {!! load_select('ta', \Stmik\Factories\ReferensiAkademikFactory::getTALists(),
