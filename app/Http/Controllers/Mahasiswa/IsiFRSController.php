@@ -105,10 +105,11 @@ class IsiFRSController extends Controller
     protected function validasiPemilihanKelas($kodeKelas, Request $request, $pembatalan=false)
     {
         $nim = MahasiswaFactory::getNIM();
+        $ta = ReferensiAkademikFactory::getTAAktif()->tahun_ajaran;
         $request->merge(['kodeKelasTerpilih'=>$kodeKelas]);
         $message = [
             'kodeKelasTerpilih.kelas_bisa_diambil' => 'Quota telah terlampaui atau pada semester aktif anda mengambil MK '
-                                                    .'yang sama walaupun beda kelas'
+                                                    .'yang sama walaupun beda kelas atau maksimal SKS terlampaui'
         ];
         $rules = [];
         if($pembatalan) {
@@ -117,7 +118,7 @@ class IsiFRSController extends Controller
             ];
         } else {
             $rules = [
-                'kodeKelasTerpilih' => "exists:pengampu_kelas,id|kelas_bisa_diambil:$nim"
+                'kodeKelasTerpilih' => "exists:pengampu_kelas,id|kelas_bisa_diambil:$nim,$ta"
             ];
         }
         $this->validate($request, $rules, $message);

@@ -11,15 +11,18 @@ namespace Stmik\Http\Validators;
 
 use Illuminate\Support\Arr;
 use Stmik\Factories\DosenKelasMKFactory;
+use Stmik\Factories\IsiFRSFactory;
 use Stmik\PengampuKelas;
 
 class IsiFRSValidator
 {
     protected $pengampuKelasFactory;
+    protected $isiFRSFactory;
 
-    public function __construct(DosenKelasMKFactory $dosenKelasMKFactory)
+    public function __construct(DosenKelasMKFactory $dosenKelasMKFactory, IsiFRSFactory $isiFRSFactory)
     {
         $this->pengampuKelasFactory = $dosenKelasMKFactory;
+        $this->isiFRSFactory = $isiFRSFactory;
     }
 
     /**
@@ -28,7 +31,7 @@ class IsiFRSValidator
      * - quota masih belum habis
      * - tidak mengambil kode MK yang sama walaupun beda kelas pada pemilihan di semester yang aktif
      * Dilakukan dengan cara pada bagian validasi:
-     *  kelasBisaDiambil:nilai_nim_mahasiswa
+     *  kelasBisaDiambil:nilai_nim_mahasiswa,tahun_ajarannya
      * @param $attribute
      * @param $value
      * @param $parameters
@@ -47,6 +50,14 @@ class IsiFRSValidator
         if($this->pengampuKelasFactory->mataKuliahSamaTelahTerambil($nim, $value)) {
             return false;
         }
+        // check jumlah SKS terambil?
+        // TODO: tambahkan dengan validasi sesuai dengan jatah berdasarkan IPS yang didapatkan pada semester sebelumnya!
+        $ta = $parameters[1];
+        $totalSKS = $this->isiFRSFactory->dapatkanTotalSKSDiambil($nim, $ta);
+        if($totalSKS >= 25) {
+            return false;
+        }
+
         return true;
     }
 }

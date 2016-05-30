@@ -223,4 +223,24 @@ SQL;
             ->select(['mk.kode as kode_mk', 'mk.nama as nama_mk', 'mk.sks', 'pk.kelas'])
             ->get();
     }
+
+    /**
+     * Dapatkan total SKS diambil oleh Mahasiswa ini pada tahun ajaran yang dipilih.
+     * @param $nim
+     * @param $ta
+     * @return float|int
+     */
+    public function dapatkanTotalSKSDiambil($nim, $ta)
+    {
+        return \DB::table('rincian_studi as ris')
+            ->join('rencana_studi as rs', function($join) use($nim, $ta) {
+                $join->on('rs.id', '=', 'ris.rencana_studi_id');
+                $join->where('rs.tahun_ajaran', '=', $ta);
+                $join->where('rs.mahasiswa_id', '=', $nim);
+            })
+            ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+            ->groupBy('rs.tahun_ajaran')
+            ->sum('mk.sks');
+    }
 }
