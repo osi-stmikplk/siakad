@@ -45,7 +45,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('mhs.dataDiri') }}"><i class="fa fa-circle-o"></i> Data Diri</a></li>
                     <li><a href="{{ route('mhs.hasilStudy') }}"><i class="fa fa-circle-o"></i> Hasil Studi</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Isi FRS</a></li>
+                    <li><a href="{{ route('mhs.frs') }}"><i class="fa fa-circle-o"></i> FRS</a></li>
                 </ul>
             </li>
             <li class="treeview">

@@ -122,4 +122,65 @@ class DosenKelasMKFactory extends AbstractFactory
         }
         return $this->errors->count() <= 0;
     }
+
+    /**
+     * Lakukan proses penambahan jumlah peminat kelas sesuai dengan $kodeIdKelas
+     * @param string $kodeIdKelas
+     */
+    public static function tambahPeminatKelasIni($kodeIdKelas)
+    {
+        PengampuKelas::where('id', '=', $kodeIdKelas)->increment('jumlah_peminat');
+    }
+
+    /**
+     * Kurangi peminatnya!
+     * @param $kodeIdKelas
+     */
+    public static function kurangiPeminatKelasIni($kodeIdKelas)
+    {
+        PengampuKelas::where('id', '=', $kodeIdKelas)->decrement('jumlah_peminat');
+    }
+
+    /**
+     * Dapatkan jumlah peminat dan pengambil pada suatu kelas
+     * @param $kodeKelas
+     * @param string &$peminat
+     * @param string &$pengambil
+     */
+    public static function dapatkanJumlahPeminatPengambilKelasIni($kodeKelas, &$peminat, &$pengambil) {
+        $c = PengampuKelas::whereId($kodeKelas)->first();
+        $peminat = $c->jumlah_peminat;
+        $pengambil = $c->jumlah_pengambil;
+    }
+
+    /**
+     * Check bila MK yang sama dengan $kodeKelas yang dipilih oleh mahasiswa ini ternyata telah terambil pada Tahun
+     * Ajaran yang aktif.
+     * @param string $nim
+     * @param string $kodeKelas
+     * @param string|null $ta bila null maka diambil dari Tahun Ajaran yang aktif
+     * @return  bool
+     */
+    public function mataKuliahSamaTelahTerambil($nim, $kodeKelas, $ta = null)
+    {
+        $ta = ($ta === null ? ReferensiAkademikFactory::getTAAktif()->tahun_ajaran : $ta);
+        // fakta bahwa kita harus melakukan query terhadap semua MK yang telah diambil oleh mahasiswa ini dan melakukan
+        // join terhadap kelas yang ingin diambilnya dan bila jumlah record adalah 0 maka belum ada yang diambil, dan
+        // bila jumlah > 0 maka telah ada yang diambil
+        $jumlah = \DB::table('rincian_studi as ris')
+            ->join('rencana_studi as rs', function($join) use($nim, $ta) {
+                $join->on('rs.id', '=', 'ris.rencana_studi_id');
+                $join->where('rs.tahun_ajaran', '=', $ta);
+                $join->where('rs.mahasiswa_id', '=', $nim);
+            })
+            ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('pengampu_kelas as pk2', function($join) use($kodeKelas) {
+                $join->on('pk2.mata_kuliah_id', '=', 'pk.mata_kuliah_id');
+                $join->where('pk2.id', '=', $kodeKelas);
+            })
+            ->selectRaw("COUNT(pk2.mata_kuliah_id) AS jumlahMK")
+            ->value("jumlahMK");
+
+        return (int) $jumlah > 0;
+    }
 }

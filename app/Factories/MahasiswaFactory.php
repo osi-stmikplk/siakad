@@ -43,7 +43,7 @@ class MahasiswaFactory extends AbstractFactory
      * Dapatkan status mahasiswa yang sudah tidak kuliah
      * @return array
      */
-    public function getStatusSudahTidakKuliahLagi()
+    public static function getStatusSudahTidakKuliahLagi()
     {
         return [
             Mahasiswa::STATUS_DROP_OUT,
@@ -118,6 +118,16 @@ class MahasiswaFactory extends AbstractFactory
         ];
         if($value===-1) return $r;
         return $r[$value];
+    }
+
+    /**
+     * Fungsi untuk mendapatkan Nomor Induk Mahasiswa. Bila nilai param $nim adalah NULL maka diambil dari session dan
+     * dianggap bahwa yang login sekarang adalah mahasiswa.
+     * @param string $nim
+     */
+    public static function getNIM($nim = null)
+    {
+        return $nim === null ? \Session::get('username', 'NOTHING'): $nim;
     }
 
 }
