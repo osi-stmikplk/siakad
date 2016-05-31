@@ -107,10 +107,10 @@ class IsiFRSController extends Controller
         $nim = MahasiswaFactory::getNIM();
         $ta = ReferensiAkademikFactory::getTAAktif()->tahun_ajaran;
         $request->merge(['kodeKelasTerpilih'=>$kodeKelas]);
-        $message = [
-            'kodeKelasTerpilih.kelas_bisa_diambil' => 'Quota telah terlampaui atau pada semester aktif anda mengambil MK '
-                                                    .'yang sama walaupun beda kelas atau maksimal SKS terlampaui'
-        ];
+//        $message = [
+//            'kodeKelasTerpilih.kelas_bisa_diambil' => 'Quota telah terlampaui atau pada semester aktif anda mengambil MK '
+//                                                    .'yang sama walaupun beda kelas atau maksimal SKS terlampaui'
+//        ];
         $rules = [];
         if($pembatalan) {
             $rules = [
@@ -121,7 +121,7 @@ class IsiFRSController extends Controller
                 'kodeKelasTerpilih' => "exists:pengampu_kelas,id|kelas_bisa_diambil:$nim,$ta"
             ];
         }
-        $this->validate($request, $rules, $message);
+        $this->validate($request, $rules);
     }
 
     /**

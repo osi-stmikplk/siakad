@@ -18,6 +18,7 @@ class IsiFRSValidator
 {
     protected $pengampuKelasFactory;
     protected $isiFRSFactory;
+    protected $validator;
 
     public function __construct(DosenKelasMKFactory $dosenKelasMKFactory, IsiFRSFactory $isiFRSFactory)
     {
@@ -43,11 +44,13 @@ class IsiFRSValidator
         $pengampuKelas = $this->pengampuKelasFactory->getDataDosenKelasMKBerdasarkan($value);
         // check bila quota telah tercapai
         if($pengampuKelas->jumlah_pengambil >= $pengampuKelas->quota) {
+            $validator->getMessageBag()->add('kelas_bisa_diambil', 'Quota kelas telah terpenuhi, cari kelas lain');
             return false;
         }
         // check bila MK sudah diambil walaupun beda kelas
         $nim = $parameters[0];
         if($this->pengampuKelasFactory->mataKuliahSamaTelahTerambil($nim, $value)) {
+            $validator->getMessageBag()->add('kelas_bisa_diambil', 'Mata Kuliah telah terambil pada kelas yang lain');
             return false;
         }
         // check jumlah SKS terambil?
@@ -55,6 +58,7 @@ class IsiFRSValidator
         $ta = $parameters[1];
         $totalSKS = $this->isiFRSFactory->dapatkanTotalSKSDiambil($nim, $ta);
         if($totalSKS >= 25) {
+            $validator->getMessageBag()->add('kelas_bisa_diambil', 'Tidak benar nilai SKS nya');
             return false;
         }
 
