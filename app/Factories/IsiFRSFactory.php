@@ -51,7 +51,7 @@ class IsiFRSFactory extends AbstractFactory
 
         // check bila sudah melakukan pembayaran SPP?
         if( StatusSPP::whereMahasiswaId($nim)->whereTahunAjaran($tahun_ajaran)
-            ->whereStatus(StatusSPP::STATUS_SUDAH_BAYAR)->first() ) {
+            ->whereStatus(StatusSPP::STATUS_SUDAH_BAYAR)->first() === null) {
             return self::MA_KEWAJIBAN_DULU;
         }
 
