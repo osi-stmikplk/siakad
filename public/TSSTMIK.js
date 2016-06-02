@@ -29,7 +29,7 @@ var TSSTMIK = {
     alertAboutErrorMsg:function(responseText){
         theM = "";
         $.each($.parseJSON(responseText),function(i,v){
-            theM += "Pada inputan " + i + " : " + v.toString();
+            theM += i + " : " + v.toString() + "\n";
         });
         alert("Terdapat kesalahan: \n" + theM);
     },

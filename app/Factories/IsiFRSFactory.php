@@ -16,6 +16,7 @@ use Stmik\PengampuKelas;
 use Stmik\ReferensiAkademik;
 use Stmik\RencanaStudi;
 use Stmik\RincianStudi;
+use Stmik\StatusSPP;
 
 class IsiFRSFactory extends AbstractFactory
 {
@@ -45,7 +46,17 @@ class IsiFRSFactory extends AbstractFactory
             return self::MA_BUKAN_WAKTUNYA;
         }
 
-        $b = RencanaStudi::whereTahunAjaran(ReferensiAkademikFactory::getTAAktif()->tahun_ajaran)
+        // check tahun ajaran
+        $tahun_ajaran = ReferensiAkademikFactory::getTAAktif()->tahun_ajaran;
+
+        // check bila sudah melakukan pembayaran SPP?
+        if( StatusSPP::whereMahasiswaId($nim)->whereTahunAjaran($tahun_ajaran)
+            ->whereStatus(StatusSPP::STATUS_SUDAH_BAYAR)->first() === null) {
+            return self::MA_KEWAJIBAN_DULU;
+        }
+
+        // sekarang sudah mulai pengisian ...
+        $b = RencanaStudi::whereTahunAjaran($tahun_ajaran)
                 ->whereMahasiswaId($nim);
         if( $b->count() <= 0 ) {
             return self::MA_MULAI_ISI;
@@ -211,5 +222,25 @@ SQL;
             ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
             ->select(['mk.kode as kode_mk', 'mk.nama as nama_mk', 'mk.sks', 'pk.kelas'])
             ->get();
+    }
+
+    /**
+     * Dapatkan total SKS diambil oleh Mahasiswa ini pada tahun ajaran yang dipilih.
+     * @param $nim
+     * @param $ta
+     * @return float|int
+     */
+    public function dapatkanTotalSKSDiambil($nim, $ta)
+    {
+        return \DB::table('rincian_studi as ris')
+            ->join('rencana_studi as rs', function($join) use($nim, $ta) {
+                $join->on('rs.id', '=', 'ris.rencana_studi_id');
+                $join->where('rs.tahun_ajaran', '=', $ta);
+                $join->where('rs.mahasiswa_id', '=', $nim);
+            })
+            ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+            ->groupBy('rs.tahun_ajaran')
+            ->sum('mk.sks');
     }
 }

@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // lakukan registrasi custom validator
         $path = \Stmik\Http\Validators\IsiFRSValidator::class . '@kelasBisaDiambil';
-        \Validator::extend('kelas_bisa_diambil', $path);
+        \Validator::extend('kelas_bisa_diambil', $path, 'Kelas tidak bisa diambil');
     }
 
     /**
