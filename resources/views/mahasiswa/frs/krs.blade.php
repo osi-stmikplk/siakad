@@ -15,33 +15,37 @@ Cetak KHS
 	table { font-size:13px; }
 	th { text-align: center; }
 	tr, td { border: solid 0px #fff; }
+	.noborder {
+		border: 2px solid #fff;
+	}
 	</style>
 </head>
 <body>
 <!-- Site wrapper -->
-<div class="page container">
+<div class="container">
     <!-- Main content -->
     <div class="col-sm-offset-2 col-sm-8 col-sm-offset-2">
-<h1 class="text-center">Formulir Rencana Studi</h1>
+	
+<h2 class="text-center">Formulir Rencana Studi</h2>
 <br>
-<table class="table table-condensed noborder">
-    <tr>
+<table class="table table-condensed">
+    <tr class="noborder">
         <td>NIM</td>
-        <td>{{ $mhs->nomor_induk }}</td>
+        <td>: {{ $mhs->nomor_induk }}</td>
         <td>Angkatan</td>
-        <td>{{ $mhs->tahun_masuk }}</td>
+        <td>: {{ $mhs->tahun_masuk }}</td>
     </tr>
-    <tr>
+    <tr class="noborder">
         <td>Nama</td>
-        <td>{{ $mhs->nama }}</td>
+        <td>: {{ $mhs->nama }}</td>
         <td>Semester</td>
-        <td>{{ $mhs->dapatkanSemester($ta) }}</td>
+        <td>: {{ $mhs->dapatkanSemester($ta) }}</td>
     </tr>
-    <tr>
+    <tr class="noborder">
         <td>Program Studi</td>
-        <td>{{ $mhs->jurusan->nama }}</td>
+        <td>: {{ $mhs->jurusan->nama }}</td>
         <td>Tahun Ajaran</td>
-        <td>{{ $ta }}</td>
+        <td>: {{ $ta }}</td>
     </tr>
 </table>
 
