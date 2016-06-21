@@ -31,6 +31,11 @@ Cetak KHS
 Load berdasarkan data yang dimasukkan adalah nilai IPK
 --}}
 	
+<style type="text/css">
+	#garis { border: 1px solid #000000; }
+	th { height: 40px; font-size: 15px; }
+</style>
+
 <h2 class="text-center">Formulir Rencana Studi</h2>
 <br>
 <table class="table table-condensed">
@@ -57,33 +62,33 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
 <?php $i = $jumlahSKS = 0; ?>
 <table class="table table-bordered table-striped table-condensed">
     <thead>
-        <tr>
-            <th>No</th>
-            <th>Kode MK</th>
-            <th>Mata Kuliah</th>
-            <th>SKS</th>
-            <th>Kelas</th>
-            <th>Catatan</th>
+        <tr id="garis">
+            <th id="garis">No</th>
+            <th id="garis">Kode MK</th>
+            <th id="garis">Mata Kuliah</th>
+            <th id="garis">SKS</th>
+            <th id="garis">Kelas</th>
+            <th id="garis">Catatan</th>
         </tr>
     </thead>
     <tbody>
     @foreach($rincianStudi as $ris)
         <tr align="center">
-            <td>{{ ++$i }}</td>
-            <td>{{ $ris->kode_mk }}</td>
-            <td align="left">{{ $ris->nama_mk }}</td>
-            <td>{{ $ris->sks }}</td>
-            <td>{{ $ris->kelas }}</td>
-            <td>&nbsp;</td>
+            <td id="garis">{{ ++$i }}</td>
+            <td id="garis">{{ $ris->kode_mk }}</td>
+            <td align="left" id="garis">{{ $ris->nama_mk }}</td>
+            <td id="garis">{{ $ris->sks }}</td>
+            <td id="garis">{{ $ris->kelas }}</td>
+            <td id="garis">&nbsp;</td>
         </tr>
         <?php $jumlahSKS += $ris->sks ?>
     @endforeach
     </tbody>
     <tfoot>
         <tr>
-            <th colspan="3">Jumlah SKS</th>
-            <th>{{ number_format($jumlahSKS) }}</th>
-            <th colspan="2">&nbsp;</th>
+            <th colspan="3" id="garis">Jumlah SKS</th>
+            <th id="garis">{{ number_format($jumlahSKS) }}</th>
+            <th colspan="2" id="garis">&nbsp;</th>
         </tr>
     </tfoot>
 </table>
