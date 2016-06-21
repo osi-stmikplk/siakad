@@ -2,7 +2,7 @@
 Cetak KHS
 --}}
 
-<html>
+<!--html>
 <head>
     <meta charset="utf-8">
     <title>{{ config('kejar.title') }}</title>
@@ -22,26 +22,31 @@ Cetak KHS
 </head>
 <body>
 <!-- Site wrapper -->
-<div class="container">
+<!--div class="container">
     <!-- Main content -->
-    <div class="col-sm-offset-2 col-sm-8 col-sm-offset-2">
+    <!--div class="col-sm-offset-2 col-sm-8 col-sm-offset-2"-->
+@extends('layout.report')
+@section('content')
+{{--
+Load berdasarkan data yang dimasukkan adalah nilai IPK
+--}}
 	
 <h2 class="text-center">Formulir Rencana Studi</h2>
 <br>
 <table class="table table-condensed">
-    <tr class="noborder">
+    <tr class="text-left noborder">
         <td>NIM</td>
         <td>: {{ $mhs->nomor_induk }}</td>
         <td>Angkatan</td>
         <td>: {{ $mhs->tahun_masuk }}</td>
     </tr>
-    <tr class="noborder">
+    <tr class="text-left noborder">
         <td>Nama</td>
         <td>: {{ $mhs->nama }}</td>
         <td>Semester</td>
         <td>: {{ $mhs->dapatkanSemester($ta) }}</td>
     </tr>
-    <tr class="noborder">
+    <tr class="text-left noborder">
         <td>Program Studi</td>
         <td>: {{ $mhs->jurusan->nama }}</td>
         <td>Tahun Ajaran</td>
@@ -92,8 +97,9 @@ Cetak KHS
 
 	Tanggal Cetak {{ date('d-m-Y H:i') }}
 </p>
-    </div>
+    <!--/div>
 </div>
 </body>
-</html>
+</html-->
 
+@endsection

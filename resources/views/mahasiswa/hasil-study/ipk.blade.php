@@ -4,20 +4,7 @@
 Load berdasarkan data yang dimasukkan adalah nilai IPK
 --}}
 <?php $nilaiAkum = ['total_sks' => 0, 'total_bobot' => 0]; ?>
-<style>
-table, tr, th {
-	text-align: center;
-	padding:3px;
-	font-size: 13px;
-}
-.noborder {
-	border: 2px solid #fff;
-}
-</style>
 
-<div class="container">
-<div class="col-sm-offset-2 col-sm-8 col-sm-offset-2">
-	
 <h2 class="text-center" style="margin-bottom:30px;">TRANSKRIP AKADEMIK SEMENTARA</h2>
 
 <p></p>
@@ -84,6 +71,6 @@ table, tr, th {
         </tr-->
     </tfoot>
 </table>
-</div>
-</div>
+<!--/div>
+</div-->
 @endsection
