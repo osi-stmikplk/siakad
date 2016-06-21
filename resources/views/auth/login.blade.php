@@ -5,7 +5,7 @@
     <div class="row">
         <div class="" style="margin: 15% 35%;">
             <div class="panel panel-primary">
-                <div class="panel-heading text-center">Login</div>
+                <div class="panel-heading text-center">LOGIN</div>
                 <div class="panel-body">
                     <form id="formLogin" class="form-horizontal" role="form"
                           method="POST" data-ic-post-to="{{ url('/login') }}">
