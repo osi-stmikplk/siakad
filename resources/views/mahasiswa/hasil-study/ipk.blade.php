@@ -5,7 +5,7 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
 --}}
 <?php $nilaiAkum = ['total_sks' => 0, 'total_bobot' => 0]; ?>
 
-<h2 class="text-center" style="margin-bottom:30px;">TRANSKRIP AKADEMIK SEMENTARA</h2>
+<h2 class="text-center" style="margin-bottom:30px;"><strong>TRANSKRIP AKADEMIK SEMENTARA</strong></h2>
 
 <p></p>
 <table class="table table-condensed" style="font-weight:bold;">
@@ -35,7 +35,6 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
         <th id="garis">Nilai</th>
         <th id="garis">SKSN</th>
         <th id="garis">Mutu</th>
-        <!--th>Bobot</th-->
     </tr>
     </thead>
     <tbody>
@@ -66,16 +65,7 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
             <th colspan="2" id="garis">Indeks Prestasi Kumulatif</th>
             <th colspan="4" id="garis">{{ number_format($nilaiAkum['total_bobot'], 0, ",", ".") }}/{{ number_format($nilaiAkum['total_sks'], 0, ",", ".") }} = {{ number_format($nilaiAkum['total_bobot'] / $nilaiAkum['total_sks'], 2, ",", ".") }}</th>
         </tr>
-        <!--tr>
-            <th colspan="4">Total Kredit * Bobot</th>
-            <th>{{ number_format($nilaiAkum['total_bobot'], 2, ",", ".") }}</th>
-        </tr>
-        <tr>
-            <th colspan="4">Indeks Prestasi Komulatif</th>
-            <th>{{ number_format($nilaiAkum['total_bobot'] / $nilaiAkum['total_sks'], 2, ",", ".") }}</th>
-        </tr-->
     </tfoot>
 </table>
-<!--/div>
-</div-->
+
 @endsection

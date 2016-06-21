@@ -15,7 +15,7 @@ TODO: tambahkan css untuk reporting, sementara hanya css kosong
 	<script src="/plugins/bootstrap/jQuery-2.2.0.min.js"></script>
 	<script src="/plugins/bootstrap/bootstrap.min.js"></script>
 	
-<style>
+<style type="text/css">
 table, tr, th {
 	text-align: center;
 	padding:3px;
@@ -34,30 +34,33 @@ h2, h4 { margin: 0px auto; }
 <div class="page">
     <!-- Main content -->
     <section class="content">
-<div class="container" style="width:19cm;margin-top:33px;">
-<!--div class="col-sm-offset-2 col-sm-8 col-sm-offset-2"-->
+		<div class="container" style="width:19cm; margin-top:17px;">
 
-<table border="0" width="100%">	
-	<tr>
-		<td rowspan="3">
-			<img src="/plugins/logo_stmikplk.jpg" width="100px">
-		</td>
-		<td><h4>SEKOLAH TINGGI MANAJEMEN INFORMATIKA DAN KOMPUTER</h4></td>
-	</tr>
-	<tr>
-		<td><h2>STMIK PALANGKA RAYA</h2></td>
-	</tr>
-	<tr>
-		<td>
-			Jl. G. Obos No. 114 Palangkaraya ~ <span class="glyphicon glyphicon-phone-alt"></span> 0536-3225515 ~ <span class="glyphicon glyphicon-print"></span> 0536-3236933
-			<br>
-			<span class="glyphicon glyphicon-globe"></span> www.stmikplk.ac.id ~ <span class="glyphicon glyphicon-envelope"></span> humas@stmikplk.ac.id
-		</td>
-	</tr>
-</table>
-<hr style="border:1px solid #777">
-        @yield('content')
-</div>
+			<table border="0" width="100%">	
+				<tr>
+					<td rowspan="3">
+						<img src="/plugins/logo_stmikplk.jpg" width="80px">
+					</td>
+					<td><h4>SEKOLAH TINGGI MANAJEMEN INFORMATIKA DAN KOMPUTER</h4></td>
+				</tr>
+				<tr>
+					<td><h2 class="text-primary" style="letter-spacing: 4px;"><strong>STMIK PALANGKA RAYA</strong></h2></td>
+				</tr>
+				<tr>
+					<td>
+						<span class="text-danger">
+							Jalan George Obos No. 114 Palangka Raya ~ <span class="glyphicon glyphicon-phone-alt"></span> 0536-3225515 ~ <span class="glyphicon glyphicon-print"></span> 0536-3236933
+						</span>
+						<br>
+						<span class="text-success">
+							<span class="glyphicon glyphicon-globe"></span> www.stmikplk.ac.id ~ <span class="glyphicon glyphicon-envelope"></span> humas@stmikplk.ac.id
+						</span>
+					</td>
+				</tr>
+			</table>
+			<hr style="border:2px solid #999; margin-top: 5px;">
+			@yield('content')
+		</div>
     </section>
 </div>
 </body>
