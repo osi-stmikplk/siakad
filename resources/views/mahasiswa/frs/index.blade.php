@@ -12,8 +12,8 @@
                 <div class="box-body">
                     <form id="dt-toolbar" class="form-inline" role="form">
                         <a target="_blank" href="{{ route('mhs.frs.cetakKRS') }}"
-                           title="Cek Kartu Rencana Studi"
-                           class="form-control btn btn-info">Cek KRS</a>
+                           title="Cetak Formulir Rencana Studi"
+                           class="form-control btn btn-info"><span class="glyphicon glyphicon-print"></span> Cetak FRS</a>
                         <label for="ta">Filter:&nbsp;</label>
                         <select class="form-control" id="tampil">
                             {!! load_select('tampil', ['MK Terpilih', 'MK Belum Terpilih', 'Semua'],
