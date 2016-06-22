@@ -41,4 +41,19 @@ class PersetujuanFRSController extends Controller
             ->with('layout', $this->getLayout());
     }
 
+    /**
+     * Lakukan reset terhadap status yang kita miliki!
+     * @param $idFRS
+     */
+    public function postStatus($idFRS)
+    {
+        if($this->factory->setStatus($idFRS)) {
+            // lakukan trigger pada client
+            $triggerini['padaSetelahReset'] = [$idFRS, $this->factory->getLastFRSStatus()];
+            return response("",200,
+                ['X-IC-Trigger' => json_encode($triggerini) ]);
+        }
+        return response(json_encode($this->factory->getErrors()), 500);
+    }
+
 }

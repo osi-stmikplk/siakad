@@ -32,9 +32,11 @@
                                data-search="true"
                                data-show-toggle="true"
                                data-query-params="PFRS.addFilter"
+                               data-unique-id="id_FRS"
                                data-mobile-responsive="true">
                             <thead>
                             <tr>
+                                <th data-field="id_FRS" data-sortable="false" data-visible="false">ID</th>
                                 <th data-field="nomor_induk" data-sortable="true" data-visible="true">Nomor Induk</th>
                                 <th data-field="nama" data-sortable="true">Nama</th>
                                 <th data-field="tahun_masuk" data-sortable="true">Tahun Masuk</th>
@@ -62,11 +64,13 @@
         loadStatus: function(value, row, index) {
             var a = [];
             if(row['status_FRS']=='{{ \Stmik\RencanaStudi::STATUS_DRAFT }}') {
-                a[0] = '<a data-ic-replace-target=true title="Klik Untuk Menyetujui" class="btn btn-xs bg-red">Draft!</a>';
+                a[0] = '<a data-ic-replace-target=true data-ic-post-to="/akma/persetujuanFRS/status/'+row['id_FRS']+ '" ' +
+                        'data-ic-confirm="Yakin untuk menyetujui?" title="Klik Untuk Menyetujui" class="btn btn-xs bg-red">Draft!</a>';
             } else {
-                a[0] = '<a data-ic-replace-target=true title="Klik Untuk Membatalkan Persetujuan" class="btn btn-xs bg-green">Disetujui!</a>';
+                a[0] = '<a data-ic-replace-target=true data-ic-post-to="/akma/persetujuanFRS/status/'+row['id_FRS']+ '" ' +
+                        'data-ic-confirm="Yakin untuk membatalkan?" title="Klik Untuk Membatalkan Persetujuan" class="btn btn-xs bg-green">Disetujui!</a>';
             }
-            a[1] = '<a title="Klik melihat KRS" class="btn btn-xs bg-black">KRS</a>';
+            a[1] = '<a target="_blank" href="/mhs/frs/cetakKRS/'+row['nomor_induk']+'" title="Klik melihat KRS" class="btn btn-xs bg-black">KRS</a>';
             return a.join('&nbsp;');
         },
         addFilter: function (p) {
@@ -84,10 +88,21 @@
         },
         attachIC: function () {
             Intercooler.processNodes($('table#daftar-mhs-ngaju tbody'));
+        },
+        padaSetelahReset: function(elt, id, statusFRS) {
+            $('#daftar-mhs-ngaju').bootstrapTable('updateByUniqueId', {
+                id: id,
+                row: {
+                    status_FRS: statusFRS
+                }
+            });
+            // attach lagi karena setelah proses rewrite di atas, intercoolerjs hilang :(
+            PFRS.attachIC();
         }
     };
     $(document).ready(function () {
         PFRS.init();
+        $('#daftar-mhs-ngaju').on('padaSetelahReset', PFRS.padaSetelahReset);
     });
 </script>
 @endpush

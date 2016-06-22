@@ -81,6 +81,6 @@ Route::group(['middleware' => ['web']], function () {
     // persetujuan FRS
     Route::get('/akma/persetujuanFRS/', ['as' => 'akma.persetujuanFRS', 'uses' => 'Akma\PersetujuanFRSController@index']);
     Route::get('/akma/persetujuanFRS/getDT', ['as' => 'akma.persetujuanFRS.getDT', 'uses' => 'Akma\PersetujuanFRSController@getDataBtTable']);
-    Route::post('/akma/persetujuanFRS/status', ['as' => 'akma.persetujuanFRS.status', 'uses' => 'Akma\PersetujuanFRSController@postStatus']);
+    Route::post('/akma/persetujuanFRS/status/{idFRS}', ['as' => 'akma.persetujuanFRS.status', 'uses' => 'Akma\PersetujuanFRSController@postStatus']);
 
 });

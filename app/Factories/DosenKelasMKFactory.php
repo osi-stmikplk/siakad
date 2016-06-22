@@ -183,4 +183,22 @@ class DosenKelasMKFactory extends AbstractFactory
 
         return (int) $jumlah > 0;
     }
+
+    /**
+     * Tambahkan jumlah yang mengambil kelas
+     * @param $kodeIdKelas
+     */
+    public static function tambahPengambilKelasIni($kodeIdKelas)
+    {
+        PengampuKelas::where('id', '=', $kodeIdKelas)->increment('jumlah_pengambil');
+    }
+
+    /**
+     * Kurangkan jumlah yang mengambil kelas
+     * @param $kodeIdKelas
+     */
+    public static function kurangiPengambilKelasIni($kodeIdKelas)
+    {
+        PengampuKelas::where('id', '=', $kodeIdKelas)->decrement('jumlah_pengambil');
+    }
 }
