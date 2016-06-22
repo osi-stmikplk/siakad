@@ -55,9 +55,8 @@ class HasilStudyController extends Controller
     public function ipk($nim = null)
     {
         // baca data mhs ybs (banghaji)
-		$mhsFactory = new MahasiswaFactory();
-        $nim = $mhsFactory->getNIM($nim);
-        $mhs = $mhsFactory->getDataMahasiswa($nim);
+        $nim = $this->factory->getNIM($nim);
+        $mhs = $this->factory->getDataMahasiswa($nim);
 
         // kirim data ke view (banghaji)
 		return view('mahasiswa.hasil-study.ipk')
@@ -69,9 +68,8 @@ class HasilStudyController extends Controller
     public function cetakKHS($semester, $nim = null)
     {
         // baca data mhs ybs (banghaji)
-		$mhsFactory = new MahasiswaFactory();
-        $nim = $mhsFactory->getNIM($nim);
-        $mhs = $mhsFactory->getDataMahasiswa($nim);
+        $nim = $this->factory->getNIM($nim);
+        $mhs = $this->factory->getDataMahasiswa($nim);
 
         // kirim data ke view (banghaji)
 		return view('mahasiswa.hasil-study.khs')
