@@ -15,8 +15,9 @@
                         <div class="form-group">
                             <!--label class="col-md-4 control-label">Alamat Email / Username</label-->
 
-                            <div class="col-sm-12">
+                            <div class="inner-addon left-addon col-sm-12">
                                 <input type="text" class="form-control" name="email" placeholder="User ID">
+                                <i class="glyphicon glyphicon-user"></i>
                                 <div id="error-email" class="help-block error"></div>
                             </div>
                         </div>
@@ -24,8 +25,9 @@
                         <div class="form-group">
                             <!--label class="col-md-4 control-label">Password</label-->
 
-                            <div class="col-sm-12">
+                            <div class="inner-addon left-addon col-sm-12">
                                 <input type="password" class="form-control" name="password" placeholder="Password">
+                                <i class="glyphicon glyphicon-lock"></i>
                                 <div id="error-password" class="help-block error"></div>
                             </div>
                         </div>
