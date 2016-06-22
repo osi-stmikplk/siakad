@@ -69,7 +69,8 @@ class HasilStudyMahasiswaFactory extends MahasiswaFactory
             $sqlSelect = <<<SQL
 ris.semester,
 sum(ris.nilai_angka * mk.sks) as jumBobotSKS,
-sum(mk.sks) as jumSKS
+sum(mk.sks) as jumSKS,
+rs.tahun_ajaran
 SQL;
             $builder = \DB::table('rencana_studi as rs')
                 ->selectRaw($sqlSelect)
@@ -123,6 +124,64 @@ SQL;
 
             // sekarang eksekusi builder!
             // TODO: tambahkan CACHE?
+            return $builder->get();
+
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+
+        return $this->errors->count() <= 0;
+    }
+    
+	// banghaji 20160622 untuk cetakKHS
+	public function loadDataHasilStudySemesteran($semester, $nim)
+    {
+        try {
+            // render dulu SQL untuk pengambilan semester dan jumBobot*SKS serta jumSKS yang di group berdasarkan semester
+            $sqlSelect = <<<SQL
+  mk.kode, mk.nama,
+  mk.sks,
+  min(ris.nilai_huruf) as nilai_huruf,
+  max(ris.nilai_angka) as nilai_angka,
+  ris.status_lulus
+SQL;
+            $builder = \DB::table('rencana_studi as rs')
+                ->selectRaw($sqlSelect)
+                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
+                ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
+                ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+                ->groupBy('rs.mahasiswa_id', 'pk.mata_kuliah_id', 'mk.kode', 'mk.nama', 'mk.sks')
+                ->orderBy('mk.nama')
+                ->where('rs.mahasiswa_id', '=', $nim)
+                ->where('ris.semester', '=', $semester);
+
+            // sekarang eksekusi builder!
+            // TODO: tambahkan CACHE?
+            return $builder->get();
+
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);
+            $this->errors->add('sys', $e->getMessage());
+        }
+
+        return $this->errors->count() <= 0;
+    }
+    
+	// banghaji 20160622 baca tahun ajaran berdasarkan semester
+	public function tahunAjaranKapan($semester, $nim)
+    {
+        try {
+            // render dulu SQL untuk pengambilan tahun ajaran
+            $sqlSelect = <<<SQL
+DISTINCT(rs.tahun_ajaran) as tahun_ajaran
+SQL;
+            $builder = \DB::table('rencana_studi as rs')
+                ->selectRaw($sqlSelect)
+                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
+                ->where('rs.mahasiswa_id', '=', $nim)
+                ->where('ris.semester', '=', $semester);
+
             return $builder->get();
 
         } catch (\Exception $e) {

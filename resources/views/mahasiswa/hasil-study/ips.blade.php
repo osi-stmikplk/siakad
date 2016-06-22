@@ -12,6 +12,7 @@ th { text-align: center; }
     <thead>
     <tr>
         <th>Semester</th>
+        <th>Tahun Ajaran</th>
         <th>SKS * Nilai Bobot</th>
         <th>Jumlah SKS</th>
         <th>IPS</th>
@@ -22,13 +23,16 @@ th { text-align: center; }
     @foreach($data as $d)
         <tr align="center">
             <td>{{ $d->semester }}</td>
+            <td>{{ $d->tahun_ajaran }}</td>
             <td>{{ $d->jumBobotSKS }}</td>
             <td>{{ $d->jumSKS }}</td>
             <td>{{ number_format($d->jumBobotSKS / $d->jumSKS, 2, ",", ".") }}</td>
             <td>
-				<button class="btn btn-xs btn-info" title="belum dibikin kata banghaji :)">
+				<a href="{{ route('mhs.hasilStudy.cetakKHS')}}/{{ $d->semester }}" target="_blank">
+				<button class="btn btn-xs btn-success" title="Cetak KHS semester #{{ $d->semester }}">
 					<span class="glyphicon glyphicon-print"></span>
 				</button>
+				</a>
 			</td>
         </tr>
     @endforeach

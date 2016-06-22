@@ -64,6 +64,22 @@ class HasilStudyController extends Controller
             ->with('mhs', $mhs)
             ->with('data', $this->factory->loadDataHasilStudy($nim));
     }
+	
+	// banghaji 20160622 untuk cetak KHS
+    public function cetakKHS($semester, $nim = null)
+    {
+        // baca data mhs ybs (banghaji)
+		$mhsFactory = new MahasiswaFactory();
+        $nim = $mhsFactory->getNIM($nim);
+        $mhs = $mhsFactory->getDataMahasiswa($nim);
+
+        // kirim data ke view (banghaji)
+		return view('mahasiswa.hasil-study.khs')
+            ->with('mhs', $mhs)
+            ->with('semester', $semester)
+            ->with('ta', $this->factory->tahunAjaranKapan($semester, $nim))
+            ->with('data', $this->factory->loadDataHasilStudySemesteran($semester, $nim));
+    }
 
 
 }
