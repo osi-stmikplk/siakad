@@ -75,4 +75,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/mhs/frs/batalkanPemilihanKelasIni/{kodeKelas}', ['as' => 'mhs.frs.batalkanPemilihanKelasIni', 'uses' => 'Mahasiswa\IsiFRSController@batalkanPemilihanKelasIni']);
     Route::get('/mhs/frs/getDT', ['as' => 'mhs.frs.getDT', 'uses' => 'Mahasiswa\IsiFRSController@getDataBtTable']);
     Route::get('/mhs/frs/cetakKRS/{nim?}/{ta?}', ['as' => 'mhs.frs.cetakKRS', 'uses' => 'Mahasiswa\IsiFRSController@cetakKRS']);
+
+    // persetujuan FRS
+    Route::get('/akma/persetujuanFRS/', ['as' => 'akma.persetujuanFRS', 'uses' => 'Akma\PersetujuanFRSController@index']);
+    Route::get('/akma/persetujuanFRS/getDT', ['as' => 'akma.persetujuanFRS.getDT', 'uses' => 'Akma\PersetujuanFRSController@getDataBtTable']);
+    Route::post('/akma/persetujuanFRS/status', ['as' => 'akma.persetujuanFRS.status', 'uses' => 'Akma\PersetujuanFRSController@postStatus']);
+
 });
