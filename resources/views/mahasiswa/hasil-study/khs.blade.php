@@ -32,7 +32,7 @@ Cetak KHS
         <td>Program Studi</td>
         <td>: {{ $mhs->jurusan->nama }}</td>
         <td>Tahun Ajaran</td>
-        <td>: @foreach($ta as $taj) {{ $taj->tahun_ajaran }} @endforeach</td>
+        <td>: {{ $ta }}</td>
     </tr>
 </table>
 

@@ -167,14 +167,21 @@ SQL;
 
         return $this->errors->count() <= 0;
     }
-    
-	// banghaji 20160622 baca tahun ajaran berdasarkan semester
+
+    /**
+    // banghaji 20160622 baca tahun ajaran berdasarkan semester
+     * YAN : karena ini kembaliannya mestinya nilai bukan collection maka gunakan value, jadi tidak perlu lagi melakukan
+     * looping pada bagian view.
+     * @param $semester
+     * @param $nim
+     * @return array|bool|static[]
+     */
 	public function tahunAjaranKapan($semester, $nim)
     {
         try {
             // render dulu SQL untuk pengambilan tahun ajaran
             $sqlSelect = <<<SQL
-DISTINCT(rs.tahun_ajaran) as tahun_ajaran
+DISTINCT(rs.tahun_ajaran) as tahun_ajaran_d
 SQL;
             $builder = \DB::table('rencana_studi as rs')
                 ->selectRaw($sqlSelect)
@@ -182,7 +189,8 @@ SQL;
                 ->where('rs.mahasiswa_id', '=', $nim)
                 ->where('ris.semester', '=', $semester);
 
-            return $builder->get();
+            // kembalikan nilai
+            return $builder->value('tahun_ajaran_d');
 
         } catch (\Exception $e) {
             \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), ['nim'=>$nim]);
