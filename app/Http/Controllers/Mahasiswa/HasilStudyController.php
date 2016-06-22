@@ -13,6 +13,8 @@ namespace Stmik\Http\Controllers\Mahasiswa;
 use Stmik\Factories\HasilStudyMahasiswaFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
+// nyontek dari IsiFRSController (banghaji)
+use Stmik\Factories\MahasiswaFactory;
 
 class HasilStudyController extends Controller
 {
@@ -52,10 +54,31 @@ class HasilStudyController extends Controller
      */
     public function ipk($nim = null)
     {
-        $nim = ($nim === null? \Session::get('username', 'NOTHING') : $nim);
+        // baca data mhs ybs (banghaji)
+		$mhsFactory = new MahasiswaFactory();
+        $nim = $mhsFactory->getNIM($nim);
+        $mhs = $mhsFactory->getDataMahasiswa($nim);
 
-        return view('mahasiswa.hasil-study.ipk')
+        // kirim data ke view (banghaji)
+		return view('mahasiswa.hasil-study.ipk')
+            ->with('mhs', $mhs)
             ->with('data', $this->factory->loadDataHasilStudy($nim));
+    }
+	
+	// banghaji 20160622 untuk cetak KHS
+    public function cetakKHS($semester, $nim = null)
+    {
+        // baca data mhs ybs (banghaji)
+		$mhsFactory = new MahasiswaFactory();
+        $nim = $mhsFactory->getNIM($nim);
+        $mhs = $mhsFactory->getDataMahasiswa($nim);
+
+        // kirim data ke view (banghaji)
+		return view('mahasiswa.hasil-study.khs')
+            ->with('mhs', $mhs)
+            ->with('semester', $semester)
+            ->with('ta', $this->factory->tahunAjaranKapan($semester, $nim))
+            ->with('data', $this->factory->loadDataHasilStudySemesteran($semester, $nim));
     }
 
 

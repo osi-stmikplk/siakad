@@ -1,65 +1,81 @@
 {{--
 Cetak KHS
 --}}
-<h1>Kartu Rencana Study</h1>
-<table>
-    <tr>
+
+@extends('layout.report')
+@section('content')
+{{--
+Load berdasarkan data yang dimasukkan adalah nilai IPK
+--}}
+	
+<style type="text/css">
+	#garis { border: 1px solid #000000; }
+	th { height: 40px; font-size: 15px; }
+</style>
+
+<h2 class="text-center"><strong>*** Formulir Rencana Studi ***</strong></h2>
+<br>
+<table class="table table-condensed">
+    <tr class="text-left noborder">
         <td>NIM</td>
-        <td>{{ $mhs->nomor_induk }}</td>
+        <td>: {{ $mhs->nomor_induk }}</td>
         <td>Angkatan</td>
-        <td>{{ $mhs->tahun_masuk }}</td>
+        <td>: {{ $mhs->tahun_masuk }}</td>
     </tr>
-    <tr>
+    <tr class="text-left noborder">
         <td>Nama</td>
-        <td>{{ $mhs->nama }}</td>
+        <td>: {{ $mhs->nama }}</td>
         <td>Semester</td>
-        <td>{{ $mhs->dapatkanSemester($ta) }}</td>
+        <td>: {{ $mhs->dapatkanSemester($ta) }}</td>
     </tr>
-    <tr>
+    <tr class="text-left noborder">
         <td>Program Studi</td>
-        <td>{{ $mhs->jurusan->nama }}</td>
+        <td>: {{ $mhs->jurusan->nama }}</td>
         <td>Tahun Ajaran</td>
-        <td>{{ $ta }}</td>
+        <td>: {{ $ta }}</td>
     </tr>
 </table>
+
 <?php $i = $jumlahSKS = 0; ?>
-<table border="1">
+<table class="table table-bordered table-striped table-condensed">
     <thead>
-        <tr>
-            <th>No</th>
-            <th>Kode MK</th>
-            <th>Mata Kuliah</th>
-            <th>SKS</th>
-            <th>Kelas</th>
-            <th>Catatan</th>
+        <tr id="garis">
+            <th id="garis">No.</th>
+            <th id="garis">Mata Kuliah</th>
+            <th id="garis">SKS</th>
+            <th id="garis">Kelas</th>
+            <th id="garis">Catatan</th>
         </tr>
     </thead>
     <tbody>
     @foreach($rincianStudi as $ris)
-        <tr>
-            <td>{{ ++$i }}</td>
-            <td>{{ $ris->kode_mk }}</td>
-            <td>{{ $ris->nama_mk }}</td>
-            <td>{{ $ris->sks }}</td>
-            <td>{{ $ris->kelas }}</td>
-            <td>&nbsp;</td>
+        <tr align="center">
+            <td id="garis">{{ ++$i }}</td>
+            <td align="left" id="garis">{{ $ris->kode_mk }} - {{ $ris->nama_mk }}</td>
+            <td id="garis">{{ $ris->sks }}</td>
+            <td id="garis">{{ $ris->kelas }}</td>
+            <td id="garis">&nbsp;</td>
         </tr>
         <?php $jumlahSKS += $ris->sks ?>
     @endforeach
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3">Jumlah SKS</td>
-            <td>{{ number_format($jumlahSKS) }}</td>
-            <td colspan="2">&nbsp;</td>
+            <th colspan="2" id="garis">Jumlah SKS</th>
+            <th id="garis">{{ number_format($jumlahSKS) }}</th>
+            <th colspan="2" id="garis">&nbsp;</th>
         </tr>
     </tfoot>
 </table>
-<p>
+<p class="pull-right">
     Palangka Raya,<br>
-    Pembimbing Akademik<br>
+    Pembimbing Akademik,<br>
 <br>
 <br>
-    ______________________________
+    _____________________________
+	<br><br>
+
+	Tanggal Cetak {{ date('d-m-Y H:i') }}
 </p>
-<p>Tanggal Cetak {{ date('d-m-Y H:i') }}</p>
+
+@endsection
