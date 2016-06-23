@@ -25,6 +25,7 @@ class IsiFRSFactory extends AbstractFactory
     const MA_MULAI_ISI = 1;
     const MA_MULAI_PILIH = 2;
     const MA_SUDAH_TDK_KULIAH = 3;
+    const MA_SUDAH_FINAL = 4; // FRS sudah disetujui!
 
     /**
      * Tentukan mode awal Mahasiswa ini, apakah dia:
@@ -60,6 +61,11 @@ class IsiFRSFactory extends AbstractFactory
                 ->whereMahasiswaId($nim);
         if( $b->count() <= 0 ) {
             return self::MA_MULAI_ISI;
+        }
+
+        // jangan izinkan proses lagi bila FRS sudah disetujui!
+        if($b->first()->status == RencanaStudi::STATUS_DISETUJUI) {
+            return self::MA_SUDAH_FINAL;
         }
 
         return self::MA_MULAI_PILIH;

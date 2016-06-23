@@ -56,6 +56,8 @@ class IsiFRSController extends Controller
             $view = 'index-kewajiban-dulu-coy';
         } elseif($mode == IsiFRSFactory::MA_SUDAH_TDK_KULIAH) {
             $view = 'index-sudah-tdk-kuliah';
+        } elseif($mode == IsiFRSFactory::MA_SUDAH_FINAL) {
+            $view = 'index-frs-sudah-final';
         }
 
         return view('mahasiswa.frs.'.$view)
@@ -107,10 +109,6 @@ class IsiFRSController extends Controller
         $nim = MahasiswaFactory::getNIM();
         $ta = ReferensiAkademikFactory::getTAAktif()->tahun_ajaran;
         $request->merge(['kodeKelasTerpilih'=>$kodeKelas]);
-//        $message = [
-//            'kodeKelasTerpilih.kelas_bisa_diambil' => 'Quota telah terlampaui atau pada semester aktif anda mengambil MK '
-//                                                    .'yang sama walaupun beda kelas atau maksimal SKS terlampaui'
-//        ];
         $rules = [];
         if($pembatalan) {
             $rules = [
