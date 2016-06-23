@@ -54,7 +54,6 @@ class IsiFRSValidator
             return false;
         }
         // check jumlah SKS terambil?
-        // TODO: tambahkan dengan validasi sesuai dengan jatah berdasarkan IPS yang didapatkan pada semester sebelumnya!
         $ta = $parameters[1];
         $totalSKS = $this->isiFRSFactory->dapatkanTotalSKSDiambil($nim, $ta);
         if($totalSKS >= 25) {

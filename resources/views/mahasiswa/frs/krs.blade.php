@@ -67,6 +67,9 @@ Load berdasarkan data yang dimasukkan adalah nilai IPK
         </tr>
     </tfoot>
 </table>
+@if($maxSKS < $jumlahSKS)
+<p class="text-red">Jumlah SKS diambali melampaui maksimal jumlah SKS yang bisa diambil, jumlah maksimal bisa diambil adalah {{ $maxSKS }}.</p>
+@endif
 <p class="pull-right">
     Palangka Raya,<br>
     Pembimbing Akademik,<br>
