@@ -33,7 +33,7 @@ tampilan layoutnya, semacam halaman login dan register ...
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition">
+<body class="hold-transition" style="background: #2288bb;">
     @yield('content')
 <!-- jQuery 2.2.0 -->
     <script src="{{ asset('plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>

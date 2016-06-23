@@ -8,7 +8,7 @@ TODO: tambahkan css untuk reporting, sementara hanya css kosong
 --}}
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <title>{{ config('kejar.title') }}</title>
     <link rel="stylesheet" href="{{ asset('reportingstyle.css') }}">
 	<link href="/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +16,7 @@ TODO: tambahkan css untuk reporting, sementara hanya css kosong
 	<script src="/plugins/bootstrap/bootstrap.min.js"></script>
 	
 <style type="text/css">
+body { color: #000000; }
 table, tr, th {
 	text-align: center;
 	padding:3px;
@@ -63,7 +64,7 @@ h2, h4 { margin: 0px auto; }
 					</td>
 				</tr>
 			</table>
-			<hr style="border:2px solid #999; margin-top: 5px;">
+			<hr style="border:2px solid #000000; margin-top: 5px;">
 			@yield('content')
 		</div>
     </section>

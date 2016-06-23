@@ -56,7 +56,13 @@ class IsiFRSValidator
         // check jumlah SKS terambil?
         $ta = $parameters[1];
         $totalSKS = $this->isiFRSFactory->dapatkanTotalSKSDiambil($nim, $ta);
-        if($totalSKS >= 25) {
+		// BUG: ada bug nomor #13
+		// jangan lupa untuk mengambil kelas yang saat ini mau diambil namun belum di 
+		// simpan di db
+		$sksMauDiambil = $pengampuKelas->mataKuliah->sks;
+		// update total sks
+		$totalSKS += $sksMauDiambil;
+		if($totalSKS >= 25) {
             $validator->getMessageBag()->add('kelas_bisa_diambil', 'Tidak benar nilai SKS nya');
             return false;
         }
