@@ -62,7 +62,7 @@ class IsiFRSValidator
 		$sksMauDiambil = $pengampuKelas->mataKuliah->sks;
 		// update total sks
 		$totalSKS += $sksMauDiambil;
-		if($totalSKS >= 25) {
+		if($totalSKS > 25) {
             $validator->getMessageBag()->add('kelas_bisa_diambil', 'Tidak benar nilai SKS nya');
             return false;
         }
