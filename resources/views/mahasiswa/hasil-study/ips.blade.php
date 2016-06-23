@@ -38,3 +38,6 @@ th { text-align: center; }
     @endforeach
     </tbody>
 </table>
+<div class="text-primary">
+	<span class="label label-primary">INFO</span> KHS semester <span class="badge">0</span> adalah KHS yang berisi nilai pindahan/transfer yang telah diakui/dikonversi oleh Jurusan.
+</div>
