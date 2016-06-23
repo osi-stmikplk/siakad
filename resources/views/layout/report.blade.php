@@ -25,6 +25,11 @@ table, tr, th {
 	border: 2px solid #fff;
 }
 h2, h4 { margin: 0px auto; }
+
+@media print{
+        /* Untuk default print portrait */
+        @page {size: portrait;}
+    }
 </style>
 
 	
