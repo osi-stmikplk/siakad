@@ -43,7 +43,8 @@ class IsiFRSValidator
         /** @var PengampuKelas $pengampuKelas */
         $pengampuKelas = $this->pengampuKelasFactory->getDataDosenKelasMKBerdasarkan($value);
         // check bila quota telah tercapai
-        if($pengampuKelas->jumlah_pengambil >= $pengampuKelas->quota) {
+        // berdasarkan sifat real time yang masih belum tercapai maka gunakan jumlah_peminat, siapa duluan dia dapat!
+        if($pengampuKelas->jumlah_peminat >= $pengampuKelas->quota) {
             $validator->getMessageBag()->add('kelas_bisa_diambil', 'Quota kelas telah terpenuhi, cari kelas lain');
             return false;
         }
@@ -62,8 +63,8 @@ class IsiFRSValidator
 		$sksMauDiambil = $pengampuKelas->mataKuliah->sks;
 		// update total sks
 		$totalSKS += $sksMauDiambil;
-		if($totalSKS >= 25) {
-            $validator->getMessageBag()->add('kelas_bisa_diambil', 'Tidak benar nilai SKS nya');
+		if($totalSKS > 25) {
+            $validator->getMessageBag()->add('kelas_bisa_diambil', 'Maksimal jumlah SKS adalah 25 SKS');
             return false;
         }
 

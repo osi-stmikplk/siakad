@@ -28,6 +28,8 @@ class PersetujuanFRSController extends Controller
     public function __construct(PersetujuanFRSFactory $persetujuanFRSFactory)
     {
         $this->factory = $persetujuanFRSFactory;
+
+        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
     }
 
     /**

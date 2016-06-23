@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Terpaksa tambah di sini untuk error karena masalah nesting level, bagi pengguna xdebug
+ */
+ini_set('xdebug.max_nesting_level', 120);
 define('LARAVEL_START', microtime(true));
 
 /*
