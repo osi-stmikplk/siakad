@@ -1,3 +1,12 @@
+/* Tambahan untuk inner-addon */    
+  .inner-addon .glyphicon{
+ 	position: absolute;
+ 	padding: 9px;
+ 	pointer-events: none;
+ }
+ .left-addon .glyphicon {left: 15px;}
+ .left-addon input {padding-left: 30px;}
+
 a { cursor: pointer; }
 table tr td.caption {font-weight: bold; width: 20%;text-align: right;}
 li#indic-loader{font-weight: bold;display: none;}

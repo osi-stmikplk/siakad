@@ -243,4 +243,59 @@ SQL;
             ->groupBy('rs.tahun_ajaran')
             ->sum('mk.sks');
     }
+
+    /**
+     * Dapatkan IP Sementara dari semester sebelumnya. Bila $ta tidak diisi maka nilai akan diambil dari Tahun Ajaran
+     * aktif.
+     * @param string $nim
+     * @param null $ta
+     * @return int
+     */
+    public function dapatkanIPSSemesterSebelumnya($nim, $ta = null)
+    {
+        $ta = ($ta === null? ReferensiAkademikFactory::getTAAktif()->tahun_ajaran: $ta);
+        $mhs = Mahasiswa::whereNomorInduk($nim)->first();
+        $ipsnya = 3;
+        // dapatkan semester
+        $tahunIni = (int) substr($ta, 0, 4);
+        $gangen = (int) substr($ta, 4);
+        $sem = ($tahunIni - $mhs->tahun_masuk) * 2 + $gangen;
+        // yang dicari adalah semester sebelumnya maka mundurkan satu semester
+        $sem -= 1;
+        // bila mahasiswa baru dan baru mengisi maka anggap bisa mengambil semua!
+        if($sem <= 0) {
+            return $ipsnya; // bisa mengambil 22 sks = paket
+        }
+        $hasilStudi = new HasilStudyMahasiswaFactory();
+        $ips = $hasilStudi->loadDataPerhitunganIPS($nim);
+        foreach ($ips as $ip) {
+            if($ip->semester == $sem) {
+                $ipsnya = $ip->jumBobotSKS / $ip->jumSKS;
+                break;
+            }
+        }
+        return $ipsnya;
+    }
+
+    /**
+     * Kembalikan maksimal SKS yang bisa diambil berdasarkan IPS. Nilai yang dikembalikan di sini adalah maksimal SKS.
+     * @param $nim
+     * @param $ta
+     * @return int
+     */
+    public function maksimalSKSBerdasarkanIPS($nim, $ta)
+    {
+        $maxSKS = 25;
+        $ipsSebelumnya = $this->dapatkanIPSSemesterSebelumnya($nim, $ta);
+        if($ipsSebelumnya <= 1.99) {
+            $maxSKS = 17;
+        } elseif($ipsSebelumnya <= 2.49) {
+            $maxSKS = 19;
+        } elseif($ipsSebelumnya <= 2.99) {
+            $maxSKS = 21;
+        } elseif($ipsSebelumnya <= 3.49) {
+            $maxSKS = 23;
+        }
+        return $maxSKS;
+    }
 }

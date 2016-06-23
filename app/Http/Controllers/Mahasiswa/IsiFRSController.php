@@ -184,6 +184,7 @@ class IsiFRSController extends Controller
         return view('mahasiswa.frs.krs')
             ->with('ta', $ta)
             ->with('mhs', $mhs)
+            ->with('maxSKS', $this->factory->maksimalSKSBerdasarkanIPS($nim, $ta))
             ->with('rincianStudi', $this->factory->dapatkanRincianStudi($nim, $ta));
     }
 
