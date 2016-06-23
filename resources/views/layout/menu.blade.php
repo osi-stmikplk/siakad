@@ -22,6 +22,8 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
+            {{-- TODO: proses untuk pemeriksaan hasRoles terlalu redundant dan dibutuhkan proses optimalisasi --}}
+            @if(Auth::user()->hasRoles(['akma', 'admin']))
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-star-half-full"></i>
@@ -36,6 +38,8 @@
                     <li><a href="#"><i class="fa fa-circle-o"></i> User</a></li>
                 </ul>
             </li>
+            @endif
+            @if(Auth::user()->hasRoles(['mahasiswa', 'admin']))
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-book"></i>
@@ -48,6 +52,8 @@
                     <li><a href="{{ route('mhs.frs') }}"><i class="fa fa-circle-o"></i> FRS</a></li>
                 </ul>
             </li>
+            @endif
+            @if(Auth::user()->hasRoles(['akma', 'admin']))
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-university"></i>
@@ -60,6 +66,7 @@
                     <li><a href="{{ route('akma.persetujuanFRS') }}"><i class="fa fa-circle-o"></i> Persetujuan KRS</a></li>
                 </ul>
             </li>
+            @endif
         </ul>
     </section>
     <!-- /.sidebar -->

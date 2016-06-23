@@ -51,6 +51,30 @@ trait HasRoleTrait
     }
 
     /**
+     * tentukan bila ada roles untuk yang login, namun untuk multiple role
+     * @param array $roles
+     * @param string $logic or | and
+     */
+    public function hasRoles(array $roles, $logic="or")
+    {
+        $val = false;
+        foreach ($roles as $role) {
+            $test = $this->hasRole($role);
+            if(!$test && $logic == 'and') {
+                // bila logic adalah and - semua harus terpenuhi dan bukan termasuk role yang diuji maka
+                $val = false;
+                break;
+            } elseif($test && $logic == 'and') {
+                $val = true;
+            } elseif($test && $logic == 'or') {
+                $val = true;
+                break; // salah satu terpenuhi dan logic adalah or
+            }
+        }
+        return $val;
+    }
+
+    /**
      * Determine if the user may perform the given permission.
      *
      * @param  Permission|String $permission
