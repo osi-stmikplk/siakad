@@ -16,7 +16,7 @@
                                class="form-control btn btn-info">Transkrip</a>
                             <label for="ta">Filter:&nbsp;</label>
                             <select class="form-control" id="ta">
-                                {!! load_select('ta', \Stmik\Factories\ReferensiAkademikFactory::getTALists(),
+                                {!! load_select('ta', \Stmik\Factories\MahasiswaFactory::daftarTahunAjaranDapatDipilih(),
                                     0, [], ['Pilih Tahun Ajaran'], true) !!}
                             </select>
                             <a onclick="KHS.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
