@@ -29,7 +29,7 @@ class PersetujuanFRSController extends Controller
     {
         $this->factory = $persetujuanFRSFactory;
 
-        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
+        $this->middleware('auth.role:akma');
     }
 
     /**

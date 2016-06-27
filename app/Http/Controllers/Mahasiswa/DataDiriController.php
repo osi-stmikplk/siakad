@@ -21,8 +21,7 @@ class DataDiriController extends Controller
     {
         $this->factory = $factory;
 
-        // check policies
-        $this->authorize('dataIniHanyaBisaDipakaiOleh', 'mahasiswa');
+        $this->middleware('auth.role:mahasiswa');
     }
 
     /**
@@ -31,8 +30,9 @@ class DataDiriController extends Controller
      */
     public function index()
     {
+        $dataMahasiswa = $this->factory->getDataMahasiswa();
         return view('mahasiswa.data-diri.index')
-            ->with('data', $this->factory->getDataMahasiswa())
+            ->with('data', $dataMahasiswa)
             ->with('action', route('mhs.postDataDiri'))
             ->with('email', $this->factory->getDataEmailMahasiswa())
             ->with('layout', $this->getLayout());
@@ -45,6 +45,8 @@ class DataDiriController extends Controller
      */
     public function postDataDiri(DataDiriRequest $request)
     {
+        $this->authorize('postDataDiri', $this->factory->getDataMahasiswa());
+
         if($this->factory->updateDataDiri($request->except($this->getIntercoolerParams()))) {
             return response(""); // kembalikan tanpa isi saja!
         }

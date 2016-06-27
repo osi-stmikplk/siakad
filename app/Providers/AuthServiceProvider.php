@@ -4,6 +4,7 @@ namespace Stmik\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Stmik\Mahasiswa;
 use Stmik\User;
 
 class AuthServiceProvider extends ServiceProvider

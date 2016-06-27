@@ -24,7 +24,7 @@ class MataKuliahController extends Controller
     public function __construct(MasterMataKuliahFactory $factory)
     {
         $this->factory = $factory;
-        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
+        $this->middleware('auth.role:akma');
     }
 
     /**
