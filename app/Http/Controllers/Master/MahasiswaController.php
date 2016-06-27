@@ -23,7 +23,7 @@ class MahasiswaController extends Controller
     {
         $this->factory = $factory;
 
-        $this->authorize('mengaksesIniRolenyaHarus', 'akma');
+        $this->middleware('auth.role:akma');
     }
 
     /**

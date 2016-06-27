@@ -130,4 +130,23 @@ class MahasiswaFactory extends AbstractFactory
         return $nim === null ? \Session::get('username', 'NOTHING'): $nim;
     }
 
+    /**
+     * Kembalikan tahun yang bisa dipilih oleh si mahasiswa yang login, dengan awal adalah tahun masuk / angkatan!
+     * Di sini dibuat khusus agar tidak menampilkan semua tahun ajaran.
+     * @return array
+     */
+    public static function daftarTahunAjaranDapatDipilih($nim = null)
+    {
+        $u = (int) ($nim === null?
+            \Auth::user()->owner->tahun_masuk:
+            Mahasiswa::whereNomorInduk($nim)->first()->tahun_masuk);
+        $yn = (int) date('Y');
+        $r = [];
+        for($i=$u;$i<=$yn;$i++) {
+            $r["{$i}1"] = "{$i}1";
+            $r["{$i}2"] = "{$i}2";
+        }
+        return $r;
+    }
+
 }

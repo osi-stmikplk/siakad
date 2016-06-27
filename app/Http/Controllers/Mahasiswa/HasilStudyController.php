@@ -25,7 +25,8 @@ class HasilStudyController extends Controller
     public function __construct(HasilStudyMahasiswaFactory $factory)
     {
         $this->factory = $factory;
-        $this->authorize('dataIniHanyaBisaDipakaiOleh', 'mahasiswa');
+
+        $this->middleware('auth.role:mahasiswa');
     }
 
     public function index()

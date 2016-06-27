@@ -41,11 +41,13 @@ class HasilStudyMahasiswaFactory extends MahasiswaFactory
             $builder = $builder->where('rs.tahun_ajaran', '=', $ta);
         }
         if($sem!==null) {
-            $builder = $builder->where('ris.semester', '=', $ta);
+            $builder = $builder->where('ris.semester', '=', $sem);
         }
         // sekarang selectnya ... harus explisit
         $builder = $builder->select(['rs.tahun_ajaran', 'mk.nama as mata_kuliah', 'mk.kode as kode_mata_kuliah',
             'ris.semester', 'mk.sks', 'ris.nilai_huruf', 'ris.nilai_angka', 'ris.status_lulus']);
+
+        \Log::debug($builder->toSql(), ['ta'=>$ta]);
 
         // kembalikan datanya!
         return $this->getBTData($pagination,
