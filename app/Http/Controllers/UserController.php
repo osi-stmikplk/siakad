@@ -9,6 +9,7 @@
 namespace Stmik\Http\Controllers;
 
 
+use Illuminate\Http\Request;
 use Stmik\Factories\UserFactory;
 use Stmik\Http\Requests\SetUserRequest;
 
@@ -65,6 +66,42 @@ class UserController extends Controller
             }
         }
         return response()->json(['system'=>"Nilai parameter tidak dikenali"], 422);
+    }
+    /**
+     * render tampilan untuk edit data berkaitan dengan login, profile!
+     * Di sini yang di render adalah:
+     * - data user name ( read only )
+     * - email  ( bisa dirubah )
+     * - password ( bisa dirubah )
+     */
+    public function profile(Request $request)
+    {
+        $user = $request->user(); // dapatkan user yang login saat ini!
+        return view('user.editor')
+            ->with('action', route('user.postProfile'))
+            ->with('user', $user);
+    }
+
+    public function postProfile(Request $request)
+    {
+        // validate manual!
+        $currPassword = $request->input('curr_password', '');
+        $user = $request->user(); // curr user
+        if(!\Hash::check($currPassword, $user->password)) {
+            return response()->json([
+                'curr_password' => ['Password saat ini tidak benar!']
+            ], 422);
+        }
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'min:6|confirmed',
+        ];
+        $this->validate($request, $rules);
+
+        if($this->factory->updateUser($user, $request->all())) {
+            return response("OKE");
+        }
+        return response()->json(['system'=>"Ups error :("], 501);
     }
 
 }

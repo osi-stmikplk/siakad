@@ -29,8 +29,8 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ asset('lte/img/user2-160x160.jpg') }}" class="img-circle"
-                                 alt="User Image">
+                            {{--<img src="{{ asset('lte/img/user2-160x160.jpg') }}" class="img-circle"--}}
+                                 {{--alt="User Image">--}}
                             <p>
                                 {{ Session::get('nama') }}
                                 <small>{{ Session::get('type') }}</small>
@@ -39,7 +39,9 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">
+                                <a href="#" data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body"
+                                   data-ic-get-from="/user/profile" title="Ubah Profile"
+                                   class="btn btn-default btn-flat">
                                     <i class="fa fa-user"></i>
                                     User</a>
                             </div>
