@@ -26,6 +26,8 @@ Route::group(['middleware' => ['web']], function () {
         // USER
         Route::get('/user/setUserUntuk/{idOrangIni}/{typeOrangNya}', ['as' => 'user.setUserUntuk', 'uses' => 'UserController@setUserUntuk']);
         Route::post('/user/setUserUntuk/{idOrangIni}/{typeOrangNya}', ['as' => 'user.postSetUserUntuk', 'uses' => 'UserController@postSetUserUntuk']);
+        Route::get('/user/profile', ['as' => 'user.profile', 'uses' => 'UserController@profile']);
+        Route::post('/user/profile', ['as' => 'user.postProfile', 'uses' => 'UserController@postProfile']);
 
         // SPP
         Route::get('/akma/spp/', ['as' => 'akma.spp', 'uses' => 'Akma\StatusSPPController@index']);

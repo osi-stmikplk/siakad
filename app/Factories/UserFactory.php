@@ -91,4 +91,19 @@ class UserFactory extends AbstractFactory
         return $this->errors->count() <= 0;
     }
 
+    /**
+     * Update profile user
+     * @param User $user
+     * @param $input
+     * @return bool
+     */
+    public function updateUser(User $user, $input)
+    {
+        $user->email = $input['email'];
+        if(isset($input['password'])) {
+            $user->password = \Hash::make($input['password']);
+        }
+        return $user->save();
+    }
+
 }

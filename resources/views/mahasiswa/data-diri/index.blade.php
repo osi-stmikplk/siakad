@@ -1,6 +1,6 @@
 @extends($layout)
 @section('content-header')
-    <h1>Data Diri Mahasiswa<small>udpate data yang kekinian</small></h1>
+    <h1>Data Diri Mahasiswa<small>update data yang kekinian</small></h1>
 @endsection
 @section('content')
 <section id="data-diri">
