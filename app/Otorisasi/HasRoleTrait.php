@@ -30,8 +30,12 @@ trait HasRoleTrait
      */
     public function assignRole($role)
     {
+        $roleo = pakai_cache("cari-role-$role", function() use($role) {
+            return Role::whereName($role)->firstOrFail();
+        });
+        if($this->hasRole($roleo)) return $roleo;
         return $this->roles()->save(
-            Role::whereName($role)->firstOrFail()
+            $roleo
         );
     }
 
@@ -47,7 +51,8 @@ trait HasRoleTrait
             return $this->roles->contains('name', $role);
         }
 
-        return !! $role->intersect($this->roles)->count();
+        return $this->roles->intersect([$role])->count() > 0;
+            //!! $role->intersect($this->roles)->count();
     }
 
     /**

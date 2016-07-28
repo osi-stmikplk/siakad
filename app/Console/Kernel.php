@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Panatau\Tools\Generatorku::class
+        \Panatau\Tools\Generatorku::class,
+        \Stmik\Console\Commands\BikinUserMahasiswaCmd::class
 //        Commands\Inspire::class,
     ];
 
