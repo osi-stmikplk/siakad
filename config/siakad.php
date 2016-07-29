@@ -7,7 +7,8 @@
  */
 return [
     'nama' => 'SIAKADpinginOl',
-    'title' => 'SIAKAD STMIK Palangkaraya',
+    'title' => 'SIAKAD STMIK Palangka Raya',
+    'slogan' => 'Kuliah Beneran, Benar-benar Kuliah',
     'versi' => '0.1',
     // pada versi production akan digunakan cache, di sini akan ditentukan berapa lama cache disimpan di system. Dibagi
     // menjadi beberapa tingkatan yaitu lama, menengah dan cepat. Nilai dalam menit!
