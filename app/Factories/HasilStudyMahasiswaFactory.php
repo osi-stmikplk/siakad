@@ -102,6 +102,7 @@ SQL;
      * nilai tertinggi berdasarkan nilai_angka lalu pada view yang melakukan proses tampilan akan melakukan render
      * serta perhitungan IPK.
      * Hasil eksekusi adalah array dengan item yang memiliki indeks mata_kuliah_id, nama, sks, nilai_huruf, nilai_angka
+     * yan @ 29 juli 2016: KHS tidak menampilkan yang nilainya E!
      * @param string $nim mahasiswa yang ingin ditampilkan
      * @return array|bool|static[]
      */
@@ -117,7 +118,12 @@ SQL;
 SQL;
             $builder = \DB::table('rencana_studi as rs')
                 ->selectRaw($sqlSelect)
-                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
+                // tidak menampilkan yang nilainya E
+                ->join('rincian_studi as ris', function($join) {
+                    $join->on('ris.rencana_studi_id', '=', 'rs.id');
+                    $join->where('ris.nilai_angka', '>', 0);
+                })
+//                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
                 ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
                 ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
                 ->groupBy('rs.mahasiswa_id', 'pk.mata_kuliah_id', 'mk.kode', 'mk.nama', 'mk.sks')
@@ -135,8 +141,13 @@ SQL;
 
         return $this->errors->count() <= 0;
     }
-    
-	// banghaji 20160622 untuk cetakKHS
+
+    /**
+     * banghaji 20160622 untuk cetakKHS
+     * @param $semester
+     * @param $nim
+     * @return array|bool|static[]
+     */
 	public function loadDataHasilStudySemesteran($semester, $nim)
     {
         try {
