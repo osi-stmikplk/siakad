@@ -18,7 +18,18 @@
 		
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li id="indic-loader" class="pull-left">
+				<!-- banghaji -->
+				@can('dataIniHanyaBisaDipakaiOleh', 'mahasiswa')
+				<div class="pull-left visible-xs">
+					<ul class="nav navbar-nav">
+						<li><a href="{{ route('mhs.dataDiri') }}" title="Data Diri"><i class="fa fa-user"></i> </a></li>
+						<li><a href="{{ route('mhs.hasilStudy') }}" title="Hasil Studi"><i class="fa fa-list-ol"></i></a></li>
+						<li><a href="{{ route('mhs.frs') }}" title="FRS"><i class="fa fa-file-text"></i></a></li>
+					</ul>
+				</div>
+				@endcan
+				<!-- banghaji -->
+				<li id="indic-loader" class="pull-left">
                     <a><i class="fa fa-spin fa-spinner"></i> Loading </a>
                 </li>
                 <li class="dropdown user user-menu">
