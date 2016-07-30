@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login @include('_ic-indicator')
+                                    <i class="fa fa-btn fa-sign-in"></i> Masuk @include('_ic-indicator')
                                 </button>
                             </div>
                         </div>

@@ -15,7 +15,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-
+		
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li id="indic-loader" class="pull-left">
@@ -40,16 +40,20 @@
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="#" data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body"
-                                   data-ic-get-from="/user/profile" title="Ubah Profile"
+                                   data-ic-get-from="/user/profile" title="Ubah Akun"
                                    class="btn btn-default btn-flat">
                                     <i class="fa fa-user"></i>
-                                    User</a>
+                                    Akun</a>
+                                <a href="{{ route('mhs.dataDiri') }}" title="Ubah Data Diri"
+                                   class="btn btn-default btn-flat">
+                                    <i class="fa fa-user"></i>
+                                    Profil</a>
                             </div>
                             <div class="pull-right">
                                 <a onclick="return confirm('Yakin untuk logout?');"
                                    href="{{ url('/logout') }}" class="btn btn-default btn-flat">
                                     <i class="fa fa-sign-out"></i>
-                                    Sign out</a>
+                                    Keluar</a>
                             </div>
                         </li>
                     </ul>
