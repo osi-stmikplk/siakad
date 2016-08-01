@@ -30,7 +30,7 @@
                             <div class="col-sm-12">
                                 <div class="input-group">
 									<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-									<input type="text" class="form-control" name="email" placeholder="ID Pengguna">
+									<input type="text" class="form-control" name="email" placeholder="ID Pengguna" autofocus>
 								</div>
 								<div id="error-email" class="help-block error"></div>
                             </div>
