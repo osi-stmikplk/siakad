@@ -12,6 +12,7 @@
                     <h2><i class="fa fa-fire"></i> Belum waktunya pengisian FRS atau waktu pengisian telah lewat?!</h2>
                     <p>Pengisian FRS Tahun Ajaran {{ $infoTA->tahun_ajaran }} dimulai pada tanggal
                         {{ $infoTA->tgl_mulai_isi_krs }} sampai dengan {{ $infoTA->tgl_berakhir_isi_krs }}</p>
+                    <p><a target="_blank" href="{{ route('mhs.frs.cetakKRS') }}"><button class="btn btn-primary"><i class="fa fa-print"></i> Cetak FRS</button></a></p>
                 </div>
             </div>
         </div>

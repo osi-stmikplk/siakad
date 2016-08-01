@@ -17,6 +17,7 @@
             <div class="well dialog">
 				<img src="/plugins/logo_stmikplk.jpg" width="80px">
                 <h4 class="text-primary"><strong>STMIK Palangka Raya</strong></h4>
+                <h6 class="text-danger"><strong>{{ config('siakad.slogan') }}</strong></h6>
 				<hr>
 				<!--h3 class="text-success">Login System</h3-->
                 <div>
@@ -63,7 +64,7 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login @include('_ic-indicator')
+                                    <i class="fa fa-btn fa-sign-in"></i> Masuk @include('_ic-indicator')
                                 </button>
                             </div>
                         </div>

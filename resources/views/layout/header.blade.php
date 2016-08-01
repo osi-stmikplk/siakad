@@ -15,10 +15,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-
+		
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li id="indic-loader" class="pull-left">
+				<!-- banghaji -->
+				@can('dataIniHanyaBisaDipakaiOleh', 'mahasiswa')
+				<div class="pull-left visible-xs">
+					<ul class="nav navbar-nav">
+						<li><a href="{{ route('mhs.dataDiri') }}" title="Data Diri"><i class="fa fa-user"></i> </a></li>
+						<li><a href="{{ route('mhs.hasilStudy') }}" title="Hasil Studi"><i class="fa fa-list-ol"></i></a></li>
+						<li><a href="{{ route('mhs.frs') }}" title="FRS"><i class="fa fa-file-text"></i></a></li>
+					</ul>
+				</div>
+				@endcan
+				<!-- banghaji -->
+				<li id="indic-loader" class="pull-left">
                     <a><i class="fa fa-spin fa-spinner"></i> Loading </a>
                 </li>
                 <li class="dropdown user user-menu">
@@ -40,16 +51,20 @@
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="#" data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body"
-                                   data-ic-get-from="/user/profile" title="Ubah Profile"
+                                   data-ic-get-from="/user/profile" title="Ubah Akun"
                                    class="btn btn-default btn-flat">
                                     <i class="fa fa-user"></i>
-                                    User</a>
+                                    Akun</a>
+                                <a href="{{ route('mhs.dataDiri') }}" title="Ubah Data Diri"
+                                   class="btn btn-default btn-flat">
+                                    <i class="fa fa-user"></i>
+                                    Profil</a>
                             </div>
                             <div class="pull-right">
                                 <a onclick="return confirm('Yakin untuk logout?');"
                                    href="{{ url('/logout') }}" class="btn btn-default btn-flat">
                                     <i class="fa fa-sign-out"></i>
-                                    Sign out</a>
+                                    Keluar</a>
                             </div>
                         </li>
                     </ul>
