@@ -10,6 +10,7 @@ namespace Stmik\Http\Controllers\Akma;
 
 
 use Illuminate\Http\Request;
+use Stmik\Factories\ReferensiAkademikFactory;
 use Stmik\Factories\StatusSPPFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
