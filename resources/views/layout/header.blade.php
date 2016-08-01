@@ -59,6 +59,15 @@
                                    class="btn btn-default btn-flat">
                                     <i class="fa fa-user"></i>
                                     Profil</a>
+                                   class="btn btn-default btn-flat">
+                                    <i class="fa fa-user-secret"></i>
+                                    Akun</a>
+                                @can('dataIniHanyaBisaDipakaiOleh', 'mahasiswa')
+                                <a href="{{ route('mhs.dataDiri') }}" title="Ubah Data Diri"
+                                   class="btn btn-default btn-flat">
+                                    <i class="fa fa-user"></i>
+                                    Profil</a>
+                                @endcan
                             </div>
                             <div class="pull-right">
                                 <a onclick="return confirm('Yakin untuk logout?');"

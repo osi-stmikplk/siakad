@@ -32,7 +32,9 @@ class ReferensiAkademikFactory extends AbstractFactory
     public static function getTALists()
     {
         return pakai_cache('daftar-tahun-ajaran', function() {
-            return ReferensiAkademik::pluck('tahun_ajaran', 'tahun_ajaran')->all();
+            // tahun ajaran baru di bagian atas ...
+            return ReferensiAkademik::orderBy('tahun_ajaran', 'desc')
+                ->pluck('tahun_ajaran', 'tahun_ajaran')->all();
         });
     }
 
