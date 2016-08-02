@@ -95,15 +95,4 @@ class StatusSPPFactory extends AbstractFactory
         return $this->statusTerakhir;
     }
 
-    /**
-     * Kembalikan data list tahun ajaran yang aktif saja untuk digunakan oleh filter
-     * @return array
-     */
-    public static function loadListTAAktif()
-    {
-        $ta = ReferensiAkademikFactory::getTALists();
-        // karena sudah di sorting, kembalikan 2 daftar TA terakhir
-        return array_slice($ta, 0, 2, true);
-    }
-
 }

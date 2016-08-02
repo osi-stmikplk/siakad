@@ -14,7 +14,8 @@
                                class="btn btn-default form-control"><i class="fa fa-plus-circle"></i> Tambah</a>&nbsp;
                             <label for="ta">Filter:&nbsp;</label>
                             <select class="form-control" id="ta">
-                                {!! load_select('ta', \Stmik\Factories\ReferensiAkademikFactory::getTALists(),
+                                {!! load_select('ta',
+                                \Stmik\Factories\ReferensiAkademikFactory::getTALists(['type'=>'rangedex', 'nilai'=>[0,4]]),
                                     0, [], ['Pilih Tahun Ajaran'], true) !!}
                             </select>
                             <select class="form-control" id="jurusan">
@@ -34,6 +35,8 @@
                                data-search="true"
                                data-show-toggle="true"
                                data-query-params="DosenKlsMK.addFilter"
+                               data-sort-name="tahun_ajaran"
+                               data-sort-order="desc"
                                data-mobile-responsive="true">
                             <thead>
                             <tr>
