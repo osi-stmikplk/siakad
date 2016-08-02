@@ -36,10 +36,10 @@ class ReferensiAkademikFactory extends AbstractFactory
      * Bila type adalah persis maka indek Tahun Ajaran adalah harus persis sesuai dengan nilai yang dimasukkan di bagian
      * nilai. Misalnya:
      * [ 'type' => 'persis', 'nilai' => [ 20151, 20152 ] ]
-     * berarti yang ditampilkan adalah Tahun Ajaran 20152 dan 20153.
-     * Sedangnya bila:
-     * [ 'type' => 'range', 'nilai' => [ 20151, 20111 ] ]
-     * maka range adalah dari TA 20151 s/d 20152
+     * berarti yang ditampilkan adalah Tahun Ajaran 20151 dan 20152.
+     * Sedangkan bila:
+     * [ 'type' => 'range', 'nilai' => [ 20111, 20151 ] ]
+     * maka range adalah dari TA 20111 s/d 20151
      * [ 'type' => 'rangedex', 'nilai' => [ 0, 2 ]
      * maka range adalah offset ke 0 s/d 2 pada array Tahun Ajaran.
      * @param array $ranges
