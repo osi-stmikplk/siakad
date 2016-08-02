@@ -11,7 +11,8 @@
                         <form id="dt-toolbar" class="form-inline" role="form">
                             <label for="ta">Filter:&nbsp;</label>
                             <select class="form-control" id="ta">
-                                {!! load_select('ta', \Stmik\Factories\StatusSPPFactory::loadListTAAktif(),
+                                {!! load_select('ta',
+                                    \Stmik\Factories\ReferensiAkademikFactory::getTALists(['type'=>'rangedex', 'nilai'=>[0,4]]),
                                     0, [], ['Pilih Tahun Ajaran'], true) !!}
                             </select>
                             <select class="form-control" id="jurusan">
