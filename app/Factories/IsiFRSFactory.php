@@ -26,6 +26,7 @@ class IsiFRSFactory extends AbstractFactory
     const MA_MULAI_PILIH = 2;
     const MA_SUDAH_TDK_KULIAH = 3;
     const MA_SUDAH_FINAL = 4; // FRS sudah disetujui!
+    const MA_STATUS_CUTI = 5; // status mahasiswa adalah cuti, update status mahasiswa dulu ke akma
 
     /**
      * Tentukan mode awal Mahasiswa ini, apakah dia:
@@ -54,6 +55,11 @@ class IsiFRSFactory extends AbstractFactory
         if( StatusSPP::whereMahasiswaId($nim)->whereTahunAjaran($tahun_ajaran)
             ->whereStatus(StatusSPP::STATUS_SUDAH_BAYAR)->first() === null) {
             return self::MA_KEWAJIBAN_DULU;
+        }
+
+        // check masih cuti?
+        if( $mhs->status == Mahasiswa::STATUS_CUTI) {
+            return self::MA_STATUS_CUTI;
         }
 
         // sekarang sudah mulai pengisian ...
