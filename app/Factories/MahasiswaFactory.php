@@ -148,5 +148,20 @@ class MahasiswaFactory extends AbstractFactory
         }
         return $r;
     }
+    public static function getLabelStatusLists($nim = null){
+       $nim = (!null ? \Session::get('username', ''): $nim);
+
+       $value = Mahasiswa::findOrFail($nim)->status;
+       $r     = self::getStatusLists($value);
+       return $r;
+    }
+
+    public static function getLabelStatusAwalMasukLists($nim = null){
+       $nim = (!null ? \Session::get('username', ''): $nim);
+
+       $value = Mahasiswa::findOrFail($nim)->status_awal_masuk;
+       $r     = self::getStatusAwalMasukLists($value);
+       return $r;
+     }
 
 }
