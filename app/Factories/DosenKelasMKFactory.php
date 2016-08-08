@@ -75,6 +75,7 @@ class DosenKelasMKFactory extends AbstractFactory
             \DB::transaction(function () use ($pengampuKelas, $input) {
                 $pengampuKelas->fill($input);
                 // perubahan pada pengampu kelas tidak akan merubah id #28
+                // di Laravel property model exists berarti telah ada sebelumnya = editing
                 if(!$pengampuKelas->exists) {
                     $pengampuKelas->id = $pengampuKelas->kalkulasiPK($input['mata_kuliah_id'], $input['dosen_id'], $input['tahun_ajaran'], $input['kelas']);
                 }
