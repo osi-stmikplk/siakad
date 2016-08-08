@@ -26,6 +26,10 @@ table, tr, th {
 	border: 2px solid #fff;
 }
 h2, h4 { margin: 0px auto; }
+a.click-close {
+	color: #000;
+	text-decoration: none;
+}
 
 @media print{
         /* Untuk default print portrait */
@@ -37,6 +41,7 @@ h2, h4 { margin: 0px auto; }
 </head>
 <body>
 <!-- Site wrapper -->
+<a onclick="javascript:window.close();" class="click-close">
 <div class="page">
     <!-- Main content -->
     <section class="content">
@@ -69,5 +74,6 @@ h2, h4 { margin: 0px auto; }
 		</div>
     </section>
 </div>
+</a>
 </body>
 </html>
