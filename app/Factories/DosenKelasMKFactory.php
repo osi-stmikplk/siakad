@@ -74,7 +74,11 @@ class DosenKelasMKFactory extends AbstractFactory
         try {
             \DB::transaction(function () use ($pengampuKelas, $input) {
                 $pengampuKelas->fill($input);
-                $pengampuKelas->id = $pengampuKelas->kalkulasiPK($input['mata_kuliah_id'], $input['dosen_id'], $input['tahun_ajaran'], $input['kelas']);
+                // perubahan pada pengampu kelas tidak akan merubah id #28
+                // di Laravel property model exists berarti telah ada sebelumnya = editing
+                if(!$pengampuKelas->exists) {
+                    $pengampuKelas->id = $pengampuKelas->kalkulasiPK($input['mata_kuliah_id'], $input['dosen_id'], $input['tahun_ajaran'], $input['kelas']);
+                }
                 $pengampuKelas->save();
             });
         } catch (\Exception $e) {
@@ -200,5 +204,17 @@ class DosenKelasMKFactory extends AbstractFactory
     public static function kurangiPengambilKelasIni($kodeIdKelas)
     {
         PengampuKelas::where('id', '=', $kodeIdKelas)->decrement('jumlah_pengambil');
+    }
+
+    /**
+     * Dapatkan daftar kelas dosen si $idSiDosen pada $tahunAjaran yang ditetapkan
+     * @param $tahunAjaran
+     * @param $idSiDosen
+     * @return mixed
+     */
+    public function dapatkanKelasDosenPada($tahunAjaran, $idSiDosen)
+    {
+        return PengampuKelas::whereTahunAjaran($tahunAjaran)
+            ->whereDosenId($idSiDosen)->get();
     }
 }
