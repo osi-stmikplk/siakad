@@ -53,7 +53,7 @@
                                 <a href="#" data-toggle="modal" data-target="#modal-util" data-ic-target="#modal-util-body"
                                    data-ic-get-from="/user/profile" title="Ubah Akun"
                                    class="btn btn-default btn-flat">
-                                    <i class="fa fa-user-secret"></i>
+                                    <i class="fa fa-user"></i>
                                     Akun</a>
                                 @can('dataIniHanyaBisaDipakaiOleh', 'mahasiswa')
                                 <a href="{{ route('mhs.dataDiri') }}" title="Ubah Data Diri"
