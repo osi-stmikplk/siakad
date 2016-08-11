@@ -27,7 +27,10 @@ class HasilStudyController extends Controller
     {
         $this->factory = $factory;
 
-        $this->middleware('auth.role:mahasiswa');
+        $this->middleware('auth.role:mahasiswa',
+            ['only' => [
+                'index'
+            ]]);
     }
 
     public function index()
