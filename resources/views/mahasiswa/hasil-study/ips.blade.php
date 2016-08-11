@@ -28,7 +28,7 @@ th { text-align: center; }
             <td>{{ $d->jumSKS }}</td>
             <td>{{ number_format($d->jumBobotSKS / $d->jumSKS, 2, ",", ".") }}</td>
             <td>
-				<a href="{{ route('mhs.hasilStudy.cetakKHS')}}/{{ $d->semester }}" target="_blank">
+				<a href="{{ route('mhs.hasilStudy.cetakKHS', ['semester'=>$d->semester, 'nim'=>$nim]) }}" target="_blank">
 				<button class="btn btn-xs btn-success" title="Cetak KHS semester #{{ $d->semester }}">
 					<span class="glyphicon glyphicon-print"></span>
 				</button>
