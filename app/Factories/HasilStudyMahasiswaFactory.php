@@ -88,7 +88,9 @@ SQL;
                 ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
                 ->groupBy('ris.semester')
                 ->where('rs.status', '=', RencanaStudi::STATUS_DISETUJUI) // hanya tampilkan yang sudah disetujui
-                ->where('rs.mahasiswa_id', '=', $nim);
+                ->where('rs.mahasiswa_id', '=', $nim)
+                ->orderBy('ris.semester')
+                ->orderBy('rs.tahun_ajaran');
 
             // sekarang eksekusi builder!
             return pakai_cache("perhitunganIPS-$nim", function() use($builder) {
