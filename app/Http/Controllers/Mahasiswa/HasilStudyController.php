@@ -10,6 +10,7 @@
 namespace Stmik\Http\Controllers\Mahasiswa;
 
 
+use Illuminate\Http\Request;
 use Stmik\Factories\HasilStudyMahasiswaFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
@@ -26,7 +27,10 @@ class HasilStudyController extends Controller
     {
         $this->factory = $factory;
 
-        $this->middleware('auth.role:mahasiswa');
+        $this->middleware('auth.role:mahasiswa',
+            ['only' => [
+                'index'
+            ]]);
     }
 
     public function index()
@@ -41,11 +45,12 @@ class HasilStudyController extends Controller
      * mengaksesnya. Di load untuk ajax saja!
      * @param null $nim
      */
-    public function ips($nim = null)
+    public function ips(Request $request, $nim = null)
     {
-        $nim = ($nim === null? \Session::get('username', 'NOTHING') : $nim);
+        $nim = $this->factory->getNIM($nim);
 
         return view('mahasiswa.hasil-study.ips')
+            ->with('nim', $nim)
             ->with('data', $this->factory->loadDataPerhitunganIPS($nim));
     }
 
