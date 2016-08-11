@@ -17,6 +17,9 @@ class RincianStudi extends Model
     public $incrementing = false;
     public $timestamps = false;
 
+    const STATUS_TAMPIL_DI_TRANSKRIP_YA = 1;
+    const STATUS_TAMPIL_DI_TRANSKRIP_TDK = 0;
+
     /**
      * Nilai dari PK didapatkan dari kalkulasi md5 terhadap nilai $pengampu_kelas_id dan $nim
      * @param $pengampu_kelas_id

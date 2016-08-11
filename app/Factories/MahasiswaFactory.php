@@ -127,7 +127,13 @@ class MahasiswaFactory extends AbstractFactory
      */
     public static function getNIM($nim = null)
     {
-        return $nim === null ? \Session::get('username', 'NOTHING'): $nim;
+        return ($nim === null?
+            (
+            \Request::input('nim') === null ?
+                \Session::get('username', 'NOTHING') :
+                \Request::input('nim')
+            )
+            : $nim);
     }
 
     /**

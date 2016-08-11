@@ -28,12 +28,18 @@ class HasilStudyMahasiswaFactory extends MahasiswaFactory
         $ta = isset($filter['ta'][0]) ? $filter['ta']: null;
         // semester
         $sem = isset($filter['sem'][0]) ? $filter['sem']: null;
+        // agar dapat digunakan oleh akma, maka tambahkan customisasi terhadap Nomor Induk Mahasiswa, sehingga tidak lagi
+        // default lewat session
+        $nim = isset($filter['nim'][0]) ? $filter['nim']: null;
+        if($nim===null) {
+            $nim = \Session::get('username', 'NOTHING'); // bila nilai tidak ada maka ini mahasiswa yang login
+        }
         $builder = \DB::table('rencana_studi as rs')
             ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
             ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')
             ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
             // user ini login sebagai mahasiswa, dan username mahasiswa adalah NIM nya
-            ->where('rs.mahasiswa_id', '=', \Session::get('username', 'NOTHING'));
+            ->where('rs.mahasiswa_id', '=', $nim);
 //            ->orderBy('rs.tahun_ajaran')
 //            ->orderBy('mk.semester');
 
@@ -45,9 +51,10 @@ class HasilStudyMahasiswaFactory extends MahasiswaFactory
         }
         // sekarang selectnya ... harus explisit
         $builder = $builder->select(['rs.tahun_ajaran', 'mk.nama as mata_kuliah', 'mk.kode as kode_mata_kuliah',
-            'ris.semester', 'mk.sks', 'ris.nilai_huruf', 'ris.nilai_angka', 'ris.status_lulus']);
+            'ris.semester', 'mk.sks', 'ris.nilai_huruf', 'ris.nilai_angka', 'ris.status_lulus',
+            'ris.tampil_di_transkrip', 'ris.id as ris_id']);
 
-        \Log::debug($builder->toSql(), ['ta'=>$ta]);
+//        \Log::debug($builder->toSql(), ['ta'=>$ta, 'nim' => $nim]);
 
         // kembalikan datanya!
         return $this->getBTData($pagination,
@@ -122,6 +129,8 @@ SQL;
                 ->join('rincian_studi as ris', function($join) {
                     $join->on('ris.rencana_studi_id', '=', 'rs.id');
                     $join->where('ris.nilai_angka', '>', 0);
+                    // jangan tampilkan yang tidak boleh tampil di transkrip #29
+                    $join->where('ris.tampil_di_transkrip', '<>', 0);
                 })
 //                ->join('rincian_studi as ris', 'ris.rencana_studi_id', '=', 'rs.id')
                 ->join('pengampu_kelas as pk', 'pk.id', '=', 'ris.kelas_diambil_id')

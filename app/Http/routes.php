@@ -87,6 +87,10 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/akma/persetujuanFRS/getDT', ['as' => 'akma.persetujuanFRS.getDT', 'uses' => 'Akma\PersetujuanFRSController@getDataBtTable']);
         Route::post('/akma/persetujuanFRS/status/{idFRS}', ['as' => 'akma.persetujuanFRS.status', 'uses' => 'Akma\PersetujuanFRSController@postStatus']);
 
+        // MK Double
+        Route::get('/akma/mkdouble/', ['as' => 'akma.mkdouble', 'uses' => 'Akma\FilterMKDoubleController@index']);
+        Route::post('/akma/mkdouble/status/{idRincianStudi}', ['as' => 'akma.mkdouble.status', 'uses' => 'Akma\FilterMKDoubleController@postStatus']);
+
     });
 
 });
