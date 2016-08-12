@@ -37,7 +37,7 @@ class IsiFRSFactory extends AbstractFactory
      */
     public function tentukanModeAwal($nim = null)
     {
-        $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        $nim = MahasiswaFactory::getNIM($nim);
         // check bila mahasiswa ini sudah lulus?
         $mhs = Mahasiswa::whereNomorInduk($nim)->first();
         if(array_search($mhs->status, MahasiswaFactory::getStatusSudahTidakKuliahLagi()) !== false) {
@@ -84,7 +84,7 @@ class IsiFRSFactory extends AbstractFactory
      */
     public function mulaiPengisianFRS($nim = null)
     {
-        $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        $nim = MahasiswaFactory::getNIM($nim);
         $ta = ReferensiAkademikFactory::getTAAktif();
         $mhs = Mahasiswa::whereNomorInduk($nim)->first();
         try {
@@ -166,7 +166,7 @@ SQL;
      */
     public function pilihKelasIni($kodeKelas, $nim = null)
     {
-        $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        $nim = MahasiswaFactory::getNIM($nim);
         try {
             \DB::transaction(function () use ($kodeKelas, $nim) {
                 $ta = ReferensiAkademikFactory::getTAAktif();
@@ -198,7 +198,7 @@ SQL;
      */
     public function batalkanPemilihanKelasIni($kodeKelas, $nim = null)
     {
-        $nim = $nim === null ? \Session::get("username", "NOTHING"): $nim;
+        $nim = MahasiswaFactory::getNIM($nim);
         try {
             \DB::transaction(function () use ($kodeKelas, $nim) {
                 $ta = ReferensiAkademikFactory::getTAAktif();
