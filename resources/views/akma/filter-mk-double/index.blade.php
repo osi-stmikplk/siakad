@@ -15,6 +15,7 @@
                                data-ic-target="#modal-util-body"
                                data-ic-get-from="/mhs/hasilStudy/ips"
                                data-ic-include="#nim"
+                               data-ic-trigger-on="nim-sudah-tersedia"
                                title="Indek Prestasi Sementara Per Semester"
                                class="form-control btn btn-primary">Riwayat Akademik</a>
                             <a id="cmdTranskrip" target="_blank" href="#"
@@ -123,16 +124,22 @@
         $('#mhs-hasil-study').on('padaSetelahReset', KHS.padaSetelahReset);
         $('#cmdTranskrip').on('click', function(e) {
             nim = $('#nim').val();
+            if(nim.trim().length <= 0) {
+                alert("Tentukan dulu NIM yang ingin di proses!");
+                return false;
+            }
             $(this).attr('href', '/mhs/hasilStudy/ipk/'+nim);
             return true;
         });
-//        $('#cmdRiwayatAkademik').on('click', function(e) {
-//            nim = $('#nim').val();
-//            $(this).data('ic-src', '/mhs/hasilStudy/ips/' + nim);
-//            Intercooler.triggerRequest($(this), function(data) {
-//                $('#modal-util-body').html(data);
-//            });
-//        });
+        $('#cmdRiwayatAkademik').on('click', function(e) {
+            nim = $('#nim').val();
+            if(nim.trim().length <= 0) {
+                alert("Tentukan dulu NIM yang ingin di proses!");
+                return false;
+            }
+            $(this).trigger('nim-sudah-tersedia');
+            return true;
+        });
     });
 </script>
 @endpush
