@@ -121,8 +121,9 @@ class MahasiswaFactory extends AbstractFactory
     }
 
     /**
-     * Fungsi untuk mendapatkan Nomor Induk Mahasiswa. Bila nilai param $nim adalah NULL maka diambil dari session dan
-     * dianggap bahwa yang login sekarang adalah mahasiswa.
+     * Fungsi untuk mendapatkan Nomor Induk Mahasiswa. Bila nilai param $nim adalah NULL maka diambil dari input (apakah
+     * itu dari FORM maupun QUERY ataupun GET), kalau tidak ada maka ambil dari session, untuk session kita anggap bahwa
+     * yang login sekarang adalah mahasiswa.
      * @param string $nim
      */
     public static function getNIM($nim = null)
