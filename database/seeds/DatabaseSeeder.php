@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         }
         try {
             \DB::transaction(function () {
+                $this->call(ReferensiAkademikSeeder::class);
                 $this->call(OtorisasiSeeder::class);
                 $this->call(JurusanSeeder::class);
                 $this->call(PegawaiSeeder::class);
