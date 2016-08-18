@@ -47,6 +47,7 @@
                                 <th data-field="nama_dosen" data-sortable="true">Dosen</th>
                                 <th data-field="kelas" data-sortable="true">Kelas</th>
                                 <th data-field="quota" data-sortable="true">Quota</th>
+                                <th data-field="jumlah_peminat" data-sortable="true">Peminat</th>
                                 {{--<th data-field="tahun_ajaran" data-sortable="true">TA</th>--}}
                                 {{--<th data-field="status_bayar" data-sortable="true">Status Pelunasan</th>--}}
                                 {{--<th data-field="jenis_aturan" data-sortable="true">Jenis Aturan</th>--}}

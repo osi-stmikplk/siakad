@@ -44,7 +44,7 @@ class DosenKelasMKFactory extends AbstractFactory
         }
         // harus di set untuk select nya ...
         $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk',
-            'd.nama as nama_dosen', 'j.nama as nama_jurusan']);
+            'd.nama as nama_dosen', 'j.nama as nama_jurusan', 'pk.jumlah_peminat']);
 
         return $this->getBTData($pagination,
             $builder,
