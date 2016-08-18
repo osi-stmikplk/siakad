@@ -102,4 +102,9 @@ class DosenKelasMKController extends Controller
         }
         return response(json_encode($this->factory->getErrors()), 500,['X-IC-Remove'=>false]);
     }
+
+    public function formAbsensi($idKelas)
+    {
+        $mahasiswa = $this->factory->dapatkanMahasiswaPengambilKelas($idKelas);
+    }
 }

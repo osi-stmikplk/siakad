@@ -12,6 +12,7 @@ namespace Stmik\Factories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Stmik\PengampuKelas;
+use Stmik\RencanaStudi;
 
 class DosenKelasMKFactory extends AbstractFactory
 {
@@ -216,5 +217,18 @@ class DosenKelasMKFactory extends AbstractFactory
     {
         return PengampuKelas::whereTahunAjaran($tahunAjaran)
             ->whereDosenId($idSiDosen)->get();
+    }
+
+    public function dapatkanMahasiswaPengambilKelas($idKelas)
+    {
+        // dapatkan sekaligus dengan rencana studi yang merencanakan kelas ini
+        $pengampuKelas = PengampuKelas::with(['rincianStudi', 'rincianStudi.rencanaStudi' => function($q) {
+                $q->whereStatus(RencanaStudi::STATUS_DISETUJUI); // hanya load yang disetujui
+                $q->select('id', 'mahasiswa_id', 'status');
+                $q->with(['mahasiswa'=>function($q) {
+                    $q->select('nama', 'nomor_induk');
+                }]); // tambahkan eager loading mahasiswa!
+            }]);
+        return $pengampuKelas;
     }
 }
