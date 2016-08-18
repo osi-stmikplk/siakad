@@ -61,7 +61,8 @@
         <div class="col-md-9">
             <select name="mata_kuliah_id" id="mata_kuliah_id" class="form-control">
                 @if(!is_null($data))
-                    {!! load_select('mata_kuliah_id', \Stmik\Factories\MasterMataKuliahFactory::getMataKuliahListsBerdasarkan($data->mataKuliah->jurusan->id),
+                    {!! load_select('mata_kuliah_id',
+                    \Stmik\Factories\MasterMataKuliahFactory::getMataKuliahListsBerdasarkan($data->mataKuliah->jurusan->id),
                         $data->mataKuliah->id, [], ['Pilih Mata Kuliah'], true) !!}
                 @endif
             </select>

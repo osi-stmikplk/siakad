@@ -12,6 +12,7 @@ namespace Stmik\Factories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Stmik\PengampuKelas;
+use Stmik\RencanaStudi;
 
 class DosenKelasMKFactory extends AbstractFactory
 {
@@ -216,5 +217,18 @@ class DosenKelasMKFactory extends AbstractFactory
     {
         return PengampuKelas::whereTahunAjaran($tahunAjaran)
             ->whereDosenId($idSiDosen)->get();
+    }
+
+    public function dapatkanMahasiswaPengambilKelas($idKelas)
+    {
+        $mahasiwa = \DB::table('pengampu_kelas as pk')
+            ->where('pk.id', $idKelas)
+            ->join('rincian_studi as ris', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
+            ->join('mahasiswa as mhs', 'mhs.nomor_induk', '=', 'rs.mahasiswa_id')
+            ->select('mhs.nomor_induk', 'mhs.nama')
+            ->orderBy('mhs.nomor_induk', 'asc');
+
+        return $mahasiwa->get();
     }
 }
