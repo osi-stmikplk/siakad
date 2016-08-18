@@ -78,7 +78,7 @@
                 '<a data-ic-confirm="Data yang terhapus tidak dapat dikembalikan, yakin menghapus?" ' +
                 'data-ic-target="closest tr" data-ic-delete-from="/akma/dkmk/delete/' + row['id'] + '" title="Hapus ..." ' +
                 'class="btn btn-xs bg-red"><i class="fa fa-trash-o"></i></a>',
-                '<a href="/akma/dkmk/absensi/' + row['id'] + '" title="Cetak Form Absensi Mata Kuliah..." ' +
+                '<a target="_blank" href="/akma/dkmk/absensi/' + row['id'] + '" title="Cetak Form Absensi Mata Kuliah..." ' +
                 'class="btn btn-xs bg-aqua-active"><i class="fa fa-list-ol"></i></a>'
             ].join('&nbsp;');
         },

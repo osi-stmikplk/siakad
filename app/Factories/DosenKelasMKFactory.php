@@ -221,14 +221,14 @@ class DosenKelasMKFactory extends AbstractFactory
 
     public function dapatkanMahasiswaPengambilKelas($idKelas)
     {
-        // dapatkan sekaligus dengan rencana studi yang merencanakan kelas ini
-        $pengampuKelas = PengampuKelas::with(['rincianStudi', 'rincianStudi.rencanaStudi' => function($q) {
-                $q->whereStatus(RencanaStudi::STATUS_DISETUJUI); // hanya load yang disetujui
-                $q->select('id', 'mahasiswa_id', 'status');
-                $q->with(['mahasiswa'=>function($q) {
-                    $q->select('nama', 'nomor_induk');
-                }]); // tambahkan eager loading mahasiswa!
-            }]);
-        return $pengampuKelas;
+        $mahasiwa = \DB::table('pengampu_kelas as pk')
+            ->where('pk.id', $idKelas)
+            ->join('rincian_studi as ris', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
+            ->join('mahasiswa as mhs', 'mhs.nomor_induk', '=', 'rs.mahasiswa_id')
+            ->select('mhs.nomor_induk', 'mhs.nama')
+            ->orderBy('mhs.nomor_induk', 'asc');
+
+        return $mahasiwa->get();
     }
 }
