@@ -41,6 +41,7 @@
                             <thead>
                             <tr>
                                 <th data-field="id" data-sortable="true" data-visible="false">ID</th>
+                                <th data-field="semester" data-sortable="true">SMT</th>
                                 <th data-field="tahun_ajaran" data-sortable="true">Tahun Ajaran</th>
                                 <th data-field="nama_jurusan" data-sortable="true">Jurusan</th>
                                 <th data-field="nama_mk" data-sortable="true">Mata Kuliah</th>

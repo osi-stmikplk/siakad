@@ -43,12 +43,12 @@ class DosenKelasMKFactory extends AbstractFactory
             $builder = $builder->whereTahunAjaran($ta);
         }
         // harus di set untuk select nya ...
-        $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk',
+        $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk', 'mk.semester',
             'd.nama as nama_dosen', 'j.nama as nama_jurusan', 'pk.jumlah_peminat']);
 
         return $this->getBTData($pagination,
             $builder,
-            ['id', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen', 'nama_jurusan', 'nama_mk'], // yang bisa dicari
+            ['id', 'semester', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen', 'nama_jurusan', 'nama_mk'], // yang bisa dicari
             ['id'=>'pk.id', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen'=>'d.nama', 'nama_jurusan'=>'j.nama', 'nama_mk'=>'mk.nama'] // mapping
         );
 
