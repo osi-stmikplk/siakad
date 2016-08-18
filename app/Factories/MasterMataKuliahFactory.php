@@ -155,10 +155,10 @@ class MasterMataKuliahFactory extends AbstractFactory
     {
         $r = MataKuliah::whereStatus(MataKuliah::STATUS_AKTIF)
             ->whereJurusanId($jurusan)
-            ->orderBy('nama')->get(['id', 'nama', 'sks', 'semester']);
+            ->orderBy('nama')->get(['id', 'kode', 'nama', 'sks', 'semester']);
         $a = [];
         foreach ($r as $item) {
-            $a[$item->id] = $item->nama . " (" . $item->sks . " SKS - Semester " . $item->semester .")";
+            $a[$item->id] = $item->kode . ' - ' . $item->nama . " (" . $item->sks . " SKS - Semester " . $item->semester .")";
         }
         return $a;
     }

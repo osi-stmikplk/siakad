@@ -51,4 +51,13 @@ class PengampuKelas extends Model
     {
         return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
     }
+
+    /**
+     * Ambil rincian studi yang memasukkan kelas ini!
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rincianStudi()
+    {
+        return $this->hasMany(RincianStudi::class, 'kelas_diambil_id');
+    }
 }

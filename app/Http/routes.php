@@ -42,6 +42,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/akma/dkmk/update/{id}', ['as' => 'akma.dkmk.update', 'uses' => 'Akma\DosenKelasMKController@update']);
         Route::get('/akma/dkmk/getDT', ['as' => 'akma.dkmk.getDT', 'uses' => 'Akma\DosenKelasMKController@getDataBtTable']);
         Route::delete('/akma/dkmk/delete/{id}', ['as' => 'akma.dkmk.delete', 'uses' => 'Akma\DosenKelasMKController@delete']);
+        Route::get('/akma/dkmk/absensi/{idKelas}', ['as' => 'akma.dkmk.absensi', 'uses' => 'Akma\DosenKelasMKController@formAbsensi']);
 
         // master mahasiswa
         Route::get('/master/mahasiswa/', ['as' => 'master.mahasiswa', 'uses' => 'Master\MahasiswaController@index']);
