@@ -102,4 +102,17 @@ class DosenKelasMKController extends Controller
         }
         return response(json_encode($this->factory->getErrors()), 500,['X-IC-Remove'=>false]);
     }
+
+    /**
+     * Kembalikan form absensi
+     * @param $idKelas
+     * @return $this
+     */
+    public function formAbsensi($idKelas)
+    {
+        $mahasiswa = $this->factory->dapatkanMahasiswaPengambilKelas($idKelas);
+        return view('akma.dosen-kelas-mk.form-absensi')
+            ->with('dataKelas', $this->factory->getDataDosenKelasMKBerdasarkan($idKelas))
+            ->with('mahasiswa', $mahasiswa);
+    }
 }
