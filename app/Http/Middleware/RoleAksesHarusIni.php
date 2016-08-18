@@ -3,6 +3,7 @@
 namespace Stmik\Http\Middleware;
 
 use Closure;
+use Stmik\User;
 
 /**
  * Class RoleAksesHarusIni
@@ -22,11 +23,16 @@ class RoleAksesHarusIni
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$role)
     {
+        /** @var User $user */
         $user = $request->user();
         if(!$user->hasRole('admin')) {
-            if (!$user->hasRole($role)) {
+            $roles = $role;
+            if(!is_array($role)) {
+                $roles = [ $role ];
+            }
+            if (!$user->hasRoles($role)) {
                 if ($request->ajax()) {
                     return response('Unauthorized.', 401);
                 } else {

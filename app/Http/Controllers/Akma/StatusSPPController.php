@@ -26,7 +26,7 @@ class StatusSPPController extends Controller
     {
         $this->factory = $statusSPPFactory;
 
-        $this->middleware('auth.role:akma');
+        $this->middleware('auth.role:akma,keuangan');
     }
 
     /**
