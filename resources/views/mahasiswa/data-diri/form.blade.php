@@ -48,13 +48,13 @@
     <div class="form-group">
         <label for="status" class="col-md-3 control-label">Status</label>
         <div class="col-md-9">
-            <p class="form-control-static">{{ load_input_value($data, "status") }}</p>
+            <p class="form-control-static">{{ $data->status_string }}</p>
         </div>
     </div>
     <div class="form-group">
         <label for="status_awal_masuk" class="col-md-3 control-label">Status Awal Masuk</label>
         <div class="col-md-9">
-            <p class="form-control-static">{{ load_input_value($data, "status_awal_masuk") }}</p>
+            <p class="form-control-static">{{ $data->status_awal_masuk_string }}</p>
             <div id="error-status_awal_masuk" class="error"></div>
         </div>
     </div>
