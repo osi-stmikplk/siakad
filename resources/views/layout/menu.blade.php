@@ -68,6 +68,18 @@
                 </ul>
             </li>
             @endcan
+            @can('mengaksesIniRolenyaHarus', 'keuangan')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-university"></i>
+                    <span>Keuangan</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('akma.spp') }}"><i class="fa fa-circle-o"></i> Status SPP</a></li>
+                </ul>
+            </li>
+            @endcan
         </ul>
     </section>
     <!-- /.sidebar -->
