@@ -28,6 +28,7 @@ class DosenKelasMKFactory extends AbstractFactory
         $filter = isset($pagination['otherQuery']['filter'])? $pagination['otherQuery']['filter']: [];
         $jurusan = isset($filter['jurusan'][0]) ? $filter['jurusan']: null;
         $ta = isset($filter['ta'][0]) ? $filter['ta']: null;
+        $semester = isset($filter['semester'][0]) ? $filter['semester']: null;
 
         $builder = \DB::table('pengampu_kelas as pk')
             ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
@@ -41,6 +42,9 @@ class DosenKelasMKFactory extends AbstractFactory
 
         if($ta!==null) {
             $builder = $builder->whereTahunAjaran($ta);
+        }
+        if($semester!==null) {
+            $builder = $builder->where('mk.semester', '=', $semester);
         }
         // harus di set untuk select nya ...
         $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk', 'mk.semester',
