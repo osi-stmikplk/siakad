@@ -22,6 +22,7 @@
                                 {!! load_select('ta', \Stmik\Factories\JurusanFactory::getJurusanLists(),
                                     0, [], ['Pilih Jurusan'], true) !!}
                             </select>
+                            <input type="text" id="semester" name="semester" placeholder="SMT" class="form-control" size="3">
                             <a onclick="DosenKlsMK.sendFilter(event)" id="send-filter" class="form-control btn btn-sm btn-warning"><i class="fa fa-exchange"></i> </a>
                         </form>
                         <table id="kelas-mk-dosen" class="table"
@@ -41,6 +42,7 @@
                             <thead>
                             <tr>
                                 <th data-field="id" data-sortable="true" data-visible="false">ID</th>
+                                <th data-field="semester" data-sortable="true">SMT-MTK</th>
                                 <th data-field="tahun_ajaran" data-sortable="true">Tahun Ajaran</th>
                                 <th data-field="nama_jurusan" data-sortable="true">Jurusan</th>
                                 <th data-field="nama_mk" data-sortable="true">Mata Kuliah</th>
@@ -86,7 +88,8 @@
         addFilter: function (p) {
             p.filter = {
                 'ta' : $('#ta').val(),
-                'jurusan': $('#jurusan').val()
+                'jurusan': $('#jurusan').val(),
+                'semester': $('#semester').val()
             };
             return p;
         },
