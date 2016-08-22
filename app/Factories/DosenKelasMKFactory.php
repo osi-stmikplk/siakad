@@ -216,6 +216,7 @@ class DosenKelasMKFactory extends AbstractFactory
      * @param $tahunAjaran
      * @param $idSiDosen
      * @return mixed
+	 * tambah filter utk cetak daftar hadir hanya status FRS yg DISETUJUI, pake konstanta 
      */
     public function dapatkanKelasDosenPada($tahunAjaran, $idSiDosen)
     {
