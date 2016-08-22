@@ -227,7 +227,7 @@ class DosenKelasMKFactory extends AbstractFactory
     {
         $mahasiwa = \DB::table('pengampu_kelas as pk')
             ->where('pk.id', $idKelas)
-            ->where('rs.status', 'DISETUJUI')
+            ->where('rs.status', RencanaStudi::STATUS_DISETUJUI)
             ->join('rincian_studi as ris', 'pk.id', '=', 'ris.kelas_diambil_id')
             ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
             ->join('mahasiswa as mhs', 'mhs.nomor_induk', '=', 'rs.mahasiswa_id')
