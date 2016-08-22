@@ -48,7 +48,7 @@ class DosenKelasMKFactory extends AbstractFactory
         }
         // harus di set untuk select nya ...
         $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk', 'mk.semester',
-            'd.nama as nama_dosen', 'j.nama as nama_jurusan', 'pk.jumlah_peminat']);
+            'd.nama as nama_dosen', 'j.nama as nama_jurusan', 'pk.jumlah_peminat', 'pk.jumlah_pengambil']);
 
         return $this->getBTData($pagination,
             $builder,
@@ -216,6 +216,7 @@ class DosenKelasMKFactory extends AbstractFactory
      * @param $tahunAjaran
      * @param $idSiDosen
      * @return mixed
+	 * tambah filter utk cetak daftar hadir hanya status FRS yg DISETUJUI, pake konstanta 
      */
     public function dapatkanKelasDosenPada($tahunAjaran, $idSiDosen)
     {
@@ -227,6 +228,7 @@ class DosenKelasMKFactory extends AbstractFactory
     {
         $mahasiwa = \DB::table('pengampu_kelas as pk')
             ->where('pk.id', $idKelas)
+            ->where('rs.status', RencanaStudi::STATUS_DISETUJUI)
             ->join('rincian_studi as ris', 'pk.id', '=', 'ris.kelas_diambil_id')
             ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
             ->join('mahasiswa as mhs', 'mhs.nomor_induk', '=', 'rs.mahasiswa_id')
