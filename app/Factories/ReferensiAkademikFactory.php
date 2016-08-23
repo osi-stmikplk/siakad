@@ -87,4 +87,16 @@ class ReferensiAkademikFactory extends AbstractFactory
         return $now->between($periode['dari'], $periode['sd']);
     }
 
+    /**
+     * Dapatkan sisa hari dari hari ini sampai waktu berakhir pengisian FRS
+     * @return int
+     */
+    public static function dapatkanSisaHariIsiFRS()
+    {
+        $now = Carbon::now();
+        $ta = self::getTAAktif(); // ambil TA aktif
+        $sd = Carbon::createFromFormat("d-m-Y H:i:s", $ta->tgl_berakhir_isi_krs . " 23:59:59");
+        return $sd->diffInDays($now);
+    }
+
 }

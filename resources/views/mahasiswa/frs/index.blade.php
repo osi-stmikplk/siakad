@@ -9,6 +9,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-calendar-check-o"></i> Jadwal Pengisian FRS:
+                        <span class="label label-warning text-warning">{{ $infoTA->tgl_mulai_isi_krs }}</span>
+                        s/d <span class="label label-danger">{{ $infoTA->tgl_berakhir_isi_krs }}</span>
+                        @if($sisaHari == 0)
+                            <span class="label label-primary">( Hari Ini Terakhir )</span>
+                        @else
+                            <span class="label label-success">( {{ $sisaHari }} Hari Lagi )</span>
+                        @endif
+                    </h3>
+                </div>
                 <div class="box-body">
                     <form id="dt-toolbar" class="form-inline" role="form">
                         <a target="_blank" href="{{ route('mhs.frs.cetakKRS') }}"
