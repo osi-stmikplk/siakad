@@ -68,6 +68,7 @@ class IsiFRSController extends Controller
 
         return view('mahasiswa.frs.'.$view)
             ->with('infoTA', ReferensiAkademikFactory::getTAAktif())
+            ->with('sisaHari', ReferensiAkademikFactory::dapatkanSisaHariIsiFRS())
             ->with('layout', $this->getLayout());
 
     }

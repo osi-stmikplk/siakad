@@ -224,6 +224,11 @@ class DosenKelasMKFactory extends AbstractFactory
             ->whereDosenId($idSiDosen)->get();
     }
 
+    /**
+     * Dapatkan mahasiswa pengambil kelas sesuai dengan $idKelas
+     * @param $idKelas
+     * @return array|static[]
+     */
     public function dapatkanMahasiswaPengambilKelas($idKelas)
     {
         $mahasiwa = \DB::table('pengampu_kelas as pk')
