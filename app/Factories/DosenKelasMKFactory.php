@@ -47,13 +47,15 @@ class DosenKelasMKFactory extends AbstractFactory
             $builder = $builder->where('mk.semester', '=', $semester);
         }
         // harus di set untuk select nya ...
-        $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk', 'mk.semester',
+		// tambah field kode dari tabel matakuliah
+		// request bang @abdidnugraha
+        $builder = $builder->select(['pk.id', 'pk.tahun_ajaran', 'pk.kelas', 'pk.quota', 'mk.nama as nama_mk', 'mk.kode as kode_mk', 'mk.semester',
             'd.nama as nama_dosen', 'j.nama as nama_jurusan', 'pk.jumlah_peminat', 'pk.jumlah_pengambil']);
 
         return $this->getBTData($pagination,
             $builder,
-            ['id', 'semester', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen', 'nama_jurusan', 'nama_mk'], // yang bisa dicari
-            ['id'=>'pk.id', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen'=>'d.nama', 'nama_jurusan'=>'j.nama', 'nama_mk'=>'mk.nama'] // mapping
+            ['id', 'semester', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen', 'nama_jurusan', 'kode_mk', 'nama_mk'], // yang bisa dicari
+            ['id'=>'pk.id', 'tahun_ajaran', 'kelas', 'quota', 'nama_dosen'=>'d.nama', 'nama_jurusan'=>'j.nama', 'nama_mk'=>'mk.nama', 'kode_mk'=>'mk.kode'] // mapping
         );
 
     }
