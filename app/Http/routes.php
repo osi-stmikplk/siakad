@@ -92,6 +92,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/akma/mkdouble/', ['as' => 'akma.mkdouble', 'uses' => 'Akma\FilterMKDoubleController@index']);
         Route::post('/akma/mkdouble/status/{idRincianStudi}', ['as' => 'akma.mkdouble.status', 'uses' => 'Akma\FilterMKDoubleController@postStatus']);
 
+        Route::get('/akma/editmkmhs/', ['as' => 'akma.editmkmhs', 'uses' => 'Akma\EditMKMahasiswaController@index']);
+
     });
 
 });

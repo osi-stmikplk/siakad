@@ -63,6 +63,7 @@
                 <ul class="treeview-menu">
                     <li><a href="{{ route('akma.spp') }}"><i class="fa fa-circle-o"></i> Status SPP</a></li>
                     <li><a href="{{ route('akma.dkmk') }}"><i class="fa fa-circle-o"></i> Kelas & Dosen</a></li>
+                    <li><a href="{{ route('akma.editmkmhs') }}"><i class="fa fa-circle-o"></i> Edit MK Mahasiswa</a></li>
                     <li><a href="{{ route('akma.persetujuanFRS') }}"><i class="fa fa-circle-o"></i> Persetujuan KRS</a></li>
                     <li><a href="{{ route('akma.mkdouble') }}"><i class="fa fa-circle-o"></i> Filter MK Transkrip</a></li>
                 </ul>
@@ -71,7 +72,7 @@
             @can('mengaksesIniRolenyaHarus', 'keuangan')
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-university"></i>
+                    <i class="fa fa-dollar"></i>
                     <span>Keuangan</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
