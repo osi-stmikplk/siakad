@@ -45,6 +45,7 @@
                                 <th data-field="semester" data-sortable="true">SMT-MTK</th>
                                 <th data-field="tahun_ajaran" data-sortable="true">Tahun Ajaran</th>
                                 <th data-field="nama_jurusan" data-sortable="true">Jurusan</th>
+                                <th data-field="kode_mk" data-sortable="true">Kode</th>
                                 <th data-field="nama_mk" data-sortable="true">Mata Kuliah</th>
                                 <th data-field="nama_dosen" data-sortable="true">Dosen</th>
                                 <th data-field="kelas" data-sortable="true">Kelas</th>
