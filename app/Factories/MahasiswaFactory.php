@@ -8,6 +8,7 @@
 
 namespace Stmik\Factories;
 
+use Illuminate\Support\Arr;
 use Stmik\Mahasiswa;
 use Stmik\User;
 
@@ -128,13 +129,20 @@ class MahasiswaFactory extends AbstractFactory
      */
     public static function getNIM($nim = null)
     {
-        return ($nim === null?
-            (
-            \Request::input('nim') === null ?
-                \Session::get('username', 'NOTHING') :
-                \Request::input('nim')
-            )
-            : $nim);
+        if($nim === null) {
+            $nim = \Session::get('username', 'NOTHING'); // default kita anggap mahasiswa
+        }
+        // hanya non mahasiswa : akma dan keuangan yang dapat melakukan query menentukan nim
+        if(!\Auth::user()->owner instanceof Mahasiswa) {
+            // untuk mengakses ini harus akma atau keuangan
+            // coba check dari Bootstrap table
+            if(\Request::input('nim')!==null) {
+                $nim = \Request::input('nim', $nim);
+            } elseif(\Request::input('filter.nim')!==null) {
+                $nim = \Request::input('filter.nim', $nim);
+            }
+        }
+        return $nim;
     }
 
     /**

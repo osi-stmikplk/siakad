@@ -114,8 +114,26 @@ class IsiFRSFactory extends AbstractFactory
         $filter = isset($pagination['otherQuery']['filter'])? $pagination['otherQuery']['filter']: [];
         // TA Aktif?
         $ta = ReferensiAkademikFactory::getTAAktif();
-        $nim = \Session::get("username", "NOTHING");
-        $jurusan = \Auth::user()->owner->jurusan_id;
+        // bila ada filter tahun ajaran maka set untuk tahun ajaran
+        $ta = isset($filter['ta'][0]) ? $filter['ta']: $ta;
+        // sekarang NIM
+        $nim = MahasiswaFactory::getNIM();
+        // sekarang jurusan, kalau user yang login adalah mahasiswa maka ambil dari session
+        if(\Auth::user()->owner instanceof Mahasiswa) {
+            $jurusan = \Auth::user()->owner->jurusan_id;
+        } else {
+            // kalau tidak harus di set filter bernama jurusan
+            $jurusan = isset($filter['jurusan'][0]) ? $filter['jurusan'] : null;
+            if($jurusan===null) {
+                // query kalau masih belum ada di set!
+                try {
+                    $jurusan = Mahasiswa::findOrFail($nim)->jurusan_id;
+                } catch(\Exception $e) {
+                    \Log::alert("Jurusan Tidak dapat, kemungkinan NIM tidak benar", ['nim'=>$nim, 'nim2'=>\Request::get('filter.nim')]);
+                    $jurusan = 0;
+                }
+            }
+        }
         // apa yang ditampilkan di sini?
         $tampil = (int)isset($filter['tampil'][0]) ? $filter['tampil']: null;
 
