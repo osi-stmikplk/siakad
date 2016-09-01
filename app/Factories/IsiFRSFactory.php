@@ -85,7 +85,7 @@ class IsiFRSFactory extends AbstractFactory
     public function mulaiPengisianFRS($nim = null)
     {
         $nim = MahasiswaFactory::getNIM($nim);
-        $ta = ReferensiAkademikFactory::getTAAktif();
+        $ta = $this->dapatkanPengisianTA();
         $mhs = Mahasiswa::whereNomorInduk($nim)->first();
         try {
             $rs = new RencanaStudi();
@@ -105,6 +105,24 @@ class IsiFRSFactory extends AbstractFactory
     }
 
     /**
+     * Karena ini bisa digunakan oleh pihak AKMA untuk pengisian dan proses TA dapat di entry dari inputan filter, maka
+     * proses akan melakukan pengambilan dari inputan data filter['ta'].
+     * @return mixed
+     */
+    protected function dapatkanPengisianTA()
+    {
+        $tab = ReferensiAkademikFactory::getTAAktif();
+        if(\Auth::user()->owner instanceof Mahasiswa)
+            return $tab; // khusus mahasiswa tidak dapat memilih TahunAjaran aktif untuk pengisian KRS!
+        if( isset(\Request::input('filter.ta')[0]) && // ada inputannya
+            strcmp(\Request::input('filter.ta'), $tab->tahun_ajaran)!==0 // filter ini tidak sama dengan TA aktif
+        ) {
+            return ReferensiAkademikFactory::getTAData(\Request::input('filter.ta'));
+        }
+        return $tab;
+    }
+
+    /**
      * Lakukan penampilan grid pilihan
      * @param $pagination
      * @param Request $request
@@ -112,15 +130,8 @@ class IsiFRSFactory extends AbstractFactory
     public function getBTTable($pagination, Request $request)
     {
         $filter = isset($pagination['otherQuery']['filter'])? $pagination['otherQuery']['filter']: [];
-        // TA Aktif?
-        $ta = ReferensiAkademikFactory::getTAAktif();
-        // bila ada filter tahun ajaran maka set untuk tahun ajaran
-        if(isset($filter['ta'][0])) {
-            if(strcmp($filter['ta'], $ta->tahun_ajaran)!==0) {
-                // dapatkan kembali data tahun ajaran
-                $ta = ReferensiAkademikFactory::getTAData($filter['ta']);
-            }
-        }
+        // TA terpilih?
+        $ta = $this->dapatkanPengisianTA();
         // sekarang NIM
         $nim = MahasiswaFactory::getNIM();
         // sekarang jurusan, kalau user yang login adalah mahasiswa maka ambil dari session
@@ -190,11 +201,22 @@ SQL;
     public function pilihKelasIni($kodeKelas, $nim = null)
     {
         $nim = MahasiswaFactory::getNIM($nim);
+        $ta = $this->dapatkanPengisianTA();
         try {
-            \DB::transaction(function () use ($kodeKelas, $nim) {
-                $ta = ReferensiAkademikFactory::getTAAktif();
+            \DB::transaction(function () use ($kodeKelas, $nim, $ta) {
                 // dapatkan rencana studi yang sudah pasti terbuat untuk tahun ajaran aktif ini!
                 $rs = RencanaStudi::whereTahunAjaran($ta->tahun_ajaran)->whereMahasiswaId($nim)->first();
+                if($rs === null) {
+                    // data RencanaStudi masih NULL / belum dibuat maka ini harus dibuat! Hal ini bisa terjadi karena
+                    // pengisian manual oleh AKMA dan Mahasiswa belum melakukan pengisian (Input terlambat)
+                    $this->mulaiPengisianFRS($nim);
+                    // query ulang
+                    $rs = RencanaStudi::whereTahunAjaran($ta->tahun_ajaran)->whereMahasiswaId($nim)->first();
+                    if($rs === null) {
+                        throw new \Exception('PANIK PANIK! Login Non Mahasiswa & RencanaStudi Tidak dapat dibuat,'
+                            .' hubungi pengembang!');
+                    }
+                }
                 // lakukan proses pembuatan rincian study
                 $ris = new RincianStudi();
                 $ris->kelas_diambil_id = $kodeKelas;
@@ -222,9 +244,9 @@ SQL;
     public function batalkanPemilihanKelasIni($kodeKelas, $nim = null)
     {
         $nim = MahasiswaFactory::getNIM($nim);
+        $ta = $this->dapatkanPengisianTA();
         try {
-            \DB::transaction(function () use ($kodeKelas, $nim) {
-                $ta = ReferensiAkademikFactory::getTAAktif();
+            \DB::transaction(function () use ($kodeKelas, $nim, $ta) {
                 // ambil rincian studi terlebih dahulu karena di sini ada nim
                 $rs = RencanaStudi::whereTahunAjaran($ta->tahun_ajaran)->whereMahasiswaId($nim)->first();
                 // lalu lakukan penghapusan berdasarkan kodeKelas ...
@@ -288,7 +310,7 @@ SQL;
      */
     public function dapatkanIPSSemesterSebelumnya($nim, $ta = null)
     {
-        $ta = ($ta === null? ReferensiAkademikFactory::getTAAktif()->tahun_ajaran: $ta);
+        $ta = ($ta === null? $this->dapatkanPengisianTA(): $ta);
         $mhs = Mahasiswa::whereNomorInduk($nim)->first();
         $ipsnya = 3;
         // dapatkan semester
