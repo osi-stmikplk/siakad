@@ -121,7 +121,6 @@ class IsiFRSFactory extends AbstractFactory
                 $ta = ReferensiAkademikFactory::getTAData($filter['ta']);
             }
         }
-        $ta = isset($filter['ta'][0]) ? $filter['ta']: $ta;
         // sekarang NIM
         $nim = MahasiswaFactory::getNIM();
         // sekarang jurusan, kalau user yang login adalah mahasiswa maka ambil dari session
