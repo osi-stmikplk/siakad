@@ -115,6 +115,12 @@ class IsiFRSFactory extends AbstractFactory
         // TA Aktif?
         $ta = ReferensiAkademikFactory::getTAAktif();
         // bila ada filter tahun ajaran maka set untuk tahun ajaran
+        if(isset($filter['ta'][0])) {
+            if(strcmp($filter['ta'], $ta->tahun_ajaran)!==0) {
+                // dapatkan kembali data tahun ajaran
+                $ta = ReferensiAkademikFactory::getTAData($filter['ta']);
+            }
+        }
         $ta = isset($filter['ta'][0]) ? $filter['ta']: $ta;
         // sekarang NIM
         $nim = MahasiswaFactory::getNIM();
