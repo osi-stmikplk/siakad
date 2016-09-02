@@ -26,6 +26,18 @@ class ReferensiAkademikFactory extends AbstractFactory
     }
 
     /**
+     * Dapatkan data Referensi Akademik berdasarkan $tahun_ajaran yang diinginkan
+     * @param string $tahun_ajaran
+     * @return mixed
+     */
+    public static function getTAData($tahun_ajaran)
+    {
+        return pakai_cache("tahun-ajaran-$tahun_ajaran", function() use($tahun_ajaran) {
+            return ReferensiAkademik::whereTahunAjaran($tahun_ajaran)->first();
+        }, 15 ); // simpan selama 15 menit saja
+    }
+
+    /**
      * Dapatkan daftar Tahun Ajaran, penambahan $ranges untuk menambahkan pilihan terhadap range yang ingin ditampilkan.
      * $ranges adalah array yang nantinya dijadikan sebagai opsi pada render Tahun Ajaran. Bila tidak dimasukkan maka
      * yang dikembalikan nilainya adalah semua daftar Tahun Ajaran.

@@ -38,7 +38,7 @@ class IsiFRSController extends Controller
     {
         $this->factory = $factory;
 
-        $this->middleware('auth.role:mahasiswa', [
+        $this->middleware('auth.role:mahasiswa|akma', [
             'except'=> [
                 'cetakKRS'      // jangan dijalankan waktu cetak KRS, ini akan diakses oleh dosen wali,akma dll
             ]
