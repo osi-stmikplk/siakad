@@ -25,7 +25,7 @@
 </style>
 
 <?php
-if($dataKelas->matakuliah->sks >= 4)
+if($dataKelas->mataKuliah->sks >= 4)
     $kolom='24';
 else
     $kolom='16'
