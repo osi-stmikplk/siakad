@@ -94,6 +94,11 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('/akma/editmkmhs/', ['as' => 'akma.editmkmhs', 'uses' => 'Akma\EditMKMahasiswaController@index']);
 
+        // Input Absensi
+        Route::get('/akma/absen/', ['as' => 'akma.absen', 'uses' => 'Akma\InputAbsenController@index']);
+        Route::post('/akma/absen/loadKelas/', ['as' => 'akma.absen.loadKelas', 'uses' => 'Akma\InputAbsenController@loadKelasBerdasarkan']);
+        Route::post('/akma/absen/loadDaftarMahasiswa/', ['as' => 'akma.absen.loadDaftarMahasiswa', 'uses' => 'Akma\InputAbsenController@loadDaftarMahasiswa']);
+        Route::post('/akma/absen/simpan/{kelas}', ['as' => 'akma.absen.simpan', 'uses' => 'Akma\InputAbsenController@simpan']);
     });
 
 });

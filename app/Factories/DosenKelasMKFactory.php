@@ -11,6 +11,7 @@ namespace Stmik\Factories;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Stmik\MataKuliah;
 use Stmik\PengampuKelas;
 use Stmik\RencanaStudi;
 
@@ -243,5 +244,20 @@ class DosenKelasMKFactory extends AbstractFactory
             ->orderBy('mhs.nomor_induk', 'asc');
 
         return $mahasiwa->get();
+    }
+
+    /**
+     * Dapatkan builder daftar kelas pada $tahunAjaran dan $diJurusanIni
+     * @param $tahunAjaran
+     * @param $diJurusanIni
+     * @return mixed
+     */
+    public function builderDapatkanKelasPada($tahunAjaran, $diJurusanIni)
+    {
+        return \DB::table('pengampu_kelas as pk')
+            ->join('mata_kuliah as mk', 'mk.id', '=', 'pk.mata_kuliah_id')
+            ->where('mk.status', '=', MataKuliah::STATUS_AKTIF)
+            ->where('pk.tahun_ajaran', '=', $tahunAjaran)
+            ->where('mk.jurusan_id', '=', $diJurusanIni);
     }
 }
