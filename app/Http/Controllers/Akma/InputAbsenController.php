@@ -24,6 +24,7 @@ class InputAbsenController extends Controller
     public function __construct(InputAbsenFactory $factory)
     {
         $this->factory = $factory;
+        $this->middleware('auth.role:akma');
     }
 
     /**
