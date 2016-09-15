@@ -49,4 +49,7 @@ $('#frmInputAbsen').on('error.ic', function (evt, elt, stat, str, xhr) {
         alert('DAMN! UOHUHOH ... Check log ...');
     }
 });
+@if(isset($msg))
+    alert('{{$msg}}');
+@endif
 </script>
