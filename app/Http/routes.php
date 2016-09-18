@@ -53,6 +53,15 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/master/mahasiswa/update/{nim}', ['as' => 'master.mahasiswa.update', 'uses' => 'Master\MahasiswaController@update']);
         Route::delete('/master/mahasiswa/delete/{nim}', ['as' => 'master.mahasiswa.delete', 'uses' => 'Master\MahasiswaController@delete']);
 
+        // master Grade
+        Route::get('/master/grade/', ['as' => 'master.grade', 'uses' => 'Master\GradeController@index']);
+        Route::get('/master/grade/getDT', ['as' => 'master.grade.getDT', 'uses' => 'Master\GradeController@getDataBtTable']);
+        Route::get('/master/grade/create', ['as' => 'master.grade.create', 'uses' => 'Master\GradeController@create']);
+        Route::post('/master/grade/store', ['as' => 'master.grade.store', 'uses' => 'Master\GradeController@store']);
+        Route::get('/master/grade/edit/{id}', ['as' => 'master.grade.edit', 'uses' => 'Master\GradeController@edit']);
+        Route::post('/master/grade/update/{id}', ['as' => 'master.grade.update', 'uses' => 'Master\GradeController@update']);
+        Route::delete('/master/grade/delete/{id}', ['as' => 'master.grade.delete', 'uses' => 'Master\GradeController@delete']);
+
         // master mata kuliah
         Route::get('/master/mk/', ['as' => 'master.mk', 'uses' => 'Master\MataKuliahController@index']);
         Route::get('/master/mk/create', ['as' => 'master.mk.create', 'uses' => 'Master\MataKuliahController@create']);
