@@ -54,6 +54,8 @@ class IsiFRSController extends Controller
         $mode = $this->factory->tentukanModeAwal();
         if($mode == IsiFRSFactory::MA_BUKAN_WAKTUNYA) {
             $view = 'index-bukan-waktunya';
+        } elseif($mode == IsiFRSFactory::MA_STATUS_DRAFT) {
+            $view = 'index-status-krs-masih-draft';
         } elseif($mode == IsiFRSFactory::MA_MULAI_ISI) {
             $view = 'index-mulai-pengisian';
         } elseif($mode == IsiFRSFactory::MA_KEWAJIBAN_DULU) {
