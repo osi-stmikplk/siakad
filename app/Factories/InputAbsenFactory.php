@@ -10,6 +10,7 @@ namespace Stmik\Factories;
 
 
 use Illuminate\Database\Query\Builder;
+use Stmik\RencanaStudi;
 
 class InputAbsenFactory extends AbstractFactory
 {
@@ -51,6 +52,7 @@ class InputAbsenFactory extends AbstractFactory
             ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
             ->join('mahasiswa as m', 'm.nomor_induk', '=', 'rs.mahasiswa_id')
             ->where('ris.kelas_diambil_id' , '=', $idKelasIni)
+            ->where('rs.status', RencanaStudi::STATUS_DISETUJUI)
             ->select('m.nomor_induk', 'm.nama', 'ris.jumlah_kehadiran',
                 'ris.absen_tanpa_keterangan',
                 'ris.absen_ijin',
