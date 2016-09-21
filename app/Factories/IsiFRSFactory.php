@@ -27,6 +27,7 @@ class IsiFRSFactory extends AbstractFactory
     const MA_SUDAH_TDK_KULIAH = 3;
     const MA_SUDAH_FINAL = 4; // FRS sudah disetujui!
     const MA_STATUS_CUTI = 5; // status mahasiswa adalah cuti, update status mahasiswa dulu ke akma
+    const MA_STATUS_DRAFT = 6; // status KRS mahasiswa masih draft, harus check ke akma!
 
     /**
      * Tentukan mode awal Mahasiswa ini, apakah dia:
@@ -44,12 +45,24 @@ class IsiFRSFactory extends AbstractFactory
             return self::MA_SUDAH_TDK_KULIAH;
         }
 
-        if( !ReferensiAkademikFactory::hariIniMasihBisaIsiFRS() ) {
-            return self::MA_BUKAN_WAKTUNYA;
-        }
-
         // check tahun ajaran
         $tahun_ajaran = ReferensiAkademikFactory::getTAAktif()->tahun_ajaran;
+
+        // ambil builder rencana studi
+        $builderRS = RencanaStudi::whereTahunAjaran($tahun_ajaran)
+            ->whereMahasiswaId($nim);
+
+        if( !ReferensiAkademikFactory::hariIniMasihBisaIsiFRS() ) {
+            // check apakah masih draft? Sudah lewat pengisian dan masih draft harus
+            // dilakukan komplen ke pihak AKMA
+            $rs = $builderRS->first();
+            // jaga-jaga kalau mahasiswa memang belum mengisi tapi sudah lewat masa pengisian!
+            if($rs !== null) {
+                // check status kalau masih draft? kalau masih draft berarti masih belum di approve!
+                if($rs->status == RencanaStudi::STATUS_DRAFT) return self::MA_STATUS_DRAFT;
+            }
+            return self::MA_BUKAN_WAKTUNYA;
+        }
 
         // check bila sudah melakukan pembayaran SPP?
         if( StatusSPP::whereMahasiswaId($nim)->whereTahunAjaran($tahun_ajaran)
@@ -63,14 +76,12 @@ class IsiFRSFactory extends AbstractFactory
         }
 
         // sekarang sudah mulai pengisian ...
-        $b = RencanaStudi::whereTahunAjaran($tahun_ajaran)
-                ->whereMahasiswaId($nim);
-        if( $b->count() <= 0 ) {
+        if( $builderRS->count() <= 0 ) {
             return self::MA_MULAI_ISI;
         }
 
         // jangan izinkan proses lagi bila FRS sudah disetujui!
-        if($b->first()->status == RencanaStudi::STATUS_DISETUJUI) {
+        if($builderRS->first()->status == RencanaStudi::STATUS_DISETUJUI) {
             return self::MA_SUDAH_FINAL;
         }
 
