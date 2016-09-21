@@ -108,6 +108,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/akma/absen/loadKelas/', ['as' => 'akma.absen.loadKelas', 'uses' => 'Akma\InputAbsenController@loadKelasBerdasarkan']);
         Route::post('/akma/absen/loadDaftarMahasiswa/', ['as' => 'akma.absen.loadDaftarMahasiswa', 'uses' => 'Akma\InputAbsenController@loadDaftarMahasiswa']);
         Route::post('/akma/absen/simpan/{kelas}', ['as' => 'akma.absen.simpan', 'uses' => 'Akma\InputAbsenController@simpan']);
+
+        // input nilai mahasiswa
+        Route::get('/akma/nilai-mahasiswa/', ['as' => 'akma.nilai-mahasiswa', 'uses' => 'Akma\NilaiMahasiswaController@index']);
+        Route::post('/akma/nilai-mahasiswa/loadKelas', ['as' => 'akma.nilai-mahasiswa.loadKelas', 'uses' => 'Akma\NilaiMahasiswaController@loadKelas']);
+        Route::post('/akma/nilai-mahasiswa/loadDaftarMahasiswa/', ['as' => 'akma.nilai-mahasiswa.loadDaftarMahasiswa', 'uses' => 'Akma\NilaiMahasiswaController@loadDaftarMahasiswa']);
+        Route::post('/akma/nilai-mahasiswa/simpan/{kelas}', ['as' => 'akma.nilai-mahasiswa.simpan', 'uses' => 'Akma\NilaiMahasiswaController@simpan']);
     });
 
 });

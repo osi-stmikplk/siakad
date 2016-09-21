@@ -66,6 +66,7 @@
                     <li><a href="{{ route('akma.dkmk') }}"><i class="fa fa-circle-o"></i> Kelas & Dosen</a></li>
                     <li><a href="{{ route('akma.absen') }}"><i class="fa fa-circle-o"></i> Absensi Mahasiswa</a></li>
                     <li><a href="{{ route('akma.editmkmhs') }}"><i class="fa fa-circle-o"></i> Edit MK Mahasiswa</a></li>
+                    <li><a href="{{ route('akma.nilai-mahasiswa') }}"><i class="fa fa-circle-o"></i> Nilai Mahasiswa</a></li>
                     <li><a href="{{ route('akma.persetujuanFRS') }}"><i class="fa fa-circle-o"></i> Persetujuan KRS</a></li>
                     <li><a href="{{ route('akma.mkdouble') }}"><i class="fa fa-circle-o"></i> Filter MK Transkrip</a></li>
                 </ul>

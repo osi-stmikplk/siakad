@@ -9,6 +9,7 @@
 namespace Stmik\Factories;
 
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Stmik\MataKuliah;
@@ -234,12 +235,7 @@ class DosenKelasMKFactory extends AbstractFactory
      */
     public function dapatkanMahasiswaPengambilKelas($idKelas)
     {
-        $mahasiwa = \DB::table('pengampu_kelas as pk')
-            ->where('pk.id', $idKelas)
-            ->where('rs.status', RencanaStudi::STATUS_DISETUJUI)
-            ->join('rincian_studi as ris', 'pk.id', '=', 'ris.kelas_diambil_id')
-            ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
-            ->join('mahasiswa as mhs', 'mhs.nomor_induk', '=', 'rs.mahasiswa_id')
+        $mahasiwa = $this->builderDapatkanMahasiswaPengambilKelas($idKelas)
             ->select('mhs.nomor_induk', 'mhs.nama')
             ->orderBy('mhs.nomor_induk', 'asc');
 
@@ -250,7 +246,7 @@ class DosenKelasMKFactory extends AbstractFactory
      * Dapatkan builder daftar kelas pada $tahunAjaran dan $diJurusanIni
      * @param $tahunAjaran
      * @param $diJurusanIni
-     * @return mixed
+     * @return Builder
      */
     public function builderDapatkanKelasPada($tahunAjaran, $diJurusanIni)
     {
@@ -259,5 +255,20 @@ class DosenKelasMKFactory extends AbstractFactory
             ->where('mk.status', '=', MataKuliah::STATUS_AKTIF)
             ->where('pk.tahun_ajaran', '=', $tahunAjaran)
             ->where('mk.jurusan_id', '=', $diJurusanIni);
+    }
+
+    /**
+     * Builder untuk mendapatkan mahasiswa pengambil kelas di $idKelas
+     * @param $idKelas
+     * @return $this
+     */
+    public function builderDapatkanMahasiswaPengambilKelas($idKelas)
+    {
+        return \DB::table('pengampu_kelas as pk')
+            ->join('rincian_studi as ris', 'pk.id', '=', 'ris.kelas_diambil_id')
+            ->join('rencana_studi as rs', 'rs.id', '=', 'ris.rencana_studi_id')
+            ->join('mahasiswa as mhs', 'mhs.nomor_induk', '=', 'rs.mahasiswa_id')
+            ->where('pk.id', $idKelas)
+            ->where('rs.status', RencanaStudi::STATUS_DISETUJUI);
     }
 }

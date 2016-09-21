@@ -21,7 +21,7 @@
                             <br>
                             <label for="jurusan">Pilih Jurusan:&nbsp;</label>
                             <select class="form-control" id="jurusan" name="jurusan"
-                                data-ic-post-to="{{ route('akma.absen.loadKelas') }}"
+                                data-ic-post-to="{{ route('akma.nilai-mahasiswa.loadKelas') }}"
                                 data-ic-include="#ta"
                                 data-ic-indicator="#kelas_indicator"
                                 data-ic-target="#kelas"
@@ -35,7 +35,7 @@
                             </label>
                             <select name="kelas" id="kelas" class="form-control">
                             </select>
-                            <a data-ic-post-to="{{ route('akma.absen.loadDaftarMahasiswa') }}"
+                            <a data-ic-post-to="{{ route('akma.nilai-mahasiswa.loadDaftarMahasiswa') }}"
                                 id="send-filter"
                                data-ic-target="#load-data-di-sini"
                                data-ic-include="#kelas"
@@ -45,13 +45,10 @@
                         </form>
                         <p>
                             <span class="label label-info">NB:</span>
-                            Pada masukan jumlah Mahasiswa nilai 0 berarti tidak ada pencatatan, nilai positif berarti
-                            dihitung penjumlahan dan nilai negatif adalah mengurangi nilai, berdasarkan status keterangan terpilih.
-                            Status akan otomatis memiliki nilai
-                            <strong>H</strong> untuk <span class="text-green">Hadir</span>, <strong>S</strong> untuk
-                            <span class="text-yellow">Sakit</span> dan <strong>TK</strong>
-                            adalah <span class="text-red">Tanpa Keterangan</span> serta <strong>I</strong>
-                            untuk <span class="text-bold">Ijin</span>.
+                            Silahkan masukkan nilai mahasiswa, gunakan tanda titik (.) sebagai pengganti koma (,) pada
+                            nilai yang tidak bulat.<br>
+                            Untuk grade nilai akan dilakukan perhitungan secara otomatis sesuai dengan standar yang
+                            telah diinputkan oleh AKMA untuk periode Tahun Ajaran terpilih.
                         </p>
                         <div id="load-data-di-sini"></div>
                     </div>
