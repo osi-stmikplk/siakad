@@ -13,6 +13,7 @@ use Illuminate\Database\Query\Builder;
 use Stmik\Dosen;
 use Stmik\Mahasiswa;
 use Stmik\Pegawai;
+use Stmik\PengampuKelas;
 
 class NilaiMahasiswaFactory extends AbstractFactory
 {
@@ -66,9 +67,57 @@ class NilaiMahasiswaFactory extends AbstractFactory
         // ambil untuk di load
         $builderMahasiswa->select('mhs.nomor_induk', 'mhs.nama',
             'ris.nilai_tugas', 'ris.nilai_uts', 'ris.nilai_praktikum', 'ris.nilai_uas',
-            'ris.nilai_akhir', 'ris.id as rincian_studi_id')
+            'ris.nilai_akhir', 'ris.id as rincian_studi_id', 'ris.nilai_huruf', 'ris.nilai_angka')
             ->orderBy('mhs.nomor_induk');
 
         return $builderMahasiswa->get();
+    }
+
+    /**
+     * Apakah data kelas ada pada TA yang aktif?
+     * @param $idKelas
+     * @return bool
+     */
+    public function checkKelasPadaTAAktif($idKelas)
+    {
+        return PengampuKelas::findOrFail($idKelas)->tahun_ajaran == ReferensiAkademikFactory::getTAAktif()->tahun_ajaran;
+    }
+
+    /**
+     * Lakukan penyimpanan yang diinputkan oleh user! Pada inputan di $input maka akan terdapat beberapa item array yang
+     * menunjukkan tujuannya. Item array tersebut akan secara otomatis oleh Laravel disimpan di $input. Adapun isi dari
+     * inputan oleh user akan diwakilkan oleh kunci indeks, serta kunci indeks berikutnya adalah menunjukkan NIP untuk
+     * mahasiswa ybs, seperti yang ditunjukkan oleh berikut:
+     * $input['ris']['xyznipnya'] => rincian studi id
+     * $input['tugas']['xyznipnya'] => nilai tugas
+     * $input['uts']['xyznipnya'] => nilai uts
+     * $input['uas']['xyznipnya'] => nilai uas
+     * $input['praktikum']['xyznipnya'] => nilai praktikum
+     * $input['nilai']['xyznipnya'] => nilai nilai akhirnya
+     * @param $input
+     */
+    public function simpan($input)
+    {
+        try {
+            \DB::transaction(function () use ($input) {
+                // looping di setiap rincian studi nya saja!
+                // todo: ingat untuk konversi nilai ke huruf yang mengambil data dari inputan oleh akma!
+                foreach ($input['ris'] as $nip=>$ris) {
+                    \DB::table('rincian_studi')
+                        ->where('id', $ris)
+                        ->update([
+                            'nilai_tugas'=>convert_to_float($input['tugas'][$nip]),
+                            'nilai_uts'=>convert_to_float($input['uts'][$nip]),
+                            'nilai_praktikum'=>convert_to_float($input['praktikum'][$nip]),
+                            'nilai_uas'=>convert_to_float($input['uas'][$nip]),
+                            'nilai_akhir'=>convert_to_float($input['akhir'][$nip])
+                        ]);
+                }
+            });
+        } catch (\Exception $e) {
+            \Log::alert("Bad Happen:" . $e->getMessage() . "\n" . $e->getTraceAsString(), []);
+            $this->errors->add('sys', $e->getMessage());
+        }
+        return $this->errors->count() <= 0;
     }
 }

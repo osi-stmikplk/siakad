@@ -14,6 +14,7 @@ use Stmik\Factories\NilaiMahasiswaFactory;
 use Stmik\Factories\ReferensiAkademikFactory;
 use Stmik\Http\Controllers\Controller;
 use Stmik\Http\Controllers\GetDataBTTableTrait;
+use Stmik\Http\Requests\NilaiMahasiswaRequest;
 
 class NilaiMahasiswaController extends Controller
 {
@@ -64,6 +65,7 @@ class NilaiMahasiswaController extends Controller
     }
 
     /**
+     * Load daftar mahasisa di kelas yang ditunjukkan oleh $idKelas
      * @param $idKelas
      */
     private function loaderDaftarMahasiswaDi($idKelas)
@@ -74,7 +76,22 @@ class NilaiMahasiswaController extends Controller
         $mahasiswaPengambil = $this->factory->dapatkanMahasiswaDi($idKelas);
         return view('akma.nilai-mahasiswa.load-daftar-mhs')
             ->with('kelas', $idKelas)
-            ->with('mahasiswaPengambil', $mahasiswaPengambil);
+            ->with('mahasiswaPengambil', $mahasiswaPengambil)
+            ->with('kelasPadaTAAktif', $this->factory->checkKelasPadaTAAktif($idKelas));
+    }
+
+    /**
+     * Lakukan proses penyimpanan
+     * @param $kelas
+     * @param NilaiMahasiswaRequest $nilaiMahasiswaRequest
+     */
+    public function simpan($kelas, NilaiMahasiswaRequest $nilaiMahasiswaRequest)
+    {
+        if($this->factory->simpan($nilaiMahasiswaRequest->all())) {
+            return $this->loaderDaftarMahasiswaDi($kelas)
+                ->with('msg', 'Nilai telah diinputkan!');
+        }
+        return response(json_encode($this->factory->getErrors()), 500);
     }
 
 }

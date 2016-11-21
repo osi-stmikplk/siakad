@@ -48,7 +48,8 @@
                             Silahkan masukkan nilai mahasiswa, gunakan tanda titik (.) sebagai pengganti koma (,) pada
                             nilai yang tidak bulat.<br>
                             Untuk grade nilai akan dilakukan perhitungan secara otomatis sesuai dengan standar yang
-                            telah diinputkan oleh AKMA untuk periode Tahun Ajaran terpilih.
+                            telah diinputkan oleh AKMA untuk periode Tahun Ajaran terpilih, perhitungan tersebut
+                            dilakukan pada saat nilai disimpan.
                         </p>
                         <div id="load-data-di-sini"></div>
                     </div>

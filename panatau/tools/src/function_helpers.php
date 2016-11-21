@@ -296,3 +296,29 @@ if(!function_exists('pakai_cache')) {
         return $result;
     }
 }
+
+if(!function_exists('convert_to_float')) {
+    /**
+     * Lakukan prose konversi ke float untuk setiap string yang dimasukkan!
+     * @param string $value nilai yang akan di konversi!
+     * @param string $decimalChar nilai karakter untuk decimal, default adalah titik
+     * @return float
+     */
+    function convert_to_float($value, $decimalChar =".")
+    {
+        $dot_pos = strrchr($value, ".");
+        $com_pos = strrchr($value, ",");
+        $sep = ($dot_pos === true && $dot_pos > $com_pos) ? $dot_pos // ini menggunakan titik sebagai decimal
+            : (($com_pos === true && $com_pos > $dot_pos) ? $com_pos // bila menggunakan koma sebagai decimal
+                : false); // atau tidak ada sama sekali
+
+        if(!$sep) { // tidak menggunakan separator
+            return floatval(preg_replace("/[^0-9]/", "", $value));
+        }
+        // ingat bahwa default adalah menggunakan titik
+        return floatval(
+            preg_replace("/[^0-9]/", "", substr($value, 0, $sep)) . $decimalChar  . // ambil sebelah kiri
+            preg_replace("/[^0-9]/", "", substr($value, $sep+1, strlen($value))) // ambil sebelah kanan
+        );
+    }
+}
