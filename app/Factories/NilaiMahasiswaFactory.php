@@ -14,15 +14,18 @@ use Stmik\Dosen;
 use Stmik\Mahasiswa;
 use Stmik\Pegawai;
 use Stmik\PengampuKelas;
+use Stmik\Grade;
 
 class NilaiMahasiswaFactory extends AbstractFactory
 {
 
     protected $dosenMKKelasFactory;
-    public function __construct(DosenKelasMKFactory $dosenKelasMKFactory)
+    protected $gradeFactory;
+    public function __construct(DosenKelasMKFactory $dosenKelasMKFactory, GradeFactory $gradeFactory)
     {
         parent::__construct();
         $this->dosenMKKelasFactory = $dosenKelasMKFactory;
+        $this->gradeFactory = $gradeFactory;
     }
 
     /**
@@ -67,7 +70,7 @@ class NilaiMahasiswaFactory extends AbstractFactory
         // ambil untuk di load
         $builderMahasiswa->select('mhs.nomor_induk', 'mhs.nama',
             'ris.nilai_tugas', 'ris.nilai_uts', 'ris.nilai_praktikum', 'ris.nilai_uas',
-            'ris.nilai_akhir', 'ris.id as rincian_studi_id', 'ris.nilai_huruf', 'ris.nilai_angka')
+            'ris.nilai_akhir', 'ris.id as rincian_studi_id', 'ris.nilai_huruf', 'ris.nilai_angka','ris.status_lulus')
             ->orderBy('mhs.nomor_induk');
 
         return $builderMahasiswa->get();
@@ -101,8 +104,13 @@ class NilaiMahasiswaFactory extends AbstractFactory
         try {
             \DB::transaction(function () use ($input) {
                 // looping di setiap rincian studi nya saja!
-                // todo: ingat untuk konversi nilai ke huruf yang mengambil data dari inputan oleh akma!
+                // DONE: ingat untuk konversi nilai ke huruf yang mengambil data dari inputan oleh akma!
                 foreach ($input['ris'] as $nip=>$ris) {
+                    $nilai_akhir = convert_to_float($input['akhir'][$nip]); // nilai akhir
+                    $nilai_huruf = $this->gradeFactory->dapatkanGrade($nilai_akhir);
+                    $nilai_angka = $this->gradeFactory->dapatkanGradeNilaiAngka($nilai_huruf);
+                    $status_lulus = $this->gradeFactory->apakahGradeIniLulus($nilai_huruf) ?
+                        Grade::GRADE_LULUS : Grade::GRADE_TIDAK_LULUS;
                     \DB::table('rincian_studi')
                         ->where('id', $ris)
                         ->update([
@@ -110,7 +118,10 @@ class NilaiMahasiswaFactory extends AbstractFactory
                             'nilai_uts'=>convert_to_float($input['uts'][$nip]),
                             'nilai_praktikum'=>convert_to_float($input['praktikum'][$nip]),
                             'nilai_uas'=>convert_to_float($input['uas'][$nip]),
-                            'nilai_akhir'=>convert_to_float($input['akhir'][$nip])
+                            'nilai_akhir'=>$nilai_akhir,
+                            'nilai_angka'=>$nilai_angka,
+                            'nilai_huruf'=>$nilai_huruf,
+                            'status_lulus'=>$status_lulus
                         ]);
                 }
             });

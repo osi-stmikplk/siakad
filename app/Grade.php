@@ -15,6 +15,7 @@ class Grade extends Model
     protected $table = 'grade';
     protected $guarded = ['id'];
 
-
+    const GRADE_LULUS = 'LULUS';
+    const GRADE_TIDAK_LULUS = 'TIDAK LULUS';
 
 }

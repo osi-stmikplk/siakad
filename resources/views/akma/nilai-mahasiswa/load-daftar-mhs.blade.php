@@ -5,6 +5,7 @@
       data-ic-post-to="{{ route('akma.nilai-mahasiswa.simpan', ['kelas'=>$kelas]) }}"
       data-ic-confirm="Yakin untuk menyimpan hasil entry nilai Mahasiswa?"
 >
+    <input type="hidden" name="tahun_ajaran" value="">
     <table class="table table-hover table-condensed">
         <thead>
         <tr>
@@ -24,7 +25,7 @@
         </thead>
         <tbody>
         @foreach($mahasiswaPengambil as $m)
-            <tr>
+            <tr @if($m->status_lulus != \Stmik\Grade::GRADE_LULUS) class="danger" @endif>
                 <td>
                     <input type="hidden" name="ris[{{ $m->nomor_induk }}]" value="{{ $m->rincian_studi_id }}">
                     {{ $m->nomor_induk }}

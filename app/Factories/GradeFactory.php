@@ -35,9 +35,12 @@ class GradeFactory extends AbstractFactory
             ReferensiAkademikFactory::getTAAktif()->tahun_ajaran:
             $tahunAjaran;
 
-        $dataG = Grade::where('tahun_ajaran_mulai','<=', $tahunAjaran)
-            ->where('tahun_ajaran_berakhir', '>=', $tahunAjaran)
-            ->first();
+        $cacheKey = "grade-tahun-$ta";
+        $dataG = pakai_cache($cacheKey, function() use($ta) {
+            return Grade::where('tahun_ajaran_mulai','<=', $ta)
+                ->where('tahun_ajaran_berakhir', '>=', $ta)
+                ->first();
+        });
 
         if($dataG === null) {
             throw new \Exception('Data Grade pada tahun ajaran '. $tahunAjaran . ' tidak ditemukan!');
@@ -94,6 +97,21 @@ class GradeFactory extends AbstractFactory
             case 'D': $a = $g->angka_d; break;
         }
         return $a;
+    }
+
+    /**
+     * Tentukan apakah grade merupakan status yang lulus?
+     * @param $grade
+     * @return bool
+     */
+    public function apakahGradeIniLulus($grade)
+    {
+        switch(strtoupper($grade)) {
+            case 'D':
+            case 'E':
+                return false;
+        }
+        return true;
     }
 
     /**

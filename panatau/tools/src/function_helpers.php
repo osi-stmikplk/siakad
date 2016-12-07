@@ -306,10 +306,10 @@ if(!function_exists('convert_to_float')) {
      */
     function convert_to_float($value, $decimalChar =".")
     {
-        $dot_pos = strrchr($value, ".");
-        $com_pos = strrchr($value, ",");
-        $sep = ($dot_pos === true && $dot_pos > $com_pos) ? $dot_pos // ini menggunakan titik sebagai decimal
-            : (($com_pos === true && $com_pos > $dot_pos) ? $com_pos // bila menggunakan koma sebagai decimal
+        $dot_pos = strrpos($value, ".");
+        $com_pos = strrpos($value, ",");
+        $sep = ($dot_pos !== false && $dot_pos > $com_pos) ? $dot_pos // ini menggunakan titik sebagai decimal
+            : (($com_pos !== false && $com_pos > $dot_pos) ? $com_pos // bila menggunakan koma sebagai decimal
                 : false); // atau tidak ada sama sekali
 
         if(!$sep) { // tidak menggunakan separator
