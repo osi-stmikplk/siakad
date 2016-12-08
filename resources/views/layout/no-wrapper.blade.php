@@ -37,7 +37,7 @@ tampilan layoutnya, semacam halaman login dan register ...
     @yield('content')
 <!-- jQuery 2.2.0 -->
     <script src="{{ asset('plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
-    <script src="{{ asset('plugins/intercooler/intercooler-0.9.4.min.js') }}"></script>
+    <script src="{{ asset('plugins/intercooler/intercooler-1.0.3.min.js') }}"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ asset('plugins/bootstrap/bootstrap.min.js') }}"></script>
     <!-- SlimScroll -->
